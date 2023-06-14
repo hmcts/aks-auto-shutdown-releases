@@ -9,6 +9,7 @@ body:
       description: |
         Name of the person making the request
       placeholder: |
+        requester
     validations:
       required: true
   - type: input
@@ -17,13 +18,16 @@ body:
       description: |
         Change request ticket number
       placeholder: |
+        ticket number
     validations:
       required: true
   - type: input
     attributes:
       label: Project
       description: |
+        project name
       placeholder: |
+        project
     validations:
       required: true
   - type: input
@@ -32,6 +36,7 @@ body:
       description: |
         cluster environment
       placeholder: |
+        environment
     validations:
       required: true
   - type: input
@@ -40,6 +45,7 @@ body:
       description: |
         Date for when the release will begin
       placeholder: |
+        01/01/24
     validations:
       required: true
   - type: input
@@ -48,5 +54,6 @@ body:
       description: |
         Date for when the release will end
       placeholder: |
+        01/01/24
     validations:
       required: true
