@@ -1,1 +1,52 @@
+name: '🏠 Auto shutdown release form'
+labels: 'release form'
+description: Form to prevent aks-auto-shutdown on a certain env for application release
 
+body:
+  - type: input
+    attributes:
+      label: Requester
+      description: |
+        Name of the person making the request
+      placeholder: |
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Change Ticket Number
+      description: |
+        Change request ticket number
+      placeholder: |
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Project
+      description: |
+      placeholder: |
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Environment
+      description: |
+        cluster environment
+      placeholder: |
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Start Date
+      description: |
+        Date for when the release will begin
+      placeholder: |
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: End Date
+      description: |
+        Date for when the release will end
+      placeholder: |
+    validations:
+      required: true
