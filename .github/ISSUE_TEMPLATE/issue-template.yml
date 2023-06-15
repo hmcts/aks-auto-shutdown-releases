@@ -5,33 +5,6 @@ description: Form to prevent aks-auto-shutdown on a certain env for application 
 body:
   - type: input
     attributes:
-      label: Requester
-      description: |
-        Name of the person making the request
-      placeholder: |
-        requester
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: Change Ticket Number
-      description: |
-        Change request ticket number
-      placeholder: |
-        ticket number
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: Project
-      description: |
-        project name
-      placeholder: |
-        project
-    validations:
-      required: true
-  - type: input
-    attributes:
       label: Environment
       description: |
         cluster environment
