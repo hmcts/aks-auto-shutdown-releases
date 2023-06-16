@@ -18,7 +18,7 @@ body:
       description: |
         Date for when the release will begin
       placeholder: |
-        01/01/24
+        01/01/2023
     validations:
       required: true
   - type: input
@@ -27,6 +27,6 @@ body:
       description: |
         Date for when the release will end
       placeholder: |
-        01/01/24
+        01/01/2023
     validations:
       required: true
