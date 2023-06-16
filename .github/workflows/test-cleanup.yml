@@ -14,6 +14,6 @@ jobs:
       - uses: actions/stale@v5
         with:
           days-before-issue-stale: -1
-          days-before-issue-close: 1
+          days-before-issue-close: 0
           close-issue-message: "This issue was closed because it has been inactive for 14 days."
           repo-token: ${{ secrets.GITHUB_TOKEN }}
