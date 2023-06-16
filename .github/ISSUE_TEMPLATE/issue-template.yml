@@ -14,7 +14,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: ">>Start Date>>"
+      label: ">>Start-Date>>"
       description: |
         Date for when the release will begin
       placeholder: |
@@ -23,7 +23,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: ">>End Date>>"
+      label: ">>End-Date>>"
       description: |
         Date for when the release will end
       placeholder: |
