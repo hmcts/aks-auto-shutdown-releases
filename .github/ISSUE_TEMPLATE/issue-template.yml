@@ -5,7 +5,7 @@ description: Form to prevent aks-auto-shutdown on a certain env for application 
 body:
   - type: input
     attributes:
-      label: Environment
+      label: >>Environment>>
       description: |
         cluster environment
       placeholder: |
@@ -14,7 +14,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: Start Date
+      label: >>Start Date>>
       description: |
         Date for when the release will begin
       placeholder: |
@@ -23,7 +23,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: End Date
+      label: >>End Date>>
       description: |
         Date for when the release will end
       placeholder: |
