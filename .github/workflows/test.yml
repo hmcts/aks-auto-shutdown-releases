@@ -1,7 +1,8 @@
 name: Issue Forms Body Parser
 
-on: issues
-      types: [opened, reopened]
+on:
+  issues:
+    types: [opened, reopened]
 
 jobs:
   process:
