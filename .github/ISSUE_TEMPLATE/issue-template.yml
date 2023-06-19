@@ -3,7 +3,7 @@ labels: 'release form'
 description: Form to prevent aks-auto-shutdown on a certain env for application release
 
 body:
-  - type: input
+  - type: dropdown
     attributes:
       label: Environment
       description: |
@@ -12,6 +12,9 @@ body:
         environment
     validations:
       required: true
+    options:
+      - att
+      - sbox
   - type: input
     attributes:
       label: Start-Date
