@@ -4,7 +4,6 @@ description: Form to prevent aks-auto-shutdown on a certain env for application 
 
 body:
 - type: dropdown
-    id: businessarea
     attributes:
       label: Business Area
       description: Business Area
