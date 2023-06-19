@@ -3,14 +3,29 @@ labels: 'release form'
 description: Form to prevent aks-auto-shutdown on a certain env for application release
 
 body:
+- type: dropdown
+    id: businessarea
+    attributes:
+      label: Business Area
+      description: Business Area
+      options:
+        - CFT
+        - SDS
+    validations:
+      required: true
   - type: dropdown
     id: environment
     attributes:
       label: Environment
       description: cluster environment
       options:
-        - aat
         - sbox
+        - test/perftest
+        - ithc
+        - demo
+        - ptlsbox
+        - preview
+        - aat
     validations:
       required: true
   - type: input
