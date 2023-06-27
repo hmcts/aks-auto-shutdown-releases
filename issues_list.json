@@ -1,0 +1,11 @@
+[
+    {
+        "Business area": "cft",
+        "Environment": [
+            "AAT / Staging",
+            "Preview / Dev"
+        ],
+        "Skip shutdown start date": "27-06-2023",
+        "Skip shutdown end date": "28-06-2023"
+    }
+]
