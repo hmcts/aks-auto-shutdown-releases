@@ -31,6 +31,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             SDS=$(date -j -f "%d-%m-%Y" "${SD}" +"%s")
             EDS=$(date -j -f "%d-%m-%Y" "${ED}" +"%s")
             TOSEC=$(date -j -f "%d-%m-%Y" "${to_date}" +"%s")
+            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF    
             DIFF=$(( $EDS - $TOSEC ))
             if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $TOSEC ]] ; then
                 echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF
