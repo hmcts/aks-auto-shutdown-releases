@@ -31,23 +31,20 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             SDS=$(date -j -f "%d-%m-%Y" "${SD}" +"%s")
             EDS=$(date -j -f "%d-%m-%Y" "${ED}" +"%s")
             TOSEC=$(date -j -f "%d-%m-%Y" "${to_date}" +"%s")
-            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF    
             DIFF=$(( $EDS - $TOSEC ))
+            STARTDIFF=$(( $TOSEC - $SDS ))
+            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF $STARTDIFF
             if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $TOSEC ]] ; then
-                echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF
                 echo "Match: $id"
                 SKIP="true"
                 continue
 
-            elif [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $DIFF -lt 129600 ]]; then
+            elif [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $STARTDIFF -gt 0 ]] &&[[ $DIFF -lt 86401 ]]; then
                 echo "Match : $id"
-                echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF
                 SKIP="true"
                 continue
             fi
-            echo $SKIP
         done < <(jq -c '.[]' issues_list.json)
-        echo "outside $SKIP"
         if [[ $SKIP == "false" ]]; then
             echo "About to shutdown cluster $NAME (rg:$RESOURCE_GROUP)"
         else
