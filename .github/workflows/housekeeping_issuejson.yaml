@@ -1,0 +1,75 @@
+name: Housekeeping Shutdown form
+run-name: Housekeeping json file
+on:
+  schedule:
+    - cron:  '00 18 * * *'
+  workflow_dispatch:
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+     
+       
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Delete old entries
+        run: |
+          python file_handling.py
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout -b PR-${{ github.run_id }}
+          echo "=============="
+          git add .
+          echo "ˆˆˆˆˆˆˆ"
+          git status
+          echo "%%%%%%%%%%"
+          git commit -m "parseissues" --allow-empty
+          echo "--------------"
+          git push --set-upstream origin PR-${{ github.run_id }}
+          gh pr create -f  -t ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"   
+          
+          
+      - name: Install jq tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+          
+      - name: get PR details 
+        uses: octokit/request-action@v2.x
+        id: get_pr_number
+        with:
+          route: GET /repos/mokainos/actions/pulls
+          owner: octokit
+          repo: request-action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
+      - name: Set env 
+        run: | 
+            echo PR_NUM=$(echo '${{ steps.get_pr_number.outputs.data }}' | jq -r '.[] | select(.title | contains("${{ github.run_id }}"))| .number' ) >>   $GITHUB_ENV
+     
+      - name: echo_prnum
+        run: |
+          echo PR_NUM ${{ env.PR_NUM }}
+                
+         
+      - name: approve 
+        run: |
+          gh pr review ${{ env.PR_NUM }} --approve
+        env:
+          GITHUB_TOKEN: "${{ secrets.MOKAINOS }}"
+          
+      - name: merge
+        run: |
+          gh pr merge ${{ env.PR_NUM }} --admin -m
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+

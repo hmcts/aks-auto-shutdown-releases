@@ -1,0 +1,50 @@
+name: Skip auto shutdown request
+description: Skip auto shutdown request
+body:
+
+- type: markdown
+  attributes:
+    value: |
+      Please provide change details
+      
+- type: dropdown
+  id: download
+  attributes:
+    label: Business area
+    options:
+      - cft
+      - cross-cutting
+  validations:
+    required: true
+    
+- type: dropdown
+  id: Enviornment
+  attributes:
+    label: Environment
+    multiple: true
+    options:
+      - Sandbox
+      - AAT / Staging
+      - Preview / Dev
+      - Test / Perftest
+      - Demo
+      - ITHC
+  validations:
+    required: true
+      
+- type: input
+  id: Start_Date
+  attributes:
+    label: Skip shutdown start date
+    placeholder: "DD-MM-YYYY"
+  validations:
+    required: true
+    
+- type: input
+  id: End_Date
+  attributes:
+    label: Skip shutdown end date
+    description: "Defaults to current day"
+    placeholder: "DD-MM-YYYY"
+  validations:
+    required: false
