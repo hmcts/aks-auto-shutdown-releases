@@ -69,14 +69,6 @@ jobs:
         run: |
           echo PR_NUM ${{ env.PR_NUM }}
           
-#       - name: Approve PR
-#         uses: octokit/request-action@v2.x
-#         with:
-#           route: POST /repos/${{ github.repository }}/pulls/${{ env.PR_NUM }}/reviews
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           review_event: APPROVE
-#           body: Auto-approved by @mokainos
-         
          
       - name: approve 
         run: |
