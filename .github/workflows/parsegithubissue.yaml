@@ -55,7 +55,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: get_pr_number
         with:
-          route: GET /repos/mokainos/actions/pulls
+          route: GET /repos/hmcts/aks-auto-shutdown-releases/pulls
           owner: octokit
           repo: request-action
         env:
