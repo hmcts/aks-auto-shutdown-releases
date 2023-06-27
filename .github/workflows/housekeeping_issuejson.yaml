@@ -46,7 +46,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: get_pr_number
         with:
-          route: GET /repos/hmcts/aks-auto-shutdown-releases/pulls
+          route: GET /repos/mokainos/actions/pulls
           owner: octokit
           repo: request-action
         env:
@@ -72,4 +72,3 @@ jobs:
           gh pr merge ${{ env.PR_NUM }} --admin -m
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
