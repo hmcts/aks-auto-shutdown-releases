@@ -26,11 +26,8 @@ jobs:
           git checkout -b PR-${{ github.run_id }}
           echo "=============="
           git add .
-          echo "ˆˆˆˆˆˆˆ"
           git status
-          echo "%%%%%%%%%%"
           git commit -m "parseissues" --allow-empty
-          echo "--------------"
           git push --set-upstream origin PR-${{ github.run_id }}
           gh pr create -f  -t ${{ github.run_id }}
         env:
