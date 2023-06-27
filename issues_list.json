@@ -13,11 +13,5 @@
         ],
         "Skip shutdown start date": "28-06-2023",
         "Skip shutdown end date": "28-06-2023"
-    },
-    {
-        "Business area": "cft",
-        "Environment": "Preview / Dev",
-        "Skip shutdown start date": "26-06-2023",
-        "Skip shutdown end date": "26-06-2023"
     }
 ]
