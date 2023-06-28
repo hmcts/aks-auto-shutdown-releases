@@ -1,9 +1,9 @@
 [
     {
         "Business area": "cft",
-        "Environment": "Preview / Dev",
-        "Skip shutdown start date": "28-06-2023",
-        "Skip shutdown end date": "28-06-2023"
+        "Environment": "AAT / Staging",
+        "Skip shutdown start date": "27-06-2023",
+        "Skip shutdown end date": "29-06-2023"
     },
     {
         "Business area": "cft",
@@ -11,19 +11,7 @@
             "AAT / Staging",
             "Preview / Dev"
         ],
-        "Skip shutdown start date": "28-06-2023",
-        "Skip shutdown end date": "28-06-2023"
-    },
-    {
-        "Business area": "cft",
-        "Environment": "AAT / Staging",
-        "Skip shutdown start date": "27-06-2023",
-        "Skip shutdown end date": "28-06-2023"
-    },
-    {
-        "Business area": "cft",
-        "Environment": "AAT / Staging",
-        "Skip shutdown start date": "27-06-2023",
-        "Skip shutdown end date": "29-06-2023"
+        "Skip shutdown start date": "28/06/2023",
+        "Skip shutdown end date": "29/06/2023"
     }
 ]
