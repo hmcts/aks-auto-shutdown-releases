@@ -1,12 +1,6 @@
 name: Skip auto shutdown request
 description: Skip auto shutdown request
-body:
-
-- type: markdown
-  attributes:
-    value: |
-      Please provide change details
-      
+body:    
 - type: dropdown
   id: download
   attributes:
@@ -36,7 +30,7 @@ body:
   id: Start_Date
   attributes:
     label: Skip shutdown start date
-    placeholder: "DD-MM-YYYY"
+    description: "DD-MM-YYYY"
   validations:
     required: true
     
@@ -44,7 +38,6 @@ body:
   id: End_Date
   attributes:
     label: Skip shutdown end date
-    description: "Defaults to current day"
-    placeholder: "DD-MM-YYYY"
+    description: "Defaults to current day. DD-MM-YYYY"
   validations:
     required: false
