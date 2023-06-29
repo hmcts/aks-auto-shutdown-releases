@@ -24,10 +24,10 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         echo $NAME $BU $ENV
         while read id
         do
-            BA=$(jq -r '."Business area"' <<< $id)
-            ENVT=$(jq -r '."Environment"' <<< $id)
-            SD=$(jq -r '."Skip shutdown start date"' <<< $id)
-            ED=$(jq -r '."Skip shutdown end date"' <<< $id)
+            BA=$(jq -r '."business_area"' <<< $id)
+            ENVT=$(jq -r '."environment"' <<< $id)
+            SD=$(jq -r '."start_date"' <<< $id)
+            ED=$(jq -r '."end_date"' <<< $id)
             SDS=$(date -j -f "%d-%m-%Y" "${SD}" +"%s")
             EDS=$(date -j -f "%d-%m-%Y" "${ED}" +"%s")
             TOSEC=$(date -j -f "%d-%m-%Y" "${to_date}" +"%s")
