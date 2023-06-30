@@ -19,8 +19,8 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         echo "----------------"
         ENV=$(echo $NAME|cut -d'-' -f2)
         BU=$(echo $NAME|cut -d'-' -f1)
-        ENV=${ENV/#sbox/Sandbox}
-        ENV=${ENV/stg/Staging}
+        #ENV=${ENV/#sbox/Sandbox}
+        #ENV=${ENV/stg/Staging}
         echo $NAME $BU $ENV
         while read id
         do
