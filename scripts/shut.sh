@@ -19,8 +19,8 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         echo "----------------"
         ENV=$(echo $NAME|cut -d'-' -f2)
         BU=$(echo $NAME|cut -d'-' -f1)
-        #ENV=${ENV/#sbox/Sandbox}
-        #ENV=${ENV/stg/Staging}
+        #---what are these doing? ENV=${ENV/#sbox/Sandbox}
+        #---                      ENV=${ENV/stg/Staging}
         echo $NAME $BU $ENV
         while read id
         do
@@ -28,9 +28,9 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ENVT=$(jq -r '."Environment"' <<< $id)
             SD=$(jq -r '."Skip shutdown start date"' <<< $id)
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
-            SDS=$(date -j -f "%d-%m-%Y" "${SD}" +"%s")
-            EDS=$(date -j -f "%d-%m-%Y" "${ED}" +"%s")
-            TOSEC=$(date -j -f "%d-%m-%Y" "${to_date}" +"%s")
+            SDS=$(date -d "%d-%m-%Y" "${SD}" +"%s")
+            EDS=$(date -d "%d-%m-%Y" "${ED}" +"%s")
+            TOSEC=$(date -d "%d-%m-%Y" "${to_date}" +"%s")
             DIFF=$(( $EDS - $TOSEC ))
             STARTDIFF=$(( $TOSEC - $SDS ))
             echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF $STARTDIFF
