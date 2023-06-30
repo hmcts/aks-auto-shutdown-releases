@@ -32,6 +32,8 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             echo $ED
             SDS=$(date -d $SD +"%s")
             EDS=$(date -d $ED +"%s")
+            echo $SDS
+            echo $EDS
             TOSEC=$(date -d $to_date +"%s")
             DIFF=$(( $EDS - $TOSEC ))
             STARTDIFF=$(( $TOSEC - $SDS ))
