@@ -10,6 +10,11 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - name: Install jq tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -24,8 +29,8 @@ jobs:
         run: |
           # Using the character `'` to prevent all characters enclosed within
           # them from being treated as special characters (e.g. $ or `)
-          echo '${{ steps.parse_issue.outputs.jsonString }}'
-          echo NEW_DATA='${{ steps.parse_issue.outputs.jsonString }}' >> $GITHUB_ENV
+          echo '${{ steps.parse_issue.outputs.jsonString }}' | jq -c
+          echo NEW_DATA='${{ steps.parse_issue.outputs.jsonString }}' | jq -c >> $GITHUB_ENV
           
        
       - uses: actions/setup-python@v4
@@ -45,11 +50,6 @@ jobs:
           
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          
-      - name: Install jq tool
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq
           
       - name: get PR details 
         uses: octokit/request-action@v2.x
