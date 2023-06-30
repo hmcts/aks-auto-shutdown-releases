@@ -14,9 +14,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: Parse issue
+      - name: GitHub Issue Parser
         id: parse_issue
-        uses: onmax/issue-form-parser@v1.4
+        uses: stefanbuck/github-issue-parser@v2.0.6
         with:
           issue_number: ${{ github.event.issue.number }}
       
