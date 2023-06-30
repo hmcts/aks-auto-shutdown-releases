@@ -2,7 +2,7 @@ name: Skip auto shutdown request
 description: Skip auto shutdown request
 body:    
 - type: dropdown
-  id: business_area
+  id: businessarea
   attributes:
     label: Business Area
     options:
