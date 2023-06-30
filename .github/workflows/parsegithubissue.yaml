@@ -30,7 +30,7 @@ jobs:
           # Using the character `'` to prevent all characters enclosed within
           # them from being treated as special characters (e.g. $ or `)
           echo '${{ steps.parse_issue.outputs.jsonString }}' | jq -c
-          echo NEW_DATA='${{ steps.parse_issue.outputs.jsonString }}' | jq -c >> $GITHUB_ENV
+          echo NEW_DATA={"businessID":"cft","enviornments":"ITHC","start_date_ID":"04-07-2023","end_date_ID":""} >> $GITHUB_ENV
           
        
       - uses: actions/setup-python@v4
