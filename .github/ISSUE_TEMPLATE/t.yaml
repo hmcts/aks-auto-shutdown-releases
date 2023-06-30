@@ -2,9 +2,9 @@ name: Skip auto shutdown request
 description: Skip auto shutdown request
 body:    
 - type: dropdown
-  id: businessarea
+  id: businessID
   attributes:
-    label: Business Area
+    label: businessLabel
     options:
       - cft
       - cross-cutting
@@ -27,17 +27,17 @@ body:
     required: true
       
 - type: input
-  id: start_date
+  id: start_date_ID
   attributes:
-    label: Skip shutdown start date
+    label: Skip shutdown start date label
     description: "DD-MM-YYYY"
   validations:
     required: true
     
 - type: input
-  id: end_date
+  id: end_date_ID
   attributes:
-    label: Skip shutdown end date
+    label: Skip shutdown end date label
     description: "Defaults to current day. DD-MM-YYYY"
   validations:
     required: false
