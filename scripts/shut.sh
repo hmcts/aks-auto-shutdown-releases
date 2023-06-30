@@ -28,9 +28,11 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ENVT=$(jq -r '."Environment"' <<< $id)
             SD=$(jq -r '."Skip shutdown start date"' <<< $id)
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
-            SDS=$(date -d $SD +%s)
-            EDS=$(date -d $ED +%s)
-            TOSEC=$(date -d $to_date +%s)
+            echo $SD
+            echo $ED
+            SDS=$(date -d $SD +"%s")
+            EDS=$(date -d $ED +"%s")
+            TOSEC=$(date -d $to_date +"%s")
             DIFF=$(( $EDS - $TOSEC ))
             STARTDIFF=$(( $TOSEC - $SDS ))
             echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF $STARTDIFF
