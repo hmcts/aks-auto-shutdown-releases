@@ -24,8 +24,8 @@ jobs:
         run: |
           # Using the character `'` to prevent all characters enclosed within
           # them from being treated as special characters (e.g. $ or `)
-          echo '${{ steps.parse_issue.outputs.payload }}'
-          echo NEW_DATA='${{ steps.parse_issue.outputs.payload }}' >> $GITHUB_ENV
+          echo '${{ steps.parse_issue.outputs.jsonString }}'
+          echo NEW_DATA='${{ steps.parse_issue.outputs.jsonString }}' >> $GITHUB_ENV
           
        
       - uses: actions/setup-python@v4
@@ -34,7 +34,7 @@ jobs:
           
       - name: process form data
         run: |
-          #python file_handling.py
+          python file_handling.py
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout -b PR-${{ github.run_id }}
