@@ -23,7 +23,7 @@ jobs:
         id: parse_issue
         uses: stefanbuck/github-issue-parser@v2.0.6
         with:
-          issue_number: ${{ github.event.issue.number }}
+          template-path: .github/ISSUE_TEMPLATE/t.ymal 
       
       - name: Show parsed payload data
         run: |
