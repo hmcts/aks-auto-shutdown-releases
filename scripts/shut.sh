@@ -30,6 +30,8 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
             echo $SD
             echo $ED
+            TEST=`date +%s`
+            echo $TEST
             SDS=$(date -d $SD +"%s")
             EDS=$(date -d $ED +"%s")
             TOSEC=$(date -d $to_date +"%s")
