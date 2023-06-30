@@ -10,27 +10,22 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Install jq tool
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq
-
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: GitHub Issue Parser
+      - name: Parse issue
         id: parse_issue
-        uses: stefanbuck/github-issue-parser@v2.0.6
+        uses: onmax/issue-form-parser@v1.4
         with:
-          template-path: .github/ISSUE_TEMPLATE/t.yaml
+          issue_number: ${{ github.event.issue.number }}
       
       - name: Show parsed payload data
         run: |
           # Using the character `'` to prevent all characters enclosed within
           # them from being treated as special characters (e.g. $ or `)
-          echo '${{ steps.parse_issue.outputs.jsonString }}' | jq -c
-          echo NEW_DATA={"businessID":"cft","enviornments":"ITHC","start_date_ID":"04-07-2023","end_date_ID":""} >> $GITHUB_ENV
+          echo '${{ steps.parse_issue.outputs.payload }}'
+          echo NEW_DATA='${{ steps.parse_issue.outputs.payload }}' >> $GITHUB_ENV
           
        
       - uses: actions/setup-python@v4
@@ -50,6 +45,11 @@ jobs:
           
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          
+      - name: Install jq tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
           
       - name: get PR details 
         uses: octokit/request-action@v2.x
