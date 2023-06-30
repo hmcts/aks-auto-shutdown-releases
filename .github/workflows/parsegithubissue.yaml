@@ -34,7 +34,7 @@ jobs:
           
       - name: process form data
         run: |
-          python file_handling.py
+          #python file_handling.py
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout -b PR-${{ github.run_id }}
