@@ -2,7 +2,7 @@
     {
         "Business area": "cft",
         "Environment": "AAT / Staging",
-        "Skip shutdown start date": "30-06-2023",
-        "Skip shutdown end date": "01-07-2023"
+        "Skip shutdown start date": "06-30-2023",
+        "Skip shutdown end date": "07-01-2023"
     }
 ]

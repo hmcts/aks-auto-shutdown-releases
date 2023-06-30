@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #set -x
 shopt -s nocasematch
-to_date=$(date +'%d-%m-%Y')
+to_date=$(date +'%m-%d-%Y')
 SUBSCRIPTIONS=$(az account list -o json)
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
     SUBSCRIPTION_ID=$(jq -r '.id' <<< $subscription)
@@ -30,9 +30,9 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
             echo $SD
             echo $ED
-            SDS=$(date --date=$SD +%s)
-            EDS=$(date --date=$ED +%s)
-            TOSEC=$(date --date=$to_date +%s)
+            SDS=$(date -d $SD +"%s")
+            EDS=$(date -d $ED +"%s")
+            TOSEC=$(date -d $to_date +"%s")
             echo $SDS
             echo $EDS
             echo $DIFF
