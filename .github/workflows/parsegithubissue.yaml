@@ -26,6 +26,7 @@ jobs:
           # them from being treated as special characters (e.g. $ or `)
           echo '${{ steps.parse_issue.outputs.payload }}'
           echo NEW_DATA='${{ steps.parse_issue.outputs.payload }}' >> $GITHUB_ENV
+          echo ISSUE_NUMBER='${{ github.event.issue.number }}' >> $GITHUB_ENV
           
        
       - uses: actions/setup-python@v4
