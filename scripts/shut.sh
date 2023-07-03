@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #set -x
 shopt -s nocasematch
-to_date=$(date +'%m-%d-%Y')
 SUBSCRIPTIONS=$(az account list -o json)
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
     SUBSCRIPTION_ID=$(jq -r '.id' <<< $subscription)
@@ -19,8 +18,8 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         echo "----------------"
         ENV=$(echo $NAME|cut -d'-' -f2)
         BU=$(echo $NAME|cut -d'-' -f1)
-        #---what are these doing? ENV=${ENV/#sbox/Sandbox}
-        #---                      ENV=${ENV/stg/Staging}
+        ENV=${ENV/#sbox/Sandbox}
+        ENV=${ENV/stg/Staging}
         echo $NAME $BU $ENV
         while read id
         do
@@ -28,20 +27,24 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ENVT=$(jq -r '."Environment"' <<< $id)
             SD=$(jq -r '."Skip shutdown start date"' <<< $id)
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
-            echo $SD
-            echo $ED
-            TEST=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $SD)
-            echo $TEST
-            SDS=$(date -d "$TEST 23:59:59" +%s)
+            #start date formatting
+            SDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $SD)
+            echo $SDF
+            SDS=$(date -d "$SDF 00:00:00" +%s)
             echo $SDS
-            EDS=$(date +"%d-%m-%Y" -d $ED)
-            TOSEC=$(date +"%d-%m-%Y" -d $to_date)
+            #end date formatting
+            EDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $ED)
+            EDS=$(date -d "$EDF 00:00:00" +%s)
             echo $EDS
-            echo $TOSEC
-            DIFF=$(( $EDS - $TOSEC ))
-            STARTDIFF=$(( $TOSEC - $SDS ))
-            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $TOSEC $to_date $DIFF $STARTDIFF
-            if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $TOSEC ]] ; then
+            #current date formatting
+            current_date=$(date +'%m-%d-%Y')
+            CDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
+            CDS=$(date -d "$CDF 00:00:00" +%s)
+            echo $CDS
+            DIFF=$(( $EDS - $CDS ))
+            STARTDIFF=$(( $CDS - $SDS ))
+            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $CDS $to_date $DIFF $STARTDIFF
+            if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $CDS ]] ; then
                 echo "Match: $id"
                 SKIP="true"
                 continue
