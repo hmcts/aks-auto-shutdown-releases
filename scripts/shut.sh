@@ -30,11 +30,11 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
             echo $SD
             echo $ED
-            TEST=$(date +%s)
+            TEST=$(date $TEST+%s)
             echo $TEST
-            SDS=$(date -d $SD +"%s")
-            EDS=$(date -d $ED +"%s")
-            TOSEC=$(date -d $to_date +"%s")
+            SDS=$(date -d "%d-%m-%Y" $SD +"%s")
+            EDS=$(date -d "%d-%m-%Y" $ED +"%s")
+            TOSEC=$(date -d "%d-%m-%Y" $to_date +"%s")
             echo $SDS
             echo $EDS
             echo $DIFF
