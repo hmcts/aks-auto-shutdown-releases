@@ -20,6 +20,7 @@ try:
 except FileNotFoundError:
   with open(filepath, "w") as json_file:
     listObj.append(new_data)
+    json.dump(listObj, json_file, indent=4)
     listObj.append(issue_number)
     json.dump(listObj, json_file, indent=4)
 else:
