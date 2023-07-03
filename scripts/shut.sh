@@ -54,16 +54,16 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
                 SKIP="true"
                 continue
 
-            elif [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $STARTDIFF -gt 0 ]] &&[[ $DIFF -lt 86401 ]]; then
+            elif [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $STARTDIFF -gt 0 ]] &&[[ $CDS -lt EDS ]]; then
                 echo "Match : $id"
                 SKIP="true"
                 continue
             fi
         done < <(jq -c '.[]' issues_list.json)
         if [[ $SKIP == "false" ]]; then
-            echo -e "${RED}About to shutdown cluster $NAME (rg:$RESOURCE_GROUP)"
+            echo -e "${GREEN}About to shutdown cluster $NAME (rg:$RESOURCE_GROUP)"
         else
-            echo -e "${GREEN}cluster $NAME (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
+            echo -e "${YELLOW}cluster $NAME (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
 
 
