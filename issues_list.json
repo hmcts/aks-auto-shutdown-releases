@@ -17,5 +17,11 @@
         ],
         "Skip shutdown start date": "03-07-2023",
         "Skip shutdown end date": "07-07-2023"
+    },
+    {
+        "Business area": "cft",
+        "Environment": "ITHC",
+        "Skip shutdown start date": "23-07-2023",
+        "Skip shutdown end date": "_No response_"
     }
 ]
