@@ -21,9 +21,10 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         NAME=$(jq -r '.name' <<< $cluster)
         echo "----------------"
         ENV=$(echo $NAME|cut -d'-' -f2)
-        BU=$(echo $NAME|cut -d'-' -f1)
         ENV=${ENV/#sbox/Sandbox}
         ENV=${ENV/stg/Staging}
+        BU=$(echo $NAME|cut -d'-' -f1)
+        BU=${BU/ss/cross-cutting}
         echo $NAME $BU $ENV
         while read id
         do

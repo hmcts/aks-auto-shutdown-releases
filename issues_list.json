@@ -1,8 +1,21 @@
 [
     {
         "Business area": "cft",
-        "Environment": "AAT / Staging",
-        "Skip shutdown start date": "15-07-2023",
-        "Skip shutdown end date": "_No response_"
+        "Environment": [
+            "Preview / Dev",
+            "Test / Perftest"
+        ],
+        "Skip shutdown start date": "04-07-2023",
+        "Skip shutdown end date": "06-07-2023"
+    },
+    {
+        "Business area": "cross-cutting",
+        "Environment": [
+            "Preview / Dev",
+            "Demo",
+            "ITHC"
+        ],
+        "Skip shutdown start date": "03-07-2023",
+        "Skip shutdown end date": "07-07-2023"
     }
 ]
