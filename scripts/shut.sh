@@ -33,22 +33,16 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
             #start date formatting
             SDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $SD)
-            echo $SDF
             SDS=$(date -d "$SDF 00:00:00" +%s)
-            echo $SDS
             #end date formatting
             EDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $ED)
             EDS=$(date -d "$EDF 00:00:00" +%s)
-            echo $EDS
             #current date formatting
             current_date=$(date +'%d-%m-%Y')
             CDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
-            echo $CDF
             CDS=$(date -d "$CDF 00:00:00" +%s)
-            echo $CDS
-            DIFF=$(( $EDS - $CDS ))
-            STARTDIFF=$(( $CDS - $SDS ))
-            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $CDS $DIFF $STARTDIFF
+            #Skip logic
+            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS $CDS
             if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $CDS ]] ; then
                 echo "Match: $id"
                 SKIP="true"
