@@ -7,9 +7,6 @@ from datetime import date
 listObj = []
 filepath = 'issues_list.json'
 new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
-read_issue_number = print(os.environ.get('ISSUE_NUMBER'))
-print(read_issue_number)
-issue_number = {'issue_number': 'number_here'}
 print("todays date")
 today = date.today()
 print(today)
@@ -20,8 +17,6 @@ try:
 except FileNotFoundError:
   with open(filepath, "w") as json_file:
     listObj.append(new_data)
-    json.dump(listObj, json_file, indent=4)
-    listObj.append(issue_number)
     json.dump(listObj, json_file, indent=4)
 else:
   print(len(listObj))
