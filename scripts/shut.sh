@@ -32,7 +32,8 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             echo $ED
             TEST=$(date $TEST+%s)
             echo $TEST
-            SDS=$(date +"%d-%m-%Y" -d $SD +%s)
+            SDS=$(date +"%d-%m-%Y" -d $SD)
+            SDS=$(date $SDS +%s)
             EDS=$(date -d "%d-%m-%Y" $ED "+%s")
             TOSEC=$(date -d "%d-%m-%Y" $to_date "+%s")
             echo $SDS
