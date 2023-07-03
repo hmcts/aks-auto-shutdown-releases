@@ -54,7 +54,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
                 SKIP="true"
                 continue
 
-            elif [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $STARTDIFF -gt 0 ]] &&[[ $CDS -lt EDS ]]; then
+            elif [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $STARTDIFF -gt 0 ]] &&[[ $CDS -lt $EDS ]]; then
                 echo "Match : $id"
                 SKIP="true"
                 continue
