@@ -37,7 +37,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             EDS=$(date -d "$EDF 00:00:00" +%s)
             echo $EDS
             #current date formatting
-            current_date=$(date +'%m-%d-%Y')
+            current_date=$(date +'%d-%m-%Y')
             CDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
             echo $CDF
             CDS=$(date -d "$CDF 00:00:00" +%s)
