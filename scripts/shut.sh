@@ -32,7 +32,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             echo $ED
             TEST=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $SD)
             echo $TEST
-            SDS=$(date -d $TEST +%s)
+            SDS=$(date -d "$TEST 23:59:59" +%s)
             echo $SDS
             EDS=$(date +"%d-%m-%Y" -d $ED)
             TOSEC=$(date +"%d-%m-%Y" -d $to_date)
