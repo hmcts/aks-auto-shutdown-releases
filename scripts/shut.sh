@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 #set -x
 shopt -s nocasematch
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+
 SUBSCRIPTIONS=$(az account list -o json)
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
     SUBSCRIPTION_ID=$(jq -r '.id' <<< $subscription)
@@ -57,9 +61,9 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             fi
         done < <(jq -c '.[]' issues_list.json)
         if [[ $SKIP == "false" ]]; then
-            echo "About to shutdown cluster $NAME (rg:$RESOURCE_GROUP)"
+            echo -e "${RED}About to shutdown cluster $NAME (rg:$RESOURCE_GROUP)"
         else
-            echo "cluster $NAME (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
+            echo -e "${GREEN}cluster $NAME (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
 
 
