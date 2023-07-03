@@ -30,7 +30,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             ED=$(jq -r '."Skip shutdown end date"' <<< $id)
             echo $SD
             echo $ED
-            TEST=$(awk -F'-' '{printf(“%04d-%02d-%02d\n”,$3,$2,$1)}' <<< $SD)
+            TEST=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $SD)
             echo $TEST
             SDS=$(date -d $TEST +%s)
             echo $SDS
