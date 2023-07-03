@@ -39,11 +39,12 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             #current date formatting
             current_date=$(date +'%m-%d-%Y')
             CDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
+            echo $CDF
             CDS=$(date -d "$CDF 00:00:00" +%s)
             echo $CDS
             DIFF=$(( $EDS - $CDS ))
             STARTDIFF=$(( $CDS - $SDS ))
-            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $CDS $to_date $DIFF $STARTDIFF
+            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS  $CDS $DIFF $STARTDIFF
             if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $CDS ]] ; then
                 echo "Match: $id"
                 SKIP="true"
