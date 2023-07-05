@@ -28,23 +28,13 @@ else:
     print(d)
     print(type(d))
     print(d['Skip shutdown end date'])
-    if d['Skip shutdown end date'] == "_No response_":
-      print(today)
-      print(today.strftime)
-      print(today.strftime('%d-%m-%Y'))
-      d['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
-      print("after update")
-      print(d)
+
+    end_date = datetime.strptime(d['Skip shutdown end date'], '%d-%m-%Y').date()
+    print( end_date)
+    print(type(end_date))
+    if today < end_date:
       listObjwrite.append(d)
-      print("post update")
-      print(listObjwrite)
-    else:
-      end_date = datetime.strptime(d['Skip shutdown end date'], '%d-%m-%Y').date()
-      print( end_date)
-      print(type(end_date))
-      if today < end_date:
-        listObjwrite.append(d)
-      print(listObjwrite) 
+    print(listObjwrite) 
   if new_data:
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
