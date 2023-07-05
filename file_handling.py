@@ -7,6 +7,8 @@ from datetime import date
 listObj = []
 filepath = 'issues_list.json'
 new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
+issue_link = json.loads(os.environ.get('ISSUE_LINK'))
+print(issue_element)
 print("todays date")
 today = date.today()
 print(today)
@@ -36,6 +38,7 @@ else:
       listObjwrite.append(d)
     print(listObjwrite) 
   if new_data:
+    new_data[issue_link] = issue_link
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
       print(new_data)
