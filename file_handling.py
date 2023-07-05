@@ -38,12 +38,18 @@ else:
       end_date = end_date.strftime('%d-%m-%Y')
       print(end_date)
       listObjwrite.append(d)
+    else
+      exit()
     print(listObjwrite) 
   if new_data:
     new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
-      print(new_data)
+    listObjwrite.append(new_data)
+    elif new_data['Skip shutdown end date'] != "_No response_":
+      print(d['Skip shutdown end date'])
+      new_data = parse(d['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
+      print(d['Skip shutdown end date'])
     listObjwrite.append(new_data)
   print("before write")  
   print(listObjwrite)
