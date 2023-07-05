@@ -39,7 +39,7 @@ else:
       listObjwrite.append(d)
     print(listObjwrite) 
   if new_data:
-    new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue.number
+    new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
       print(new_data)
