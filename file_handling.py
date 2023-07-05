@@ -3,6 +3,7 @@ import json
 import os
 from datetime import datetime
 from datetime import date
+from dateutil.parser import parse
 
 listObj = []
 filepath = 'issues_list.json'
@@ -30,9 +31,7 @@ else:
     d = listObj[x]
     print(d)
     print(type(d))
-    print(d['Skip shutdown end date'])
-
-    end_date = datetime.strptime(d['Skip shutdown end date'], '%d-%m-%Y').date()
+    end_date = parse(d['Skip shutdown end date'], dayfirst = True).date().strftime("%d-%m-%Y")
     print(end_date)
     print(type(end_date))
     if today < end_date:
