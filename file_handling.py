@@ -48,10 +48,10 @@ else:
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
 
     elif new_data['Skip shutdown end date'] != "_No response_":
-      print(d['Skip shutdown end date'])
-      end_date = parse(d['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
+      print(['Skip shutdown end date'])
+      end_date = parse(new_data['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
       new_data['Skip shutdown end date'] = end_date
-      print(d['Skip shutdown end date'])
+      print(['Skip shutdown end date'])
     listObjwrite.append(new_data)
   print("before write")  
   print(listObjwrite)
