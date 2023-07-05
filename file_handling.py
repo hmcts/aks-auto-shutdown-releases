@@ -46,6 +46,9 @@ else:
         listObjwrite.append(d)
       print(listObjwrite) 
   if new_data:
+    if new_data['Skip shutdown end date'] == "_No response_":
+      new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
+      print(new_data)
     listObjwrite.append(new_data)
   print("before write")  
   print(listObjwrite)
