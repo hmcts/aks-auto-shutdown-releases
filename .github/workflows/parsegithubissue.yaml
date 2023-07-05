@@ -27,6 +27,7 @@ jobs:
           echo '${{ steps.parse_issue.outputs.payload }}'
           echo NEW_DATA='${{ steps.parse_issue.outputs.payload }}' >> $GITHUB_ENV
           echo ISSUE_LINK="https://github.com/${{ env.GITHUB_REPOSITORY }}/issues/${{ github.event.issue.number }}" >> $GITHUB_ENV
+          echo ISSUE_NUMBER = '${{ github.event.issue.number }}' >> $GITHUB_ENV
 
       - name: echo GitHub Env
         run: |
