@@ -33,7 +33,7 @@ else:
     print(d['Skip shutdown end date'])
 
     end_date = datetime.strptime(d['Skip shutdown end date'], '%d-%m-%Y').date()
-    print( end_date)
+    print(end_date)
     print(type(end_date))
     if today < end_date:
       listObjwrite.append(d)
