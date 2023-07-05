@@ -29,9 +29,9 @@
     },
     {
         "Business area": "cross-cutting",
-        "Environment": "Demo",
-        "Skip shutdown start date": "28-08-2023",
+        "Environment": "ITHC",
+        "Skip shutdown start date": "22-08-2023",
         "Skip shutdown end date": "05-07-2023",
-        "https://github.com//issues/135": "https://github.com//issues/135"
+        "issue_link": "https://github.com//issues/138"
     }
 ]
