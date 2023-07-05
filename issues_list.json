@@ -28,15 +28,15 @@
         "Skip shutdown end date": "06-07-2023"
     },
     {
-        "Business area": "cross-cutting",
-        "Environment": "Demo",
-        "Skip shutdown start date": "10-07-2023",
+        "Business area": "cft",
+        "Environment": "Sandbox",
+        "Skip shutdown start date": "09-07-2023",
         "Skip shutdown end date": "05-07-2023"
     },
     {
         "Business area": "cft",
-        "Environment": "Sandbox",
-        "Skip shutdown start date": "09-07-2023",
-        "Skip shutdown end date": "_No response_"
+        "Environment": "Test / Perftest",
+        "Skip shutdown start date": "12-07-2023",
+        "Skip shutdown end date": "05-07-2023"
     }
 ]
