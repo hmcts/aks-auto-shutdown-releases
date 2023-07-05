@@ -37,7 +37,7 @@ else:
       listObjwrite.append(d)
     print(listObjwrite) 
   if new_data:
-    new_data[issue_link] = issue_link
+    new_data['issue_link'] = issue_link
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
       print(new_data)
