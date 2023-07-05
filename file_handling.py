@@ -8,7 +8,7 @@ listObj = []
 filepath = 'issues_list.json'
 new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
 issue_number = os.environ.get('ISSUE_NUMBER')
-github_repository = os.environ.get('GITHUB_REPOSITORY')
+github_repository = os.environ.get('GITHUB_REPO')
 print(github_repository)
 print("todays date")
 today = date.today()
