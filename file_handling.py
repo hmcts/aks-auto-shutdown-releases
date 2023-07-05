@@ -31,10 +31,12 @@ else:
     d = listObj[x]
     print(d)
     print(type(d))
-    end_date = parse(d['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
+    end_date = parse(d['Skip shutdown end date'], dayfirst = True).date()
     print(end_date)
     print(type(end_date))
-    if today < end_date:
+    if today <= end_date:
+      end_date = end_date.strftime('%d-%m-%Y')
+      print(end_date)
       listObjwrite.append(d)
     print(listObjwrite) 
   if new_data:
