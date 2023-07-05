@@ -39,6 +39,7 @@ else:
       print(end_date)
       listObjwrite.append(d)
     else:
+      print("Error: Cannot have an end date in the past")
       exit()
     print(listObjwrite) 
   if new_data:
@@ -48,7 +49,8 @@ else:
 
     elif new_data['Skip shutdown end date'] != "_No response_":
       print(d['Skip shutdown end date'])
-      new_data = parse(d['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
+      end_date = parse(d['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
+      new_data['Skip shutdown end date'] = end_date
       print(d['Skip shutdown end date'])
     listObjwrite.append(new_data)
   print("before write")  
