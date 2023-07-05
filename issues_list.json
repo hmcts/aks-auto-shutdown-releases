@@ -28,9 +28,10 @@
         "Skip shutdown end date": "06-07-2023"
     },
     {
-        "Business area": "cft",
-        "Environment": "Sandbox",
-        "Skip shutdown start date": "15-08-2023",
-        "Skip shutdown end date": "05-07-2023"
+        "Business area": "cross-cutting",
+        "Environment": "Demo",
+        "Skip shutdown start date": "28-08-2023",
+        "Skip shutdown end date": "05-07-2023",
+        "https://github.com//issues/135": "https://github.com//issues/135"
     }
 ]
