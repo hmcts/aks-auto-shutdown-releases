@@ -29,14 +29,14 @@
     },
     {
         "Business area": "cross-cutting",
-        "Environment": "AAT / Staging",
-        "Skip shutdown start date": "28-07-2023",
+        "Environment": "Demo",
+        "Skip shutdown start date": "10-07-2023",
         "Skip shutdown end date": "05-07-2023"
     },
     {
-        "Business area": "cross-cutting",
-        "Environment": "Demo",
-        "Skip shutdown start date": "10-07-2023",
+        "Business area": "cft",
+        "Environment": "Sandbox",
+        "Skip shutdown start date": "09-07-2023",
         "Skip shutdown end date": "_No response_"
     }
 ]
