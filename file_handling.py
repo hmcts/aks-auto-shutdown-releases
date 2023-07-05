@@ -38,7 +38,7 @@ else:
       end_date = end_date.strftime('%d-%m-%Y')
       print(end_date)
       listObjwrite.append(d)
-    else
+    else:
       exit()
     print(listObjwrite) 
   if new_data:
