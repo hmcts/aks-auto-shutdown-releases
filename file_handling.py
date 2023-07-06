@@ -25,6 +25,7 @@ if new_data:
     try:
         new_data["skip_start_date"] = (
             parse(new_data["skip_start_date"], dayfirst=True)
+            .date()
         )
         if new_data["skip_start_date"] < today:
           raise Exception("DateInPast")
