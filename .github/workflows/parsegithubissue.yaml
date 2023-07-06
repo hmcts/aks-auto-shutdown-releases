@@ -59,7 +59,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Output:
-            ${{ env.ISSUE_ERROR_COMMENT }}
+            ${{ env.ISSUE_COMMENT }}
 
       - name: Commit / Merge PR
         if: env.PROCESS_SUCCESS == 'true'
