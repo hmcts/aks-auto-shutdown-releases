@@ -45,7 +45,7 @@ if new_data:
                 .strftime("%d-%m-%Y")
             )
         except:
-            issue_error_comment = "Errpr in end date format: " + new_data["skip_end_date"]
+            issue_error_comment = "Error in end date format: " + new_data["skip_end_date"]
             with open(env_file, "a") as env_file:
                 print("ERROR HERE")
                 env_file.write("ISSUE_ERROR_COMMENT=" + issue_error_comment)
@@ -63,4 +63,6 @@ finally:
     with open(filepath, "w") as json_file:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
+            issue_success_comment = "Issue processed correctly!"
             env_file.write("PROCESS_SUCCESS=true")
+            env_file.write("ISSUE_ERROR_COMMENT=" + issue_success_comment)
