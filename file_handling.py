@@ -40,8 +40,8 @@ if new_data:
             issue_error_comment = "Error: End date format issue"
             with open(env_file, "a") as env_file:
               print("ERROR HERE")
-              env_file.write("ISSUE_ERROR_COMMENT_=" + issue_error_comment)
-              print("env comment added" + issue_error_comment)
+              env_file.write("ISSUE_ERROR_COMMENT=" + issue_error_comment)
+              print("env comment added: " + issue_error_comment)
               exit(0)
 
 try:

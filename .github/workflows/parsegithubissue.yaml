@@ -55,7 +55,8 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            ${{ env.MY_VARIABLE }}
+            Issue Output:
+            ${{ env.ISSUE_ERROR_COMMENT }}
 
       - name: Commit / Merge PR
         if: env.PROCESS_SUCCESS == 'true'
