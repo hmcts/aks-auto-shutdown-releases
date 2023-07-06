@@ -65,4 +65,5 @@ finally:
         with open(env_file, "a") as env_file:
             issue_success_comment = "Issue processed correctly!"
             env_file.write("PROCESS_SUCCESS=true")
-            env_file.write("ISSUE_ERROR_COMMENT=" + issue_success_comment)
+            env_process_success = os.environ.get("PROCESS_SUCCESS")
+            print(env_process_success)
