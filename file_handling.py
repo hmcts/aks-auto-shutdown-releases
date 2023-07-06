@@ -30,7 +30,6 @@ if new_data:
 
     elif (
         new_data["skip_end_date"] != "_No response_"
-        and new_data["skip_end_date"] >= today
     ):
         try:
             new_data["skip_end_date"] = (
