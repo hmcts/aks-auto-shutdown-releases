@@ -46,9 +46,6 @@ jobs:
         continue-on-error: true
         run: |
           python file_handling.py
-          
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Create Issue Comment
         uses: peter-evans/create-or-update-comment@v3.0.2
@@ -68,6 +65,9 @@ jobs:
           git commit -m "parseissues"
           git push --set-upstream origin PR-${{ github.run_id }}
           gh pr create -f  -t ${{ github.run_id }}
+
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           
       - name: Install jq tool
         run: |
