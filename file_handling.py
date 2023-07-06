@@ -11,6 +11,7 @@ new_data["skip_start_date"] = new_data.pop("Skip shutdown start date")
 new_data["skip_end_date"] = new_data.pop("Skip shutdown end date")
 new_data["environment"] = new_data.pop("Environment")
 new_data["business_area"] = new_data.pop("Business area")
+print(type(new_data["skip_start_date"]))
 print("==================")
 issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
@@ -27,16 +28,12 @@ if new_data:
             .date()
             .strftime("%d-%m-%Y")
         )
-        if new_data["skip_start_date"] < today:
-          issue_error_comment = "Error, start date cannot be in the past"
-          with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
-            exit(0)
     except:
         issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
             exit(0)
+
     if new_data["skip_end_date"] == "_No response_":
         new_data["skip_end_date"] = today.strftime("%d-%m-%Y")
 
