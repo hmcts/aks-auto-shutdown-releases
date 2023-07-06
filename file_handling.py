@@ -14,9 +14,8 @@ new_data["business_area"] = new_data.pop("Business area")
 print("==================")
 issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
-print("todays date")
 today = date.today()
-print(today)
+env_file = os.getenv('GITHUB_ENV')
 
 if new_data:
     new_data["issue_link"] = (
@@ -38,8 +37,10 @@ if new_data:
                 .strftime("%d-%m-%Y")
             )
         except:
-            print("Error: End date format issue")
-            exit()
+            issue_error_comment = "Error: End date format issue"
+            with open(env_file, "a") as env_file:
+              env_file.write("ISSUE_ERROR_COMMENT_=" + issue_error_comment)
+            exit(1)
 
 try:
     with open(filepath, "r") as json_file:

@@ -55,6 +55,14 @@ jobs:
           
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Create Issue Comment
+        uses: peter-evans/create-or-update-comment@v3.0.2
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ${{ env.MY_VARIABLE }}
+
           
       - name: Install jq tool
         run: |
