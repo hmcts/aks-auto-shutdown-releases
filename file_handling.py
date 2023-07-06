@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from datetime import date
 from dateutil.parser import parse
+from sys import exit
 
 listObj = []
 filepath = "issues_list.json"
@@ -42,7 +43,7 @@ if new_data:
               print("ERROR HERE")
               env_file.write("ISSUE_ERROR_COMMENT_=" + issue_error_comment)
               print("env comment added" + issue_error_comment)
-            exit(0)
+              sys.exit(0)
 
 try:
     with open(filepath, "r") as json_file:
