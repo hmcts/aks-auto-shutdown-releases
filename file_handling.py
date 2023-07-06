@@ -49,13 +49,22 @@ if new_data:
         try:
             new_data["skip_end_date"] = (
                 parse(new_data["skip_end_date"], dayfirst=True)
-                .strftime("%d-%m-%Y")
+                .date()
             )
-        except:
-            issue_error_comment = "Error in end date format: " + new_data["skip_end_date"]
-            with open(env_file, "a") as env_file:
-                env_file.write("ISSUE_COMMENT=" + issue_error_comment)
-                exit(0)
+            if new_data["skip_end_date"] < new_data["skip_start_date"].date():
+              raise ValueError("End date cannot be before start date")
+            else:
+              new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
+    except ValueError:
+        issue_error_comment = "Error: end date is less than start date"
+        with open(env_file, "a") as env_file:
+            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            exit(0)
+    except:
+        issue_error_comment = "Error in end date format: " + new_data["skip_end_date"]
+        with open(env_file, "a") as env_file:
+            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            exit(0)
 
 try:
     with open(filepath, "r") as json_file:
