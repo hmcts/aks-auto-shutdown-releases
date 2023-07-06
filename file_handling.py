@@ -23,21 +23,24 @@ if new_data:
         "https://github.com/" + github_repository + "/issues/" + issue_number
     )
     try:
-        new_data["skip_start_date"] = (
-            parse(new_data["skip_start_date"], dayfirst=True)
-            .date()
-        )
+        new_data["skip_start_date"] = parse(
+            new_data["skip_start_date"], dayfirst=True
+        ).date()
         if new_data["skip_start_date"] < today:
-          raise ValueError("Start Date is in the past")
+            raise ValueError("Start Date is in the past")
         else:
-          new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
+            new_data["skip_start_date"] = new_data["skip_start_date"].strftime(
+                "%d-%m-%Y"
+            )
     except ValueError:
-      issue_error_comment = "Error: start date is in the past"
-      with open(env_file, "a") as env_file:
+        issue_error_comment = "Error: start date is in the past"
+        with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
             exit(0)
     except:
-        issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
+        issue_error_comment = (
+            "Error in start date format: " + new_data["skip_start_date"]
+        )
         with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
             exit(0)
@@ -47,26 +50,29 @@ if new_data:
 
     elif new_data["skip_end_date"] != "_No response_":
         try:
-            new_data["skip_end_date"] = (
-                parse(new_data["skip_end_date"], dayfirst=True)
-                .date()
-            )
+            new_data["skip_end_date"] = parse(
+                new_data["skip_end_date"], dayfirst=True
+            ).date()
             if new_data["skip_end_date"] < new_data["skip_start_date"].date():
-              print("in if statement")
-              raise ValueError("End date cannot be before start date")
+                print("in if statement")
+                raise ValueError("End date cannot be before start date")
             else:
-              print("in else")
-              new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
-    except ValueError:
-        issue_error_comment = "Error: end date is less than start date"
-        with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
-            exit(0)
-    except:
-        issue_error_comment = "Error in end date format: " + new_data["skip_end_date"]
-        with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
-            exit(0)
+                print("in else")
+                new_data["skip_end_date"] = new_data["skip_end_date"].strftime(
+                    "%d-%m-%Y"
+                )
+        except ValueError:
+            issue_error_comment = "Error: end date is less than start date"
+            with open(env_file, "a") as env_file:
+                env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+                exit(0)
+        except:
+            issue_error_comment = (
+                "Error in end date format: " + new_data["skip_end_date"]
+            )
+            with open(env_file, "a") as env_file:
+                env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+                exit(0)
 
 try:
     with open(filepath, "r") as json_file:
@@ -79,5 +85,5 @@ finally:
     with open(filepath, "w") as json_file:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
-            env_file.write("PROCESS_SUCCESS=true" + '\n')
+            env_file.write("PROCESS_SUCCESS=true" + "\n")
             env_file.write("ISSUE_COMMENT=Processed Correctly")
