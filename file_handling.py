@@ -8,6 +8,7 @@ from dateutil.parser import parse
 listObj = []
 filepath = 'issues_list.json'
 new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
+new_data.replace('Skip shutdown start date', 'start_date')
 issue_number = os.environ.get('ISSUE_NUMBER')
 github_repository = os.environ.get('GITHUB_REPO')
 print("todays date")
@@ -37,7 +38,6 @@ else:
     print(listObjwrite) 
   if new_data:
     new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
-    new_data.replace('Skip shutdown start date', 'start_date')
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
 
