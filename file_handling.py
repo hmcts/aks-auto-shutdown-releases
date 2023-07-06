@@ -42,7 +42,7 @@ if new_data:
               print("ERROR HERE")
               env_file.write("ISSUE_ERROR_COMMENT_=" + issue_error_comment)
               print("env comment added" + issue_error_comment)
-            exit(1)
+            exit(0)
 
 try:
     with open(filepath, "r") as json_file:
