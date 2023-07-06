@@ -30,9 +30,7 @@ if new_data:
     except:
         issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
-            print("ERROR HERE")
-            env_file.write("ISSUE_ERROR_COMMENT=" + issue_error_comment)
-            print("env comment added: " + issue_error_comment)
+            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
             exit(0)
     if new_data["skip_end_date"] == "_No response_":
         new_data["skip_end_date"] = today.strftime("%d-%m-%Y")
@@ -47,9 +45,7 @@ if new_data:
         except:
             issue_error_comment = "Error in end date format: " + new_data["skip_end_date"]
             with open(env_file, "a") as env_file:
-                print("ERROR HERE")
-                env_file.write("ISSUE_ERROR_COMMENT=" + issue_error_comment)
-                print("env comment added: " + issue_error_comment)
+                env_file.write("ISSUE_COMMENT=" + issue_error_comment)
                 exit(0)
 
 try:
@@ -64,3 +60,4 @@ finally:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
             env_file.write("PROCESS_SUCCESS=true")
+            env_file.write("ISSUE_COMMENT=Processed_Correctly")
