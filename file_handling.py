@@ -32,7 +32,7 @@ if new_data:
         else:
           new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except ValueError:
-      issue_error_comment = "Error: " + new_data["skip_start_date"] + "is in the past"
+      issue_error_comment = "Error: start date is in the past"
       with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
             exit(0)
