@@ -27,6 +27,11 @@ if new_data:
             .date()
             .strftime("%d-%m-%Y")
         )
+        if new_data["skip_start_date"] < today:
+          issue_error_comment = "Error, start date cannot be in the past"
+          with open(env_file, "a") as env_file:
+            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            exit(0)
     except:
         issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
@@ -60,4 +65,4 @@ finally:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
             env_file.write("PROCESS_SUCCESS=true" + '\n')
-            env_file.write("ISSUE_COMMENT=Processed_Correctly")
+            env_file.write("ISSUE_COMMENT=Processed Correctly")
