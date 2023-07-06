@@ -7,11 +7,9 @@ from dateutil.parser import parse
 
 listObj = []
 filepath = 'issues_list.json'
-orig_data = os.environ.get('NEW_DATA')
-print(orig_data)
-orig_data.replace('Skip shutdown start date', 'start_date')
-print(orig_data)
-new_data = json.loads(orig_data, '{}')
+new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
+print(new_data)
+new_data["start_date"]=new_data.pop("Skip shutdown start date")
 print(new_data)
 print("==================")
 issue_number = os.environ.get('ISSUE_NUMBER')
