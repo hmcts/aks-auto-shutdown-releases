@@ -26,7 +26,7 @@ except FileNotFoundError:
   with open(filepath, "w") as json_file:
     listObj.append(new_data)
     json.dump(listObj, json_file, indent=4)
-finally:
+else:
   listObjwrite = []
   for x in range(len(listObj)):
     print("================")
@@ -39,7 +39,7 @@ finally:
     else:
       print("Error: Cannot have an end date in the past")
       exit()
-    print(listObjwrite)
+    print(listObjwrite) 
   if new_data:
     new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
     if new_data['skip_end_date'] == "_No response_":
@@ -49,6 +49,7 @@ finally:
       end_date = parse(new_data['skip_end_date'], dayfirst = True).date().strftime('%d-%m-%Y')
       new_data['skip_end_date'] = end_date
     listObjwrite.append(new_data)
+  print("before write")  
   print(listObjwrite)
   with open(filepath, "w") as json_file:
     json.dump(listObjwrite, json_file, indent=4)
