@@ -48,6 +48,11 @@ jobs:
         run: |
           python file_handling.py
 
+      - name: echo GitHub Env
+        run: |
+          echo $GITHUB_ENV
+          env
+
       - name: Create Issue Comment
         uses: peter-evans/create-or-update-comment@v3.0.2
         with:

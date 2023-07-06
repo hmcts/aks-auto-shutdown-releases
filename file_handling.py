@@ -63,7 +63,4 @@ finally:
     with open(filepath, "w") as json_file:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
-            issue_success_comment = "Issue processed correctly!"
             env_file.write("PROCESS_SUCCESS=true")
-            env_process_success = os.environ.get("PROCESS_SUCCESS")
-            print(env_process_success)
