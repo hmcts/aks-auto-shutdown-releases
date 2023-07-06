@@ -19,9 +19,23 @@ print("todays date")
 today = date.today()
 print(today)
 
+if new_data:
+  new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
+  new_data['skip_start_date'] = parse(new_data['skip_start_date'], dayfirst = True).date().strftime('%d-%m-%Y')
+  if new_data['skip_end_date'] == "_No response_":
+    new_data['skip_end_date'] = today.strftime('%d-%m-%Y')
+
+  elif new_data['skip_end_date'] != "_No response_" and new_data['skip_end_date'] >= today:
+    try:
+      new_data['skip_end_date'] = parse(new_data['skip_end_date'], dayfirst = True).date().strftime('%d-%m-%Y')
+    except:
+      print("Error: End date format issue")
+      exit()
+
 try:
   with open(filepath, "r") as json_file:
     listObj = json.load(json_file)
+    listObj.append(new_data)
 except FileNotFoundError:
   with open(filepath, "w") as json_file:
     listObj.append(new_data)
@@ -31,23 +45,11 @@ finally:
   for x in range(len(listObj)):
     print("================")
     d = listObj[x]
-    end_date = parse(d['skip_end_date'], dayfirst = True).date()
-    if today <= end_date:
-      end_date = end_date.strftime('%d-%m-%Y')
-      print(end_date)
-      listObjwrite.append(d)
-    else:
-      print("Error: Cannot have an end date in the past")
-      exit()
-    print(listObjwrite)
-  if new_data:
-    new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
-    if new_data['skip_end_date'] == "_No response_":
-      new_data['skip_end_date'] = today.strftime('%d-%m-%Y')
+    print(end_date)
+    listObjwrite.append(d)
 
-    elif new_data['skip_end_date'] != "_No response_":
-      end_date = parse(new_data['skip_end_date'], dayfirst = True).date().strftime('%d-%m-%Y')
-      new_data['skip_end_date'] = end_date
+    print(listObjwrite)
+
     listObjwrite.append(new_data)
   print(listObjwrite)
   with open(filepath, "w") as json_file:
