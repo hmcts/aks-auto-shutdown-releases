@@ -28,7 +28,7 @@ if new_data:
             .strftime("%d-%m-%Y")
         )
     except:
-        issue_error_comment = "Error in start date format"
+        issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
             print("ERROR HERE")
             env_file.write("ISSUE_ERROR_COMMENT=" + issue_error_comment)
@@ -45,7 +45,7 @@ if new_data:
                 .strftime("%d-%m-%Y")
             )
         except:
-            issue_error_comment = "Error: End date format issue"
+            issue_error_comment = "Errpr in end date format: " + new_data["skip_end_date"]
             with open(env_file, "a") as env_file:
                 print("ERROR HERE")
                 env_file.write("ISSUE_ERROR_COMMENT=" + issue_error_comment)
