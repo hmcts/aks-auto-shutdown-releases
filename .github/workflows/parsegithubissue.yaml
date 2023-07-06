@@ -58,7 +58,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Issue Output:
+            Output:
             ${{ env.ISSUE_ERROR_COMMENT }}
 
       - name: Commit / Merge PR
