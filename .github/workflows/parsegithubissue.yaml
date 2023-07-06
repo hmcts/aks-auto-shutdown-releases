@@ -43,15 +43,9 @@ jobs:
           pip3 install python-dateutil
           
       - name: process form data
+        continue-on-error: true
         run: |
           python file_handling.py
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git checkout -b PR-${{ github.run_id }}
-          git add .
-          git commit -m "parseissues"
-          git push --set-upstream origin PR-${{ github.run_id }}
-          gh pr create -f  -t ${{ github.run_id }}
           
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -63,6 +57,16 @@ jobs:
           body: |
             ${{ env.MY_VARIABLE }}
 
+      - name: Commit / Merge PR
+        if: env.PROCESS_SUCCESS == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout -b PR-${{ github.run_id }}
+          git add .
+          git commit -m "parseissues"
+          git push --set-upstream origin PR-${{ github.run_id }}
+          gh pr create -f  -t ${{ github.run_id }}
           
       - name: Install jq tool
         run: |
