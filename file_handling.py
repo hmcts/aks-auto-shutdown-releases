@@ -59,5 +59,5 @@ finally:
     with open(filepath, "w") as json_file:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
-            env_file.write("PROCESS_SUCCESS=true")
+            env_file.write("PROCESS_SUCCESS=true" + '\n')
             env_file.write("ISSUE_COMMENT=Processed_Correctly")
