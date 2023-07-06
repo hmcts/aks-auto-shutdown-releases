@@ -25,9 +25,16 @@ if new_data:
     try:
         new_data["skip_start_date"] = (
             parse(new_data["skip_start_date"], dayfirst=True)
-            .date()
-            .strftime("%d-%m-%Y")
         )
+        if new_data["skip_start_date"] < today:
+          raise Exception("DateInPast")
+        else
+          new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
+    except DateInPast:
+      issue_error_comment = "Error: "new_data["skip_start_date"] + "is in the past"
+        with open(env_file, "a") as env_file:
+            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            exit(0)
     except:
         issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
@@ -41,7 +48,6 @@ if new_data:
         try:
             new_data["skip_end_date"] = (
                 parse(new_data["skip_end_date"], dayfirst=True)
-                .date()
                 .strftime("%d-%m-%Y")
             )
         except:
