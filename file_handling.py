@@ -58,7 +58,7 @@ if new_data:
               print("in else")
               new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
     except ValueError:
-        issue_error_comment = "Error: end date is less than start date
+        issue_error_comment = "Error: end date is less than start date"
         with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
             exit(0)
