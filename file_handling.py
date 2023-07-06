@@ -28,10 +28,10 @@ if new_data:
             .date()
         )
         if new_data["skip_start_date"] < today:
-          raise Exception("DateInPast")
+          raise ValueError("Start Date is in the past")
         else:
           new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
-    except DateInPast:
+    except ValueError:
       issue_error_comment = "Error: " + new_data["skip_start_date"] + "is in the past"
       with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
