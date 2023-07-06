@@ -28,7 +28,7 @@ if new_data:
         )
         if new_data["skip_start_date"] < today:
           raise Exception("DateInPast")
-        else
+        else:
           new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except DateInPast:
       issue_error_comment = "Error: "new_data["skip_start_date"] + "is in the past"
