@@ -7,8 +7,13 @@ from dateutil.parser import parse
 
 listObj = []
 filepath = 'issues_list.json'
-new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
-new_data.replace('Skip shutdown start date', 'start_date')
+orig_data = os.environ.get('NEW_DATA')
+print(orig_data)
+orig_data.replace('Skip shutdown start date', 'start_date')
+print(orig_data)
+new_data = json.loads(orig_data, '{}')
+print(new_data)
+print("==================")
 issue_number = os.environ.get('ISSUE_NUMBER')
 github_repository = os.environ.get('GITHUB_REPO')
 print("todays date")
