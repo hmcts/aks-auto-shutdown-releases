@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 from datetime import date
 from dateutil.parser import parse
-from sys import exit
 
 listObj = []
 filepath = "issues_list.json"
@@ -43,7 +42,7 @@ if new_data:
               print("ERROR HERE")
               env_file.write("ISSUE_ERROR_COMMENT_=" + issue_error_comment)
               print("env comment added" + issue_error_comment)
-              sys.exit(0)
+              exit(0)
 
 try:
     with open(filepath, "r") as json_file:
@@ -55,3 +54,4 @@ except FileNotFoundError:
 finally:
     with open(filepath, "w") as json_file:
         json.dump(listObj, json_file, indent=4)
+        env_file.write("PROCESS_SUCCESS=true")
