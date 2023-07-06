@@ -10,7 +10,6 @@ filepath = 'issues_list.json'
 new_data = json.loads(os.environ.get('NEW_DATA', '{}'))
 issue_number = os.environ.get('ISSUE_NUMBER')
 github_repository = os.environ.get('GITHUB_REPO')
-print(github_repository)
 print("todays date")
 today = date.today()
 print(today)
@@ -23,17 +22,11 @@ except FileNotFoundError:
     listObj.append(new_data)
     json.dump(listObj, json_file, indent=4)
 else:
-  print(len(listObj))
   listObjwrite = []
   for x in range(len(listObj)):
     print("================")
-    print(x)
     d = listObj[x]
-    print(d)
-    print(type(d))
     end_date = parse(d['Skip shutdown end date'], dayfirst = True).date()
-    print(end_date)
-    print(type(end_date))
     if today <= end_date:
       end_date = end_date.strftime('%d-%m-%Y')
       print(end_date)
@@ -44,14 +37,13 @@ else:
     print(listObjwrite) 
   if new_data:
     new_data['issue_link'] = "https://github.com/" + github_repository + "/issues/" + issue_number
+    new_data.replace('Skip shutdown start date', 'start_date')
     if new_data['Skip shutdown end date'] == "_No response_":
       new_data['Skip shutdown end date'] = today.strftime('%d-%m-%Y')
 
     elif new_data['Skip shutdown end date'] != "_No response_":
-      print(['Skip shutdown end date'])
       end_date = parse(new_data['Skip shutdown end date'], dayfirst = True).date().strftime('%d-%m-%Y')
       new_data['Skip shutdown end date'] = end_date
-      print(['Skip shutdown end date'])
     listObjwrite.append(new_data)
   print("before write")  
   print(listObjwrite)
