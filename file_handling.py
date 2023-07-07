@@ -17,6 +17,9 @@ github_repository = os.environ.get("GITHUB_REPO")
 today = date.today()
 env_file = os.getenv("GITHUB_ENV")
 
+with open(env_file, "a") as env_file:
+            env_file.write("\n" + "PROCESS_SUCCESS=false")
+
 if new_data:
     new_data["issue_link"] = (
         "https://github.com/" + github_repository + "/issues/" + issue_number

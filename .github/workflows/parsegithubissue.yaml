@@ -59,6 +59,18 @@ jobs:
           body: |
             ${{ env.ISSUE_COMMENT }}
 
+      - name: add bug label
+        if: env.PROCESS_SUCCESS == 'false'
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "bug"
+
+      - name: remove bug label
+        if: env.PROCESS_SUCCESS == 'true'
+        uses: andymckay/labeler@master
+        with:
+          remove-labels: "bug"
+
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
         run: |
