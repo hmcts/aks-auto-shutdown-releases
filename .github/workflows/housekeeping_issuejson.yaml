@@ -13,14 +13,22 @@ jobs:
         with:
           fetch-depth: '0'
      
-       
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
+      - name: Install python-dateutil
+        run: |
+          pip3 install python-dateutil
           
       - name: Delete old entries
+        continue-on-error: true
         run: |
-          python file_handling.py
+          python housekeeping.py
+
+      - name: Commit / Merge
+        if: env.JSON_FILE_EXISTS == 'true'
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout -b PR-${{ github.run_id }}
@@ -31,15 +39,17 @@ jobs:
           git push --set-upstream origin PR-${{ github.run_id }}
           gh pr create -f  -t ${{ github.run_id }}
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"   
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"  
           
           
       - name: Install jq tool
+        if: env.JSON_FILE_EXISTS == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install jq
           
       - name: get PR details 
+        if: env.JSON_FILE_EXISTS == 'true'
         uses: octokit/request-action@v2.x
         id: get_pr_number
         with:
@@ -49,22 +59,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      
-      - name: Set env 
+      - name: Set env
+        if: env.JSON_FILE_EXISTS == 'true'
         run: | 
             echo PR_NUM=$(echo '${{ steps.get_pr_number.outputs.data }}' | jq -r '.[] | select(.title | contains("${{ github.run_id }}"))| .number' ) >>   $GITHUB_ENV
      
       - name: echo_prnum
+        if: env.JSON_FILE_EXISTS == 'true'
         run: |
           echo PR_NUM ${{ env.PR_NUM }}
                 
          
-      - name: approve 
+      - name: approve
+        if: env.JSON_FILE_EXISTS == 'true'
         run: |
           gh pr review ${{ env.PR_NUM }} --approve
         env:
           GITHUB_TOKEN: "${{ secrets.MOKAINOS }}"
           
       - name: merge
+        if: env.JSON_FILE_EXISTS == 'true'
         run: |
           gh pr merge ${{ env.PR_NUM }} --admin -m
         env:
