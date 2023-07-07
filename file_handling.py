@@ -52,7 +52,7 @@ if new_data:
     if new_data["skip_end_date"] == "_No response_":
         if date_start_date > today:
             new_data["skip_end_date"] = new_data["skip_start_date"]
-        elif date_start_date = today:
+        elif date_start_date == today:
             new_data["skip_end_date"] = today.strftime("%d-%m-%Y")
     elif new_data["skip_end_date"] != "_No response_":
         try:
