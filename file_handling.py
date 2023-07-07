@@ -18,7 +18,7 @@ today = date.today()
 env_file = os.getenv("GITHUB_ENV")
 
 with open(env_file, "a") as env_file:
-            env_file.write("\n" + "PROCESS_SUCCESS=false")
+            env_file.write("PROCESS_SUCCESS=false")
 
 if new_data:
     new_data["issue_link"] = (
