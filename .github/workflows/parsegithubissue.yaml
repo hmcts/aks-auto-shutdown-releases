@@ -69,8 +69,8 @@ jobs:
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
         run: |
-          git config user.name hmcts-platform-operations
-          git config user.email github-platform-operations@hmcts.net
+          git config user.name JordanHoey96
+          git config user.email jordan.hoey@justice.gov.uk
           git add .
           git commit -m "parseissues"
           git push --force --set-upstream origin master
