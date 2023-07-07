@@ -39,7 +39,7 @@ if new_data:
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
         with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=Error: start date in past")
+            env_file.write("ISSUE_COMMENT=Error")
             print("RuntimeError")
             exit(0)
     except:
