@@ -39,7 +39,7 @@ if new_data:
     except:
         issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            env_file.write("\n" + "ISSUE_COMMENT=DateFormat")
             print("Unexpected Error")
             exit(0)
 #End Date logic
