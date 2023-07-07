@@ -73,6 +73,8 @@ jobs:
           git config user.email github-platform-operations@hmcts.net
           git add .
           git commit -m "parseissues"
+          git remote -v
+          git remote set-url origin https://hmcts-platform-operations:${GITHUB_TOKEN}@github.com/hmcts/aks-auto-shutdown-releases.git
           git push origin master
 
         env:
@@ -84,3 +86,5 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           comment: Auto-closing issuess
+
+
