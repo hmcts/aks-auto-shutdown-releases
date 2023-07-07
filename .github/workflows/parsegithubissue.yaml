@@ -83,4 +83,4 @@ jobs:
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
-          comment: Auto-closing issue
+          comment: Auto-closing issues
