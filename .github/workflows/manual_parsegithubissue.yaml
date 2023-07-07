@@ -54,6 +54,7 @@ jobs:
           python file_handling.py
 
       - name: Create Issue Comment
+        if: env.PROCESS_SUCCESS != 'true'
         uses: peter-evans/create-or-update-comment@v3.0.2
         with:
           issue-number: ${{ inputs.PROJECT }}
