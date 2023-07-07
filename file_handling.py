@@ -36,12 +36,12 @@ if new_data:
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
         with open(env_file, "a") as env_file:
-            env_file.write("\n" + "ISSUE_COMMENT=Error: start date in past")
+            env_file.write("ISSUE_COMMENT=Error: start date in past")
             print("RuntimeError")
             exit(0)
     except:
         with open(env_file, "a") as env_file:
-            env_file.write("\n" + "ISSUE_COMMENT=Error: Unexpected Date Format")
+            env_file.write("ISSUE_COMMENT=Error: Unexpected Date Format")
             print("Unexpected Error")
             exit(0)
 #End Date logic
@@ -62,11 +62,11 @@ if new_data:
                 new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
         except RuntimeError:
             with open(env_file, "a") as env_file:
-                env_file.write("\n" + "ISSUE_COMMENT=Error: End date less than start date")
+                env_file.write("ISSUE_COMMENT=Error: End date less than start date")
                 exit(0)
         except:
             with open(env_file, "a") as env_file:
-                env_file.write("\n" + "ISSUE_COMMENT=Error: Unexpected Date Format")
+                env_file.write("ISSUE_COMMENT=Error: Unexpected Date Format")
                 exit(0)
 #Write to file
 try:
