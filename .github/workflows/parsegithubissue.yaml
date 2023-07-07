@@ -1,4 +1,4 @@
-name: Auto Parse github form - test
+name: Auto Parse github form
 run-name: ${{ github.actor }} - issue:${{ github.event.issue.number }}
 on:
   issues:
@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: '0'
           token: ${{ env.GH_TOKEN }}
-          
+
       - name: Parse issue
         id: parse_issue
         uses: onmax/issue-form-parser@v1.4
@@ -33,11 +33,6 @@ jobs:
           echo NEW_DATA='${{ steps.parse_issue.outputs.payload }}' >> $GITHUB_ENV
           echo GITHUB_REPO='${{ github.repository }}' >> $GITHUB_ENV
           echo ISSUE_NUMBER='${{ github.event.issue.number }}' >> $GITHUB_ENV
-
-      - name: echo GitHub Env
-        run: |
-          echo $GITHUB_ENV
-          env
 
       - uses: actions/setup-python@v4
         with:
@@ -57,11 +52,6 @@ jobs:
         run: |
           python file_handling.py
 
-      - name: echo GitHub Env
-        run: |
-          echo $GITHUB_ENV
-          env
-
       - name: Create Issue Comment
         uses: peter-evans/create-or-update-comment@v3.0.2
         with:
@@ -76,15 +66,14 @@ jobs:
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
           git add .
-          git commit -m "parseissues"
+          git commit -m "parseissue- " ${{ github.event.issue.number }}
           git push
-
     
       - name: Close Issue
         if: env.PROCESS_SUCCESS == 'true'
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
-          comment: Auto-closing issuess
+          comment: Auto-closing issues
 
 

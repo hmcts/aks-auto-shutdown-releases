@@ -11,7 +11,6 @@ new_data["skip_start_date"] = new_data.pop("Skip shutdown start date")
 new_data["skip_end_date"] = new_data.pop("Skip shutdown end date")
 new_data["environment"] = new_data.pop("Environment")
 new_data["business_area"] = new_data.pop("Business area")
-print(type(new_data["skip_start_date"]))
 print("==================")
 issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
@@ -39,7 +38,7 @@ if new_data:
             exit(0)
     except:
         with open(env_file, "a") as env_file:
-            env_file.write("\n" + "ISSUE_COMMENT=Date Format Error")
+            env_file.write("\n" + "ISSUE_COMMENT=Error: Unexpected Date Format")
             print("Unexpected Error")
             exit(0)
 #End Date logic
@@ -54,10 +53,8 @@ if new_data:
                 new_data["skip_end_date"], dayfirst=True
             ).date()
             if new_data["skip_end_date"] < date_start_date:
-                print("in if statement")
                 raise RuntimeError("End date cannot be before start date")
             else:
-                print("in else")
                 date_end_date = new_data["skip_end_date"]
                 new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
         except RuntimeError:
