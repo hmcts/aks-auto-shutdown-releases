@@ -18,6 +18,7 @@ jobs:
         with:
           fetch-depth: '0'
           token: ${{ env.GH_TOKEN }}
+          
       - name: Parse issue
         id: parse_issue
         uses: onmax/issue-form-parser@v1.4
