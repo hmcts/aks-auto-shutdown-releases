@@ -12,11 +12,13 @@ temp_listObj = []
 try:
     with open(filepath, "r") as json_file:
         listObj = json.load(json_file)
-        env_file.write("JSON_FILE_EXISTS=true")
+        with open(env_file, "a") as env_file:
+            env_file.write("JSON_FILE_EXISTS=true")
 except FileNotFoundError:
-        print("No file to clean up")
+    print("No file to clean up")
+    with open(env_file, "a") as env_file:
         env_file.write("JSON_FILE_EXISTS=false")
-        exit(0)
+    exit(0)
 
 for x in range(len(listObj)):
     d = listObj[x]

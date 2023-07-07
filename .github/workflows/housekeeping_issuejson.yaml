@@ -20,6 +20,11 @@ jobs:
       - name: Install python-dateutil
         run: |
           pip3 install python-dateutil
+
+      - name: echo GitHub Env
+        run: |
+          echo $GITHUB_ENV
+          env
           
       - name: Delete old entries
         continue-on-error: true
