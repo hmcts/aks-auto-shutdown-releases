@@ -19,6 +19,11 @@ jobs:
           fetch-depth: '0'
           token: ${{ env.GH_TOKEN }}
 
+      - name: add test label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "test-action"
+
       - name: Parse issue
         id: parse_issue
         uses: onmax/issue-form-parser@v1.4
@@ -53,6 +58,7 @@ jobs:
           python file_handling.py
 
       - name: Create Issue Comment
+        if: env.PROCESS_SUCCESS != 'true'
         uses: peter-evans/create-or-update-comment@v3.0.2
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -70,6 +76,12 @@ jobs:
         uses: andymckay/labeler@master
         with:
           remove-labels: "bug"
+
+      - name: remove test label
+        if: env.PROCESS_SUCCESS == 'true'
+        uses: andymckay/labeler@master
+        with:
+          remove-labels: "test-action"
 
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
