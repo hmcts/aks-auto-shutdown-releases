@@ -23,20 +23,18 @@ if new_data:
         "https://github.com/" + github_repository + "/issues/" + issue_number
     )
 #Start Date logic
-    if new_data["skip_start_date"] == "_No response_":
-        new_data["skip_start_date"] = today.strftime("%d-%m-%Y")
     try:
         new_data["skip_start_date"] = parse(
             new_data["skip_start_date"], dayfirst=True
         ).date()
         if new_data["skip_start_date"] < today:
-            raise ValueError("Start Date is in the past")
+            raise RuntimeError("Start Date is in the past")
         else:
             date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime(
                 "%d-%m-%Y"
             )
-    except ValueError:
+    except RuntimeError:
         issue_error_comment = "Error: start date is in the past"
         with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
