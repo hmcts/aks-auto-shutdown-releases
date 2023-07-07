@@ -1,11 +1,12 @@
-name: Auto Parse github form
+name: Manual Parse github form
 run-name: ${{ github.actor }} - issue:${{ github.event.issue.number }}
+
 on:
-  issues:
-    types:
-      - opened
-      - edited
   workflow_dispatch:
+    inputs:
+      PROJECT:
+        type: string
+        description: "Issue ID"
 jobs:
   parse:
     permissions: write-all
@@ -19,7 +20,7 @@ jobs:
         id: parse_issue
         uses: onmax/issue-form-parser@v1.4
         with:
-          issue_number: ${{ github.event.issue.number }}
+          issue_number: ${{ inputs.PROJECT }}
       
       - name: Show parsed payload data
         run: |
@@ -61,7 +62,7 @@ jobs:
       - name: Create Issue Comment
         uses: peter-evans/create-or-update-comment@v3.0.2
         with:
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ inputs.PROJECT }}
           body: |
             Output:
             ${{ env.ISSUE_COMMENT }}
@@ -127,5 +128,5 @@ jobs:
         if: env.PROCESS_SUCCESS == 'true'
         uses: peter-evans/close-issue@v3
         with:
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ inputs.PROJECT }}
           comment: Auto-closing issue
