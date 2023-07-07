@@ -24,22 +24,22 @@ if new_data:
     )
 #Start Date logic
     try:
-        new_data["skip_start_date"] = parse(new_data["skip_start_date"], dayfirst=True).date()
+        new_data["skip_start_date"] = parse(
+            new_data["skip_start_date"], dayfirst=True
+        ).date()
         if new_data["skip_start_date"] < today:
             raise RuntimeError("Start Date is in the past")
         else:
             date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
-        issue_error_comment = "Error: start date is in the past"
         with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=" + issue_error_comment)
-            print("Runtime Error")
+            env_file.write("\n" + "ISSUE_COMMENT=Error: start date in past")
+            print("RuntimeError")
             exit(0)
     except:
-        issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
-            env_file.write("\n" + "ISSUE_COMMENT=DateFormat")
+            env_file.write("\n" + "ISSUE_COMMENT=Date Format Error")
             print("Unexpected Error")
             exit(0)
 #End Date logic
@@ -55,24 +55,18 @@ if new_data:
             ).date()
             if new_data["skip_end_date"] < date_start_date:
                 print("in if statement")
-                raise ValueError("End date cannot be before start date")
+                raise RuntimeError("End date cannot be before start date")
             else:
                 print("in else")
                 date_end_date = new_data["skip_end_date"]
-                new_data["skip_end_date"] = new_data["skip_end_date"].strftime(
-                    "%d-%m-%Y"
-                )
-        except ValueError:
-            issue_error_comment = "Error: end date is less than start date"
+                new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
+        except RuntimeError:
             with open(env_file, "a") as env_file:
-                env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+                env_file.write("\n" + "ISSUE_COMMENT=Error: End date less than start date")
                 exit(0)
         except:
-            issue_error_comment = (
-                "Error in end date format: " + date_end_date
-            )
             with open(env_file, "a") as env_file:
-                env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+                env_file.write("\n" + "ISSUE_COMMENT=Error: Unexpected Date Format")
                 exit(0)
 #Write to file
 try:
@@ -86,5 +80,5 @@ finally:
     with open(filepath, "w") as json_file:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, "a") as env_file:
-            env_file.write("PROCESS_SUCCESS=true" + "\n")
-            env_file.write("ISSUE_COMMENT=Processed Correctly")
+            env_file.write("\n" + "PROCESS_SUCCESS=true")
+            env_file.write("\n" + "ISSUE_COMMENT=Processed Correctly")
