@@ -24,27 +24,23 @@ if new_data:
     )
 #Start Date logic
     try:
-        new_data["skip_start_date"] = parse(
-            new_data["skip_start_date"], dayfirst=True
-        ).date()
+        new_data["skip_start_date"] = parse(new_data["skip_start_date"], dayfirst=True).date()
         if new_data["skip_start_date"] < today:
             raise RuntimeError("Start Date is in the past")
         else:
             date_start_date = new_data["skip_start_date"]
-            new_data["skip_start_date"] = new_data["skip_start_date"].strftime(
-                "%d-%m-%Y"
-            )
+            new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
         issue_error_comment = "Error: start date is in the past"
         with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            print("Runtime Error")
             exit(0)
     except:
-        issue_error_comment = (
-            "Error in start date format: " + new_data["skip_start_date"]
-        )
+        issue_error_comment = "Error in start date format: " + new_data["skip_start_date"]
         with open(env_file, "a") as env_file:
             env_file.write("ISSUE_COMMENT=" + issue_error_comment)
+            print("Unexpected Error")
             exit(0)
 #End Date logic
     if new_data["skip_end_date"] == "_No response_":
