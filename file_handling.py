@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from datetime import date
 from dateutil.parser import parse
-
+#Vars
 listObj = []
 filepath = "issues_list.json"
 new_data = json.loads(os.environ.get("NEW_DATA", "{}"))
@@ -22,6 +22,7 @@ if new_data:
     new_data["issue_link"] = (
         "https://github.com/" + github_repository + "/issues/" + issue_number
     )
+#Start Date logic
     try:
         new_data["skip_start_date"] = parse(
             new_data["skip_start_date"], dayfirst=True
@@ -29,6 +30,7 @@ if new_data:
         if new_data["skip_start_date"] < today:
             raise ValueError("Start Date is in the past")
         else:
+            date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime(
                 "%d-%m-%Y"
             )
@@ -47,17 +49,18 @@ if new_data:
 
     if new_data["skip_end_date"] == "_No response_":
         new_data["skip_end_date"] = today.strftime("%d-%m-%Y")
-
+#End Date logic
     elif new_data["skip_end_date"] != "_No response_":
         try:
             new_data["skip_end_date"] = parse(
                 new_data["skip_end_date"], dayfirst=True
             ).date()
-            if new_data["skip_end_date"] < new_data["skip_start_date"].date():
+            if new_data["skip_end_date"] < date_start_date:
                 print("in if statement")
                 raise ValueError("End date cannot be before start date")
             else:
                 print("in else")
+                date_end_date = new_data["skip_end_date"]
                 new_data["skip_end_date"] = new_data["skip_end_date"].strftime(
                     "%d-%m-%Y"
                 )
@@ -68,12 +71,12 @@ if new_data:
                 exit(0)
         except:
             issue_error_comment = (
-                "Error in end date format: " + new_data["skip_end_date"]
+                "Error in end date format: " + date_end_date
             )
             with open(env_file, "a") as env_file:
                 env_file.write("ISSUE_COMMENT=" + issue_error_comment)
                 exit(0)
-
+#Write to file
 try:
     with open(filepath, "r") as json_file:
         listObj = json.load(json_file)
