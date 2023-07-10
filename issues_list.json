@@ -96,5 +96,19 @@
         "environment": "Preview / Dev",
         "business_area": "cft",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/299"
+    },
+    {
+        "skip_start_date": "15-07-2023",
+        "skip_end_date": "15-07-2023",
+        "environment": "Sandbox",
+        "business_area": "cft",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/300"
+    },
+    {
+        "skip_start_date": "16-07-2023",
+        "skip_end_date": "16-07-2023",
+        "environment": "Sandbox",
+        "business_area": "cft",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/301"
     }
 ]
