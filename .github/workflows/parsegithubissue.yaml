@@ -77,18 +77,13 @@ jobs:
         uses: andymckay/labeler@master
         with:
           add-labels: "Error in form"
-          remove-labels: "Processing"
+          remove-labels: "Processing, Success"
 
       - name: remove error/processing labels
         if: env.PROCESS_SUCCESS == 'true'
         uses: andymckay/labeler@master
         with:
           remove-labels: "Error in form, Processing"
-
-      - name: add success label
-        if: env.PROCESS_SUCCESS == 'true'
-        uses: andymckay/labeler@master
-        with:
           add-labels: "Success"
 
       - name: Commit to master
