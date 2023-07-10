@@ -84,13 +84,9 @@ except FileNotFoundError:
 finally:
     with open(filepath, 'w') as json_file:
         json.dump(listObj, json_file, indent=4)
-        with open(env_file, 'r') as env_file:
-            filedata = env_file.read()
-            print(filedata)
-            filedata = filedata.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
-            filedata = filedata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
-            print(filedata)
-
+        json_file.close()
         with open(env_file, 'w') as env_file_data:
-            env_file_data.write(filedata)
-
+            env_file_data.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
+            env_file_data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
+            env_file_data.write()
+            env_file_data.close()
