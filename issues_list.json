@@ -166,5 +166,12 @@
         "environment": "Test / Perftest",
         "business_area": "cft",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/309"
+    },
+    {
+        "skip_start_date": "28-08-2023",
+        "skip_end_date": "28-08-2023",
+        "environment": "Test / Perftest",
+        "business_area": "cft",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/310"
     }
 ]
