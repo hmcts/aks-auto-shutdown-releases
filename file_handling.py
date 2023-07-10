@@ -19,11 +19,14 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
-#Setting default env vars
-with open(env_file, 'a') as env_file_data:
-    env_file_data.write("PROCESS_SUCCESS=false" + '\n')
-    env_file_data.write("ISSUE_COMMENT=Processing failed")
-    env_file_data.close()
+
+open(env_file, 'r') as env_file_data:
+    file_data = env_file_data.read()
+    file_data.append("PROCESS_SUCCESS=false" + '\n')
+    file_data.append("ISSUE_COMMENT=Processing failed")
+    file_data.close()
+    
+print(file_data)
 
 if new_data:
     new_data["issue_link"] = (
@@ -40,9 +43,9 @@ if new_data:
             date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
-        with open(env_file, 'a') as env_file:
-            env_file.write("ISSUE_COMMENT=Error: Start date cannot be in the past")
-            print("RuntimeError")
+            open(env_file, 'r') as env_file_data:
+                file_data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Start date cannot be in the past")
+                print("RuntimeError")
             exit(0)
     except:
         with open(env_file, 'a') as env_file:
