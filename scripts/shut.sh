@@ -28,10 +28,10 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         echo $NAME $BU $ENV
         while read id
         do
-            BA=$(jq -r '."Business area"' <<< $id)
-            ENVT=$(jq -r '."Environment"' <<< $id)
-            SD=$(jq -r '."Skip shutdown start date"' <<< $id)
-            ED=$(jq -r '."Skip shutdown end date"' <<< $id)
+            BA=$(jq -r '."business_area"' <<< $id)
+            ENVT=$(jq -r '."environment"' <<< $id)
+            SD=$(jq -r '."skip_start_date"' <<< $id)
+            ED=$(jq -r '."skip_end_date"' <<< $id)
             #start date formatting
             SDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $SD)
             SDS=$(date -d "$SDF 00:00:00" +%s)
