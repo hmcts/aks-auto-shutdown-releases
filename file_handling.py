@@ -10,7 +10,8 @@ new_data = json.loads(os.environ.get("NEW_DATA", "{}"))
 new_data["skip_start_date"] = new_data.pop("Skip shutdown start date")
 new_data["skip_end_date"] = new_data.pop("Skip shutdown end date")
 new_data["environment"] = new_data.pop("Environment")
-new_data["business_area"] = new_data.pop("Business area")
+new_data["business_area"] = new_data.pop("Why do you need the auto shutdown skipped?")
+new_data["reason"] = new_data.pop("")
 print("==================")
 issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
@@ -37,9 +38,7 @@ with open(env_file_path, 'a') as env_file:
     env_file.close()
 
 if new_data:
-    new_data["issue_link"] = (
-        "https://github.com/" + github_repository + "/issues/" + issue_number
-    )
+    new_data["issue_link"] = ("https://github.com/" + github_repository + "/issues/" + issue_number)
 #Start Date logic
     try:
         new_data["skip_start_date"] = parse(

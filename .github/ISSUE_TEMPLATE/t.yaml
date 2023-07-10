@@ -1,6 +1,12 @@
 name: Skip auto shutdown request
 description: Skip auto shutdown request
-body:    
+body:
+- type: input
+  attributes:
+    label: Why do you need the auto shutdown skipped?
+  validations:
+    required: true
+
 - type: dropdown
   id: download
   attributes:
