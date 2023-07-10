@@ -19,9 +19,10 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
-env_vars = open(env_file, "a") as env_file:
+
+open(env_file, "a") as env_file:
     env_file.write("PROCESS_SUCCESS=false" + '\n')
-env_vars.close()
+    env_vars.close()
 
 
 
