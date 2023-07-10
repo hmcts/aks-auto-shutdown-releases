@@ -54,10 +54,10 @@ jobs:
         run: |
           pip3 install python-dateutil
 
-      #- name: Delete old entries
-       # continue-on-error: true
-        #run: |
-         # python housekeeping.py
+      - name: Delete old entries
+        continue-on-error: true
+        run: |
+          python housekeeping.py
           
       - name: process form data
         continue-on-error: true
@@ -100,6 +100,9 @@ jobs:
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
-          comment: Success! Your entry has been added to the [shutdown exclusions json](https://github.com/hmcts/aks-auto-shutdown-releases/blob/master/issues_list.json) Auto-closing issue.
+          body: | 
+            Success! Your entry has been added to the [shutdown exclusions json](https://github.com/hmcts/aks-auto-shutdown-releases/blob/master/issues_list.json) 
+          
+            Auto-closing issue.
 
 
