@@ -54,10 +54,10 @@ jobs:
         run: |
           pip3 install python-dateutil
 
-      - name: Delete old entries
-        continue-on-error: true
-        run: |
-          python housekeeping.py
+      #- name: Delete old entries
+       # continue-on-error: true
+        #run: |
+         # python housekeeping.py
           
       - name: process form data
         continue-on-error: true
