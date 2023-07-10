@@ -13,7 +13,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
     #--resource-type Microsoft.ContainerService/managedClusters \
     #--query "[?tags.autoShutdown == 'true']" -o json)
     CLUSTERS=$(az resource list \
-        --resource-type Microsoft.ContainerService/managedClusters     -o json)
+        --resource-type Microsoft.ContainerService/managedClusters -o json)
 
     jq -c '.[]' <<< $CLUSTERS | while read cluster; do
         RESOURCE_GROUP=$(jq -r '.resourceGroup' <<< $cluster)
