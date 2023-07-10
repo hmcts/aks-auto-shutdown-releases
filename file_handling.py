@@ -20,13 +20,11 @@ print(env_file)
 print("========")
 
 
-open(env_file, 'r') as env_file_data:
-    file_data = env_file_data.read()
-    file_data.append("PROCESS_SUCCESS=false" + '\n')
-    file_data.append("ISSUE_COMMENT=Processing failed")
+open(env_file, 'a') as env_file_data:
+    env_file_data.write("PROCESS_SUCCESS=false" + '\n')
+    env_file_data.write("ISSUE_COMMENT=Processing failed")
     file_data.close()
-    
-print(file_data)
+    print(env_file_data)
 
 if new_data:
     new_data["issue_link"] = (
@@ -44,11 +42,12 @@ if new_data:
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
             open(env_file, 'r') as env_file_data:
-                file_data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Start date cannot be in the past")
+                mydata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Start date cannot be in the past")
+                mydata.write()
                 print("RuntimeError")
             exit(0)
     except:
-        with open(env_file, 'a') as env_file:
+        with open(env_file, 'r') as env_file:
             env_file.write("ISSUE_COMMENT=Error: Unexpected start date format")
             print("Unexpected Error")
             exit(0)
@@ -87,13 +86,15 @@ except FileNotFoundError:
 finally:
     with open(filepath, 'w') as json_file:
         json.dump(listObj, json_file, indent=4)
-        with open(env_file, 'r') as env_file:
-            filedata = env_file.read()
-            print(filedata)
-            filedata = filedata.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
-            filedata = filedata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
-            print(filedata)
+        json_file.close()
+    
+    vars_data = open(env_file, 'rt')
+    data = vars_data.read()
+    data = data.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
+    data = data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
+    vars_data.close()
 
-        with open(env_file, 'w') as env_file_data:
-            env_file_data.write(filedata)
+    vars_data = open(env_file, 'wt')
+    vars_data.write(data)
+    vars_data.close()
 
