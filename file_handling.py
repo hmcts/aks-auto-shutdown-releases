@@ -20,7 +20,7 @@ print(env_file)
 print("========")
 
 
-open(env_file, 'a') as env_file_data:
+env_file_data = open(env_file, 'a')
     env_file_data.write("PROCESS_SUCCESS=false" + '\n')
     env_file_data.write("ISSUE_COMMENT=Processing failed")
     file_data.close()
