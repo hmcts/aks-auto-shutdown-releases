@@ -19,7 +19,7 @@ jobs:
           fetch-depth: '0'
           token: ${{ env.GH_TOKEN }}
 
-      - name: add test label
+      - name: add processing label
         uses: andymckay/labeler@master
         with:
           add-labels: "Processing"
