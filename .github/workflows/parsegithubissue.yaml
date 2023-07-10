@@ -13,16 +13,23 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - name: Create Issue Comment
+        uses: peter-evans/create-or-update-comment@v3.0.2
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Processing form... please wait ~30 seconds.
+      
+      - name: add processing label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "Processing"
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: '0'
           token: ${{ env.GH_TOKEN }}
-
-      - name: add processing label
-        uses: andymckay/labeler@master
-        with:
-          add-labels: "Processing"
 
       - name: Parse issue
         id: parse_issue
@@ -97,6 +104,6 @@ jobs:
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
-          comment: Auto-closing issues
+          comment: Success! Auto-closing issue
 
 
