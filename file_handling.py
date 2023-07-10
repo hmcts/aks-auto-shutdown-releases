@@ -19,11 +19,12 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
-#Setting default env vars
-with open(env_file, 'a') as env_file_data:
+
+open(env_file, 'a') as env_file_data:
     env_file_data.write("PROCESS_SUCCESS=false" + '\n')
     env_file_data.write("ISSUE_COMMENT=Processing failed")
-    env_file_data.close()
+    file_data.close()
+    print(env_file_data)
 
 if new_data:
     new_data["issue_link"] = (
@@ -40,12 +41,13 @@ if new_data:
             date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
-        with open(env_file, 'a') as env_file:
-            env_file.write("ISSUE_COMMENT=Error: Start date cannot be in the past")
-            print("RuntimeError")
+            open(env_file, 'r') as env_file_data:
+                mydata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Start date cannot be in the past")
+                mydata.write()
+                print("RuntimeError")
             exit(0)
     except:
-        with open(env_file, 'a') as env_file:
+        with open(env_file, 'r') as env_file:
             env_file.write("ISSUE_COMMENT=Error: Unexpected start date format")
             print("Unexpected Error")
             exit(0)
@@ -85,8 +87,13 @@ finally:
     with open(filepath, 'w') as json_file:
         json.dump(listObj, json_file, indent=4)
         json_file.close()
-        with open(env_file, 'w') as env_file_data:
-            env_file_data.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
-            env_file_data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
-            env_file_data.write()
-            env_file_data.close()
+
+    vars_data = open(env_file, 'rt')
+    data = vars_data.read()
+    data = data.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
+    data = data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
+    vars_data.close()
+
+    vars_data = open(env_file, 'wt')
+    vars_data.write(data)
+    vars_data.close()
