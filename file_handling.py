@@ -16,6 +16,8 @@ issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
 today = date.today()
 env_file = os.getenv("GITHUB_ENV")
+print(env_file)
+print("========")
 
 #env_vars = open(env_file, "a") as env_file:
  #   env_file.write("PROCESS_SUCCESS=false" + '\n')
