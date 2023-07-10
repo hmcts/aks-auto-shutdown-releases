@@ -15,7 +15,7 @@ print("==================")
 issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
 today = date.today()
-env_file = os.getenv("GITHUB_ENV")
+env_file_path = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
