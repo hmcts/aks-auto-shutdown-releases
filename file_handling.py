@@ -16,7 +16,6 @@ issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
 today = date.today()
 env_file_path = os.getenv("GITHUB_ENV")
-print(env_file)
 print("========")
 
 def update_env_vars(var_to_update, new_var):
