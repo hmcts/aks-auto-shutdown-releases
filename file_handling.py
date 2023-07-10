@@ -19,12 +19,9 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
-
-open(env_file, "a") as env_file:
-    env_file.write("PROCESS_SUCCESS=false" + '\n')
-    env_vars.close()
-
-
+with open(env_file, 'a') as env_file_data:
+    env_file_data.write("PROCESS_SUCCESS=false" + '\n')
+    env_file_data.close()
 
 if new_data:
     new_data["issue_link"] = (
@@ -41,12 +38,12 @@ if new_data:
             date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
-        with open(env_file, "a") as env_file:
+        with open(env_file, 'a') as env_file:
             env_file.write("ISSUE_COMMENT=Error: Start date cannot be in the past")
             print("RuntimeError")
             exit(0)
     except:
-        with open(env_file, "a") as env_file:
+        with open(env_file, 'a') as env_file:
             env_file.write("ISSUE_COMMENT=Error: Unexpected start date format")
             print("Unexpected Error")
             exit(0)
@@ -67,29 +64,29 @@ if new_data:
                 date_end_date = new_data["skip_end_date"]
                 new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
         except RuntimeError:
-            with open(env_file, "a") as env_file:
+            with open(env_file, 'a') as env_file:
                 env_file.write("ISSUE_COMMENT=Error: End date less than start date")
                 exit(0)
         except:
-            with open(env_file, "a") as env_file:
+            with open(env_file, 'a') as env_file:
                 env_file.write("ISSUE_COMMENT=Error: Unexpected end date format")
                 exit(0)
 #Write to file
 try:
-    with open(filepath, "r") as json_file:
+    with open(filepath, 'r') as json_file:
         listObj = json.load(json_file)
         listObj.append(new_data)
 except FileNotFoundError:
-    with open(filepath, "w") as json_file:
+    with open(filepath, 'w') as json_file:
         listObj.append(new_data)
 finally:
-    with open(filepath, "w") as json_file:
+    with open(filepath, 'w') as json_file:
         json.dump(listObj, json_file, indent=4)
-        with open(env_file, "r") as env_file:
+        with open(env_file, 'r') as env_file:
             filedata = env_file.read()
             filedata = filedata.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
             filedata = filedata.replace("ISSUE_COMMENT=Processing failed, ISSUE_COMMENT=Processed Correctly")
 
-        with open(env_file, "W") as env_file:
+        with open(env_file, 'w') as env_file:
             env_file.write(filedata)
 
