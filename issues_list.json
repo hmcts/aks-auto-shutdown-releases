@@ -131,5 +131,19 @@
         "environment": "Demo",
         "business_area": "cft",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/305"
+    },
+    {
+        "skip_start_date": "25-07-2023",
+        "skip_end_date": "25-07-2023",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging",
+            "Preview / Dev",
+            "Test / Perftest",
+            "Demo",
+            "ITHC"
+        ],
+        "business_area": "cft",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/306"
     }
 ]
