@@ -19,8 +19,10 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
+#Setting default env vars
 with open(env_file, 'a') as env_file_data:
     env_file_data.write("PROCESS_SUCCESS=false" + '\n')
+    env_file_data.write("ISSUE_COMMENT=Processing failed")
     env_file_data.close()
 
 if new_data:
