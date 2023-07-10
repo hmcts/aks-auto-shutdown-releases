@@ -89,6 +89,6 @@ finally:
             filedata = filedata.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
             filedata = filedata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
 
-        with open(env_file, 'w') as env_file:
-            env_file.write(filedata)
+        with open(env_file, 'w') as env_file_data:
+            env_file_data.write(filedata)
 
