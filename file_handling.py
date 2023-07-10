@@ -87,7 +87,7 @@ finally:
     with open(filepath, 'w') as json_file:
         json.dump(listObj, json_file, indent=4)
         json_file.close()
-    
+
     vars_data = open(env_file, 'rt')
     data = vars_data.read()
     data = data.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
@@ -97,4 +97,3 @@ finally:
     vars_data = open(env_file, 'wt')
     vars_data.write(data)
     vars_data.close()
-
