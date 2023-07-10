@@ -19,11 +19,23 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
+def update_env_vars(var_to_update, new_var):
+    env_vars_file = open(env_file_path, 'rt')
+    env_vars_contents = env_vars_file.read()
+    if var_to_update in env_vars_contents:
+        env_vars_contents = env_vars_contents.replace(var_to_update, new_var)
+        env_vars_file.close()
+        env_vars_file = open(env_file_path, 'wt')
+        env_vars_file.write(env_vars_contents)
+        env_vars_file.close()
+        print(var_to_update + " has been updated to " + new_var)
+    else:
+        print("var does not exist")
 
-env_file_data = open(env_file, 'a')
-env_file_data.write("PROCESS_SUCCESS=false" + '\n')
-env_file_data.write("ISSUE_COMMENT=Processing failed")
-file_data.close()
+with open(env_file_path, 'a') as env_file:
+    env_file.write('\n' + "PROCESS_SUCCESS=false" + '\n')
+    env_file.write("ISSUE_COMMENT=Processing failed")
+    env_file.close()
 
 if new_data:
     new_data["issue_link"] = (
@@ -40,14 +52,11 @@ if new_data:
             date_start_date = new_data["skip_start_date"]
             new_data["skip_start_date"] = new_data["skip_start_date"].strftime("%d-%m-%Y")
     except RuntimeError:
-            open(env_file, 'r') as env_file_data:
-                mydata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Start date cannot be in the past")
-                mydata.write()
-                print("RuntimeError")
+            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Start date cannot be in the past")
+            print("RuntimeError")
             exit(0)
     except:
-        with open(env_file, 'r') as env_file:
-            env_file.write("ISSUE_COMMENT=Error: Unexpected start date format")
+            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected start date format")
             print("Unexpected Error")
             exit(0)
 #End Date logic
@@ -62,37 +71,30 @@ if new_data:
                 new_data["skip_end_date"], dayfirst=True
             ).date()
             if new_data["skip_end_date"] < date_start_date:
+                print("in if statement")
                 raise RuntimeError("End date cannot be before start date")
             else:
+                print("in else")
                 date_end_date = new_data["skip_end_date"]
                 new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
         except RuntimeError:
-            with open(env_file, 'a') as env_file:
-                env_file.write("ISSUE_COMMENT=Error: End date less than start date")
+                update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: End date cannot be before start date")
                 exit(0)
         except:
-            with open(env_file, 'a') as env_file:
-                env_file.write("ISSUE_COMMENT=Error: Unexpected end date format")
+                update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected end date format")
                 exit(0)
 #Write to file
 try:
-    with open(filepath, 'r') as json_file:
+    with open(filepath, "r") as json_file:
         listObj = json.load(json_file)
         listObj.append(new_data)
 except FileNotFoundError:
-    with open(filepath, 'w') as json_file:
+    with open(filepath, "w") as json_file:
         listObj.append(new_data)
 finally:
     with open(filepath, 'w') as json_file:
         json.dump(listObj, json_file, indent=4)
         json_file.close()
 
-    vars_data = open(env_file, 'rt')
-    data = vars_data.read()
-    data = data.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
-    data = data.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
-    vars_data.close()
-
-    vars_data = open(env_file, 'wt')
-    vars_data.write(data)
-    vars_data.close()
+    update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
+    update_env_vars("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
