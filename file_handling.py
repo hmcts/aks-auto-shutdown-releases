@@ -19,9 +19,9 @@ env_file = os.getenv("GITHUB_ENV")
 print(env_file)
 print("========")
 
-#env_vars = open(env_file, "a") as env_file:
- #   env_file.write("PROCESS_SUCCESS=false" + '\n')
-#env_vars.close()
+env_vars = open(env_file, "a") as env_file:
+    env_file.write("PROCESS_SUCCESS=false" + '\n')
+env_vars.close()
 
 
 
@@ -87,7 +87,7 @@ finally:
         with open(env_file, "r") as env_file:
             filedata = env_file.read()
             filedata = filedata.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
-            filedata = filedata.append("ISSUE_COMMENT=Processed Correctly")
+            filedata = filedata.replace("ISSUE_COMMENT=Processing failed, ISSUE_COMMENT=Processed Correctly")
 
         with open(env_file, "W") as env_file:
             env_file.write(filedata)
