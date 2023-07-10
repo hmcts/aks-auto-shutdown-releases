@@ -46,7 +46,7 @@ if new_data:
             exit(0)
     except:
         with open(env_file, "a") as env_file:
-            env_file.write("ISSUE_COMMENT=Error: Unexpected Date Format")
+            env_file.write("ISSUE_COMMENT=Error: Unexpected start date format")
             print("Unexpected Error")
             exit(0)
 #End Date logic
@@ -71,7 +71,7 @@ if new_data:
                 exit(0)
         except:
             with open(env_file, "a") as env_file:
-                env_file.write("ISSUE_COMMENT=Error: Unexpected Date Format")
+                env_file.write("ISSUE_COMMENT=Error: Unexpected end date format")
                 exit(0)
 #Write to file
 try:
