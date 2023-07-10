@@ -86,6 +86,7 @@ finally:
         json.dump(listObj, json_file, indent=4)
         with open(env_file, 'r') as env_file:
             filedata = env_file.read()
+            print(filedata)
             filedata = filedata.replace("PROCESS_SUCCESS=false", "PROCESS_SUCCESS=true")
             filedata = filedata.replace("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Processed Correctly")
             print(filedata)
