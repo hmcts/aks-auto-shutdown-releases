@@ -19,7 +19,7 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         RESOURCE_GROUP=$(jq -r '.resourceGroup' <<< $cluster)
         SKIP="false"
         NAME=$(jq -r '.name' <<< $cluster)
-        echo "----------------"
+        echo "---------------------"
         ENV=$(echo $NAME|cut -d'-' -f2)
         ENV=${ENV/#sbox/Sandbox}
         ENV=${ENV/stg/Staging}
@@ -43,7 +43,6 @@ jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
             CDF=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
             CDS=$(date -d "$CDF 00:00:00" +%s)
             #Skip logic
-            echo $NAME $BU $ENV $BA $ENVT $SD $ED $SDS $EDS $CDS
             if [[ ${ENVT} =~ ${ENV} ]] && [[ $BU == $BA ]] && [[ $SDS -eq $CDS ]] ; then
                 echo "Match: $id"
                 SKIP="true"
