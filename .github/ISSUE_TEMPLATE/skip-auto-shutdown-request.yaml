@@ -1,5 +1,5 @@
-name: Skip auto shutdown request
-description: Skip auto shutdown request
+name: :moon: Skip auto shutdown
+description: Request that an environment is not shutdown (automatically processed)
 body:
 - type: input
   attributes:
@@ -12,8 +12,8 @@ body:
   attributes:
     label: Business area
     options:
-      - cft
-      - cross-cutting
+      - CFT
+      - Cross-Cutting
   validations:
     required: true
     
