@@ -96,7 +96,6 @@ jobs:
           git push
           commit_tree_url=$(gh browse -c -n)
           commit_url=${commit_tree_url/tree/commit}
-          echo $commit_url
           echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
     
       - name: Close Issue
@@ -105,7 +104,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           comment: | 
-            Success! Your entry has been added to the [shutdown exclusions json](${{ env.COMMIT_URL }}) 
+            Success! Your [commit](${{ env.COMMIT_URL }}) has been added to the json exclusions file.
             Auto-closing issue.
 
 
