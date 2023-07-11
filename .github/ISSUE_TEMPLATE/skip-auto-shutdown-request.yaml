@@ -45,6 +45,6 @@ body:
   id: End_Date
   attributes:
     label: Skip shutdown end date
-    description: "Defaults to current day. DD-MM-YYYY"
+    description: "Defaults to start date. DD-MM-YYYY"
   validations:
     required: false
