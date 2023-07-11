@@ -94,6 +94,10 @@ jobs:
           git add .
           git commit -m parseissue-${{ github.event.issue.number }}
           git push
+          commit_tree_url=$(gh browse -c -n)
+          commit_url=${commit_tree_url/tree/commit}
+          echo $commit_url
+          echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
     
       - name: Close Issue
         if: env.PROCESS_SUCCESS == 'true'
@@ -101,7 +105,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           comment: | 
-            Success! Your entry has been added to the [shutdown exclusions json](https://github.com/hmcts/aks-auto-shutdown-releases/blob/master/issues_list.json) 
+            Success! Your entry has been added to the [shutdown exclusions json](${{ env.COMMIT_URL }}) 
             Auto-closing issue.
 
 
