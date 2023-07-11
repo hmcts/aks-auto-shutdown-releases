@@ -3,7 +3,7 @@ description: Request that an environment is not shutdown (automatically processe
 body:
 - type: input
   attributes:
-    label: Why do you need the auto shutdown skipped?
+    label: Change or JIRA ID
   validations:
     required: true
 
