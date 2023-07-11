@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add eyes reaction
-        uses: aidan-mundy/react-to-issue@v1.INSERT.VERSION
+        uses: aidan-mundy/react-to-issue@v1.1.1
         with:
           issue-number: ${{ github.event.issue.number }}
           reactions: eyes
