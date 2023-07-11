@@ -37,3 +37,10 @@ jobs:
           git add .
           git commit -m parseissue-${{ github.event.issue.number }}
           git push
+      
+      - name: Close Stale Issues
+        uses: actions/stale@v4.1.1
+        days-before-stale: 7
+        only-labels: Error in form
+
+
