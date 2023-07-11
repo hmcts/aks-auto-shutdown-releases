@@ -39,7 +39,7 @@ with open(env_file_path, 'a') as env_file:
 
 if new_data:
     new_data["issue_link"] = ("https://github.com/" + github_repository + "/issues/" + issue_number)
-#Business area validation
+"""Business area validation
     try:
         if new_data["business_area"].lower() != "cft" or new_data["business_area"].lower() != "cross-cutting":
             raise RuntimeError("Error: Business area does not exist")
@@ -51,7 +51,7 @@ if new_data:
             update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected business area")
             print("Unexpected Error in business area")
             exit(0)
-
+"""
 #Start Date logic
     try:
         new_data["skip_start_date"] = parse(new_data["skip_start_date"], dayfirst=True).date()
