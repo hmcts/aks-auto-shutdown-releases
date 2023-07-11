@@ -30,6 +30,7 @@ jobs:
           python housekeeping.py
 
       - name: Commit to master
+        continue-on-error: true
         if: env.JSON_FILE_EXISTS == 'true'
         run: |
           git config user.name hmcts-platform-operations
@@ -40,7 +41,8 @@ jobs:
       
       - name: Close Stale Issues
         uses: actions/stale@v4.1.1
-        days-before-stale: 7
-        only-labels: Error in form
+        with:
+          days-before-stale: 7
+          only-labels: Error in form
 
 
