@@ -18,7 +18,6 @@ issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
 today = date.today()
 env_file_path = os.getenv("GITHUB_ENV")
-print("========================= Testing vars above ========================================")
 
 def update_env_vars(var_to_update, new_var):
     env_vars_file = open(env_file_path, 'rt')
@@ -51,6 +50,18 @@ if new_data:
     except:
             update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected business area")
             print("Unexpected Error in business area")
+            exit(0)
+    #Environment validation
+    try:
+        if new_data["environment"].lower() not in ("sandbox", "aat / staging", "preview / dev", "test / perftest", "demo", "ithc"):
+            raise RuntimeError("Error: Environment does not exist")
+    except RuntimeError:
+            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Environment does not exist")
+            print("Environment RuntimeError")
+            exit(0)
+    except:
+            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected business area")
+            print("Unexpected Error in enviornment value")
             exit(0)
 #Start Date logic
     try:
