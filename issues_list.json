@@ -219,11 +219,11 @@
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/321"
     },
     {
-        "skip_start_date": "11-07-2023",
-        "skip_end_date": "11-07-2023",
+        "skip_start_date": "28-08-2023",
+        "skip_end_date": "28-08-2023",
         "environment": "Sandbox",
         "business_area": "cft",
-        "change_jira_id": "DTSPO-0000",
-        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/322"
+        "change_jira_id": "DTSP-0000",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/323"
     }
 ]
