@@ -11,7 +11,8 @@ new_data["skip_start_date"] = new_data.pop("Skip shutdown start date")
 new_data["skip_end_date"] = new_data.pop("Skip shutdown end date")
 new_data["environment"] = new_data.pop("Environment")
 new_data["business_area"] = new_data.pop("Business area")
-new_data["reason"] = new_data.pop("Why do you need the auto shutdown skipped?")
+new_data["change_jira_id"] = new_data.pop("Change or JIRA ID")
+new_data["business_area"] = new_data["business_area"].lower()
 print("==================")
 issue_number = os.environ.get("ISSUE_NUMBER")
 github_repository = os.environ.get("GITHUB_REPO")
@@ -39,6 +40,18 @@ with open(env_file_path, 'a') as env_file:
 
 if new_data:
     new_data["issue_link"] = ("https://github.com/" + github_repository + "/issues/" + issue_number)
+    #Business area validation
+    try:
+        if new_data["business_area"] not in ("cft", "cross-cutting"):
+            raise RuntimeError("Error: Business area does not exist")
+    except RuntimeError:
+            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Business area does not exist")
+            print("Business area RuntimeError")
+            exit(0)
+    except:
+            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected business area")
+            print("Unexpected Error in business area")
+            exit(0)
 #Start Date logic
     try:
         new_data["skip_start_date"] = parse(new_data["skip_start_date"], dayfirst=True).date()
