@@ -13,12 +13,11 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Create Issue Comment
-        uses: peter-evans/create-or-update-comment@v3.0.2
+      - name: Add eyes reaction
+        uses: aidan-mundy/react-to-issue@v1.INSERT.VERSION
         with:
           issue-number: ${{ github.event.issue.number }}
-          body: |
-            Processing form... please wait ~30 seconds.
+          reactions: eyes
       
       - name: add processing label
         uses: andymckay/labeler@master
