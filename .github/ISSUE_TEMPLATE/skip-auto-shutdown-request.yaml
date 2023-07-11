@@ -4,7 +4,7 @@ description: Request that an environment is not shutdown (automatically processe
 body:
 - type: input
   attributes:
-    label: Change or JIRA ID
+    label: Change or Jira reference
   validations:
     required: true
 
