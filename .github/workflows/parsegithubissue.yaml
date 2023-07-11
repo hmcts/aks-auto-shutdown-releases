@@ -70,6 +70,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ${{ env.ISSUE_COMMENT }}
+            Please edit this issue and select "Update comment" to resubmit.
 
       - name: add error label
         if: env.PROCESS_SUCCESS == 'false'
