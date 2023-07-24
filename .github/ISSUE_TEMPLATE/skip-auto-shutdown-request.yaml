@@ -1,4 +1,3 @@
-
 name: '🌍 Skip auto shutdown'
 description: Request that an environment is not shutdown (automatically processed)
 body:
@@ -19,7 +18,7 @@ body:
     required: true
     
 - type: dropdown
-  id: Enviornment
+  id: Environment
   attributes:
     label: Environment
     multiple: true

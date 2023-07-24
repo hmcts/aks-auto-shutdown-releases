@@ -106,5 +106,3 @@ jobs:
           comment: | 
             Success! Your [commit](${{ env.COMMIT_URL }}) has been added to the json exclusions file.
             Auto-closing issue.
-
-
