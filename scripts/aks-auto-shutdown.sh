@@ -39,7 +39,6 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             current_date_seconds=$(date -d "$current_date_formatting 00:00:00" +%s)
             #Skip logic
             #if start date is equal to current date: skip shutdown on that cluster
-            echo $env_entry $cluster_env $cluster_business_area $business_area_entry $start_date_seconds $current_date_seconds $end_date_seconds
             if [[ ${env_entry} =~ ${cluster_env} ]] && [[ $cluster_business_area == $business_area_entry ]] && [[ $start_date_seconds -eq $current_date_seconds ]] ; then
                 echo "Match: $id"
                 SKIP="true"
