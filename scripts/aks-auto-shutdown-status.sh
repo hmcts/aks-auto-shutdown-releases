@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #set -x
 shopt -s nocasematch
+#waiting for clusters to shutdown.
+sleep 600
 
 SUBSCRIPTIONS=$(az account list -o json)
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
