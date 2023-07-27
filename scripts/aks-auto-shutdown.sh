@@ -37,9 +37,6 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             current_date=$(date +'%d-%m-%Y')
             current_date_formatting=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
             current_date_seconds=$(date -d "$current_date_formatting 00:00:00" +%s)
-            #Sleep to simulate real shutdown scenario to allow testing of Actions timeout. To be removed!
-            echo "Waiting 5 minutes"
-            sleep 5m
 
             #Skip logic
             #if start date is equal to current date: skip shutdown on that cluster
@@ -56,8 +53,8 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
         done < <(jq -c '.[]' issues_list.json)
         if [[ $SKIP == "false" ]]; then
             echo -e "${GREEN}About to shutdown cluster $cluster_name (rg:$RESOURCE_GROUP)"
-            #echo az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name || echo Ignoring any errors stopping cluster
-            #az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name || echo Ignoring any errors stopping cluster
+            #echo az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
+            #az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
         else
             echo -e "${YELLOW}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
