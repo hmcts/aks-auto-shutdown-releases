@@ -72,7 +72,6 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             echo -e "${YELLOW}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
     done # end_of_cluster_loop
-done
 
 #Summary
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
