@@ -55,7 +55,7 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             #echo az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
             #az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
         else
-            #echo -e "${YELLOW}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
+            echo -e "${YELLOW}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
     done # end_of_cluster_loop
 done
