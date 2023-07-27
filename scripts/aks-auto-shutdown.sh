@@ -4,26 +4,11 @@ shopt -s nocasematch
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 
-function cluster () {
-        RESOURCE_GROUP=$(jq -r '.resourceGroup' <<< $cluster)
-        NAME=$(jq -r '.name' <<< $cluster)
-}
-
-function ts_echo() {
-    date +"%H:%M:%S $(printf "%s "  "$@")"
-}
-
-function subscription () {
-   
-        SUBSCRIPTIONS=$(az account list -o json)
-        jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
-        SUBSCRIPTION_ID=$(jq -r '.id' <<< $subscription)
-        az account set -s $SUBSCRIPTION_ID
-        CLUSTERS=$(az resource list --resource-type Microsoft.ContainerService/managedClusters --query "[?tags.autoShutdown == 'true']" -o json)
-        done
-}
-
-subscription
+SUBSCRIPTIONS=$(az account list -o json)
+jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
+    SUBSCRIPTION_ID=$(jq -r '.id' <<< $subscription)
+    az account set -s $SUBSCRIPTION_ID
+    CLUSTERS=$(az resource list --resource-type Microsoft.ContainerService/managedClusters --query "[?tags.autoShutdown == 'true']" -o json)
 
 jq -c '.[]' <<< $CLUSTERS | while read cluster; do
         RESOURCE_GROUP=$(jq -r '.resourceGroup' <<< $cluster)
@@ -67,20 +52,10 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
         done < <(jq -c '.[]' issues_list.json)
         if [[ $SKIP == "false" ]]; then
             echo -e "${GREEN}About to shutdown cluster $cluster_name (rg:$RESOURCE_GROUP)"
-           #echo az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
+            #echo az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
             #az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
         else
-            echo -e "${YELLOW}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
+            #echo -e "${YELLOW}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
     done # end_of_cluster_loop
-
-#Summary
-jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
-subscription
-    jq -c '.[]' <<< $CLUSTERS | while read cluster; do
-        cluster
-        ts_echo $NAME
-        RESULT=$(az aks show --name  $NAME -g $RESOURCE_GROUP | jq -r .powerState.code)
-        ts_echo "${RESULT}"
-    done
 done
