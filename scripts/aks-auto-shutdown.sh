@@ -37,6 +37,10 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             current_date=$(date +'%d-%m-%Y')
             current_date_formatting=$(awk -F'-' '{printf("%04d-%02d-%02d\n",$3,$2,$1)}' <<< $current_date)
             current_date_seconds=$(date -d "$current_date_formatting 00:00:00" +%s)
+            #Sleep to simulate real shutdown scenario to allow testing of Actions timeout. To be removed!
+            echo "Waiting 5 minutes"
+            time.sleep(300)
+
             #Skip logic
             #if start date is equal to current date: skip shutdown on that cluster
             if [[ ${env_entry} =~ ${cluster_env} ]] && [[ $cluster_business_area == $business_area_entry ]] && [[ $start_date_seconds -eq $current_date_seconds ]] ; then
