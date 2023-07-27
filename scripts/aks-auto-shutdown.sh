@@ -39,7 +39,7 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             current_date_seconds=$(date -d "$current_date_formatting 00:00:00" +%s)
             #Sleep to simulate real shutdown scenario to allow testing of Actions timeout. To be removed!
             echo "Waiting 5 minutes"
-            time.sleep(300)
+            sleep 5m
 
             #Skip logic
             #if start date is equal to current date: skip shutdown on that cluster
