@@ -15,11 +15,12 @@ function ts_echo() {
 
 function subscription () {
    
+        SUBSCRIPTIONS=$(az account list -o json)
+        jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
         SUBSCRIPTION_ID=$(jq -r '.id' <<< $subscription)
         az account set -s $SUBSCRIPTION_ID
-        CLUSTERS=$(az resource list \
-        --resource-type Microsoft.ContainerService/managedClusters \
-        --query "[?tags.autoShutdown == 'true']" -o json)
+        CLUSTERS=$(az resource list --resource-type Microsoft.ContainerService/managedClusters --query "[?tags.autoShutdown == 'true']" -o json)
+        done
 }
 
 subscription
