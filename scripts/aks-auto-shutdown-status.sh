@@ -3,8 +3,6 @@
 shopt -s nocasematch
 AMBER='\033[1;33m'
 GREEN='\033[0;32m'
-#waiting for clusters to shutdown.
-sleep 600
 
 SUBSCRIPTIONS=$(az account list -o json)
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
