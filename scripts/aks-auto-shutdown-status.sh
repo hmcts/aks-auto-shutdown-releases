@@ -16,9 +16,9 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
         cluster_data=$(az aks show -n $cluster_name -g $RESOURCE_GROUP -o json)
         cluster_status=$(jq -r '.powerState.code' <<< "$cluster_data")
 
-        if [[ $cluster_status == "Stopped" ]] then;
+        if [[ $cluster_status == "Stopped" ]]; then
             echo "${GREEN}$cluster_name is $cluster_status"
-        elif [[ $cluster_status == "Running" ]] then;
+        elif [[ $cluster_status == "Running" ]] then
             echo "${AMBER}$cluster_name is $cluster_status"
         fi
     done # end_of_cluster_loop
