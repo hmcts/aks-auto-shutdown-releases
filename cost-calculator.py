@@ -11,6 +11,13 @@ vm_num = os.getenv("AKS_NODE_COUNT")
 vm_num_int = int(vm_num)
 start_date = os.getenv("START_DATE")
 end_date = os.getenv("END_DATE")
+print("=== Printing Vars ===")
+print(vm_sku)
+print(vm_num)
+print(vm_num_int)
+print(start_date)
+print(end_date)
+print("===============")
 
 api_url = "https://prices.azure.com/api/retail/prices?currencyCode='GBP&api-version=2021-10-01-preview"
 query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines Ddsv5 Series'"
