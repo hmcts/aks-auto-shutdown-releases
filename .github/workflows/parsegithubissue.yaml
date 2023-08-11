@@ -58,6 +58,10 @@ jobs:
       - name: Install python-dateutil
         run: |
           pip3 install python-dateutil
+
+      - name: Install numpy
+        run: |
+          pip3 install numpy
                     
       - name: process form data
         continue-on-error: true
@@ -110,6 +114,11 @@ jobs:
       - name: get aks costs
         continue-on-error: true
         run: ./scripts/aks-get-costs.sh
+
+      - name: process costs
+        continue-on-error: true
+        run: |
+          python cost-calculator.py
 
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
