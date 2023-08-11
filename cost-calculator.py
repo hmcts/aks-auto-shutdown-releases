@@ -7,7 +7,6 @@ import numpy as np
 import os
 
 vm_sku = os.getenv("AKS_NODE_SKU")
-vm_sku = os.getenv("GITHUB_REPO")
 vm_num = os.getenv("AKS_NODE_COUNT")
 vm_num_int = int(vm_num)
 start_date = os.getenv("START_DATE")
