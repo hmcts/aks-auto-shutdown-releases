@@ -98,6 +98,11 @@ jobs:
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Success"
+      
+      - name: get aks costs
+        continue-on-error: true
+        run: |
+          ./aks-get-costs.sh
 
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
