@@ -6,11 +6,12 @@ from dateutil.parser import parse
 import numpy as np
 import os
 
-vm_sku = os.environ.get("AKS_NODE_SKU")
-vm_num = os.environ.get("AKS_NODE_COUNT")
+vm_sku = os.getenv("AKS_NODE_SKU")
+vm_sku = os.getenv("GITHUB_REPO")
+vm_num = os.getenv("AKS_NODE_COUNT")
 vm_num_int = int(vm_num)
-start_date = os.environ.get("START_DATE")
-end_date = os.environ.get("END_DATE")
+start_date = os.getenv("START_DATE")
+end_date = os.getenv("END_DATE")
 
 api_url = "https://prices.azure.com/api/retail/prices?currencyCode='GBP&api-version=2021-10-01-preview"
 query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines Ddsv5 Series'"
