@@ -26,9 +26,9 @@ start_date = start.strftime("%d-%m-%Y")
 end = parse(end_date, dayfirst=True).date()
 end_date = end.strftime("%d-%m-%Y")
 
-business_days = np.busday_count(entered_start_date_date, (entered_end_date_date + timedelta(days=1)))
+business_days = np.busday_count(start, (end + timedelta(days=1)))
 
-diff = (entered_end_date_date - entered_start_date_date).days
+diff = (end - start).days
 total_days = (diff +1)
 weekend_days = (total_days - business_days)
 
