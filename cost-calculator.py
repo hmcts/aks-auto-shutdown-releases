@@ -4,6 +4,7 @@ import json
 from datetime import datetime, date, timedelta
 from dateutil.parser import parse
 import numpy as np
+import os
 
 vm_sku = os.environ.get("AKS_NODE_SKU")
 vm_num = os.environ.get("AKS_NODE_COUNT")
