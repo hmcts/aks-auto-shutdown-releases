@@ -62,6 +62,10 @@ jobs:
       - name: Install numpy
         run: |
           pip3 install numpy
+
+      - name: Install requests
+        run: |
+          pip3 install requests
                     
       - name: process form data
         continue-on-error: true
