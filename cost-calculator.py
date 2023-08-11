@@ -24,6 +24,12 @@ query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceTyp
 response = requests.get(api_url, params={'$filter': query})
 json_data = json.loads(response.text)
 
+print("******")
+print(query)
+print("******")
+
+print(json_data)
+
 for item in json_data['Items']:
     vm_hour_rate = item['retailPrice']
 
