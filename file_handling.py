@@ -51,18 +51,6 @@ if new_data:
             update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected business area")
             print("Unexpected Error in business area")
             exit(0)
-    #Environment validation
-    try:
-        if new_data["environment"].lower() not in ("sandbox", "aat / staging", "preview / dev", "test / perftest", "demo", "ithc", "ptl"):
-            raise RuntimeError("Error: Environment does not exist")
-    except RuntimeError:
-            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Environment does not exist")
-            print("Environment RuntimeError")
-            exit(0)
-    except:
-            update_env_vars("ISSUE_COMMENT=Processing failed", "ISSUE_COMMENT=Error: Unexpected business area")
-            print("Unexpected Error in enviornment value")
-            exit(0)
 #Start Date logic
     try:
         new_data["skip_start_date"] = parse(new_data["skip_start_date"], dayfirst=True).date()
