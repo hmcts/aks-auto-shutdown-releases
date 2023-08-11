@@ -123,5 +123,16 @@
         "business_area": "cft",
         "change_jira_id": "test",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/380"
+    },
+    {
+        "skip_start_date": "10-01-2024",
+        "skip_end_date": "10-01-2024",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/381"
     }
 ]
