@@ -58,7 +58,7 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     print("======")
 
     with open(env_file_path, 'a') as env_file:
-        env_file.write('\n' + "COST_DETAILS=" + str(cost_output_format)
+        env_file.write('\n' + "COST_DETAILS=" + str(cost_output_format))
         env_file.close()
 
 calculate_cost(vm_hour_rate, vm_num_int, business_days, weekend_days)
