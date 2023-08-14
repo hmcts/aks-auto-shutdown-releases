@@ -84,5 +84,16 @@
         "business_area": "cft",
         "change_jira_id": "dtspo-0000",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/388"
+    },
+    {
+        "skip_start_date": "28-08-2023",
+        "skip_end_date": "30-09-2023",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "dtspo-0000",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/389"
     }
 ]
