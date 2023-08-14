@@ -51,7 +51,7 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     total_cost = ((vm_cost // 100) * 25) + vm_cost
     #cost_output = round(total_cost, 2)
     #cost_output_format = f"{cost_output:,}"
-    cost_output = str(round(total_cost, 2))
+    cost_output = round(total_cost, 2)
     cost_output_formatted = f"{cost_output:,}"
 
     #with open(env_file_path, 'a') as env_file:
