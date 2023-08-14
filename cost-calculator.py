@@ -51,8 +51,8 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     total_cost = ((vm_cost // 100) * 25) + vm_cost
     cost_output = str(round(total_cost, 2))
 
-calculate_cost(vm_hour_rate, vm_num_int, business_days, weekend_days)
-
-with open(env_file_path, 'a') as env_file:
+    with open(env_file_path, 'a') as env_file:
     env_file.write('\n' + "COST_DETAILS=Total estimated cost of skipping shutdown for the provided dates is £" + cost_output)
     env_file.close()
+
+calculate_cost(vm_hour_rate, vm_num_int, business_days, weekend_days)
