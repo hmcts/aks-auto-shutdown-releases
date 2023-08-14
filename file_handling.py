@@ -80,7 +80,6 @@ if new_data:
                 print("in if statement")
                 raise RuntimeError("End date cannot be before start date")
             else:
-                print("in else")
                 date_end_date = new_data["skip_end_date"]
                 new_data["skip_end_date"] = new_data["skip_end_date"].strftime("%d-%m-%Y")
         except RuntimeError:
