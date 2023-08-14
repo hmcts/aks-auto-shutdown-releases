@@ -50,7 +50,7 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     vm_cost = (env_rate * total_hours)*vm_num_int
     total_cost = ((vm_cost // 100) * 25) + vm_cost
     cost_output = round(total_cost, 2)
-    cost_output_format = print(f"{cost_output:,}")
+    cost_output_format = f"{cost_output:,}"
 
     print("======")
     print(cost_output)
