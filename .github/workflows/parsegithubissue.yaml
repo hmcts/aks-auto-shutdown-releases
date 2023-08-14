@@ -115,14 +115,24 @@ jobs:
           client-id: 2b6fa9d7-7dba-4600-a58a-5e25554997aa # DTS AKS Auto-Shutdown
           tenant-id: 531ff96d-0ae9-462a-8d2d-bec7c0b42082 # HMCTS.NET
           allow-no-subscriptions: true
-      - name: get aks costs
+      - name: get aks resource details
+        if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
-        run: ./scripts/aks-get-costs.sh
+        run: ./scripts/aks-resource-details.sh
 
       - name: process costs
+        if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
         run: |
           python cost-calculator.py
+
+      - name: Add cost details as a comment
+        if: env.PROCESS_SUCCESS == 'true'
+        uses: peter-evans/create-or-update-comment@v3.0.2
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ${{ env.COST_DETAILS }}
 
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
