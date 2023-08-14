@@ -129,7 +129,7 @@ jobs:
             Total estimated cost of skipping shutdown for the provided dates is £${{ env.COST_DETAILS }}
 
       - name: Add high cost label
-        if: env.COST_DETAILS > 5000
+        if: env.COST_DETAILS_RAW > 5000
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "High Cost"
