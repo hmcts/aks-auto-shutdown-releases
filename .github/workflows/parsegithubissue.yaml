@@ -133,6 +133,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ${{ env.COST_DETAILS }}
+            Cost details comment
 
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
