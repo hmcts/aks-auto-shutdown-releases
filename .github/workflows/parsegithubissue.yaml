@@ -102,12 +102,6 @@ jobs:
           labels: |
             Error in form
             Processing
-            
-      - name: Add success label
-        if: env.PROCESS_SUCCESS == 'true'
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: "Success"
 
       - name: 'Az CLI login'
         uses: azure/login@v1
@@ -132,8 +126,19 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            ${{ env.COST_DETAILS }}
-            Cost details comment
+            Total estimated cost of skipping shutdown for the provided dates is £${{ env.COST_DETAILS }}
+
+      - name: Add high cost label
+        if: env.COST_DETAILS > 50
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "High Cost"
+
+      - name: Add success label
+        if: env.PROCESS_SUCCESS == 'true'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "Success"
 
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true'
