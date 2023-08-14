@@ -52,14 +52,15 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     #cost_output = round(total_cost, 2)
     #cost_output_format = f"{cost_output:,}"
     cost_output = str(round(total_cost, 2))
+    cost_output_formatted = f"{cost_output:,}"
 
     #with open(env_file_path, 'a') as env_file:
      #   env_file.write('\n' + "COST_DETAILS_FORMATTED=" + str(cost_output_format))
       #  env_file.write('\n' + "COST_DETAILS_RAW=" + str(cost_output))
        # env_file.close()
     with open(env_file_path, 'a') as env_file:
-        env_file.write('\n' + "COST_DETAILS=" + cost_output)
+        env_file.write('\n' + "COST_DETAILS=" + cost_output + '\n')
+        env_file.write("COST_DETAILS_FORMATTED=" + cost_output_formatted)
         env_file.close()
-
 
 calculate_cost(vm_hour_rate, vm_num_int, business_days, weekend_days)
