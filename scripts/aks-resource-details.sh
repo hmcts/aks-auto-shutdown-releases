@@ -26,11 +26,13 @@ function get_costs() {
 
         if [[ ${env_entry} =~ ${cluster_env} ]] && [[ $cluster_business_area == $business_area_entry ]]; then
             nodepool_details=$(az aks nodepool list --cluster-name $cluster_name --resource-group $RESOURCE_GROUP | jq '.')
-            nodepool_sku=$(echo $nodepool_details | jq '.[] | select(.name=="linux")' | jq '.vmSize')
-            nodepool_count=$(echo $nodepool_details | jq '.[] | select(.name=="linux")' | jq '.count')
-            echo "Including $cluster_name in shutdown skip cost. It has $nodepool_count nodes with a size of $nodepool_sku"
-            node_count=$(($node_count + $nodepool_count))
-            continue
+            while read nodepool; do
+                nodepool_sku=$(echo $nodepool_details | jq '.[]' | jq '.vmSize')
+                nodepool_count=$(echo $nodepool_details | jq '.[] | select(.name=="linux")' | jq '.count')
+                echo "Including $cluster_name in shutdown skip cost. It has $nodepool_count nodes with a size of $nodepool_sku in nodepool $nodepool"
+                node_count=$(($node_count + $nodepool_count))
+                continue
+            done < <(jq -c '.[]' <<<$nodepool_details)
         fi
     done < <(jq -c '.[]' <<<$CLUSTERS) # end_of_cluster_loop
 }
@@ -84,7 +86,7 @@ done < <(jq -r 'last | .environment[]' issues_list.json || jq -r 'last | .enviro
 echo "==================="
 echo "total nodes: $node_count with a size of $nodepool_sku"
 
-echo AKS_NODE_COUNT=$node_count >> $GITHUB_ENV
-echo AKS_NODE_SKU=$nodepool_sku >> $GITHUB_ENV
-echo START_DATE=$start_date >> $GITHUB_ENV
-echo END_DATE=$end_date >> $GITHUB_ENV
+echo AKS_NODE_COUNT=$node_count >>$GITHUB_ENV
+echo AKS_NODE_SKU=$nodepool_sku >>$GITHUB_ENV
+echo START_DATE=$start_date >>$GITHUB_ENV
+echo END_DATE=$end_date >>$GITHUB_ENV
