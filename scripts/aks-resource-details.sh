@@ -30,7 +30,7 @@ function get_costs() {
             while read nodepool; do
                 nodepool_count=$(jq -r '."count"' <<< $nodepool)
                 nodepool_name=$(jq -r '."name"' <<< $nodepool)
-                nodepool_sku_output=$(jq -r '."name"' <<< $nodepool)
+                nodepool_sku_output=$(jq -r '."vmSize"' <<< $nodepool)
                 echo "Including $cluster_name in shutdown skip cost. It has $nodepool_count nodes with a size of $nodepool_sku_output in nodepool $nodepool_name"
                 node_count=$(($node_count + $nodepool_count))
                 continue
