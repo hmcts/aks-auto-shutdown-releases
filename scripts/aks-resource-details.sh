@@ -26,11 +26,12 @@ function get_costs() {
 
         if [[ ${env_entry} =~ ${cluster_env} ]] && [[ $cluster_business_area == $business_area_entry ]]; then
             nodepool_details=$(az aks nodepool list --cluster-name $cluster_name --resource-group $RESOURCE_GROUP -o json)
+            nodepool_sku=$(echo $nodepool_details | jq '.[] | select(.name=="linux")' | jq '.vmSize')
             while read nodepool; do
-                nodepool_sku=$(jq -r '."vmSize"' <<< $nodepool)
                 nodepool_count=$(jq -r '."count"' <<< $nodepool)
                 nodepool_name=$(jq -r '."name"' <<< $nodepool)
-                echo "Including $cluster_name in shutdown skip cost. It has $nodepool_count nodes with a size of $nodepool_sku in nodepool $nodepool_name"
+                nodepool_sku_output=$(jq -r '."name"' <<< $nodepool)
+                echo "Including $cluster_name in shutdown skip cost. It has $nodepool_count nodes with a size of $nodepool_sku_output in nodepool $nodepool_name"
                 node_count=$(($node_count + $nodepool_count))
                 continue
             done < <(jq -c '.[]' <<<$nodepool_details)
