@@ -36,7 +36,7 @@ function get_costs() {
 
 while read i; do
     if [[ $business_area_entry =~ "Cross-Cutting" ]]; then
-        
+        echo "processing $i in $business_area_entry"
         if [[ $i =~ "Staging" ]]; then
             az account set --name DTS-SHAREDSERVICES-STG
             get_costs
