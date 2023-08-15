@@ -6,5 +6,29 @@
         "business_area": "cft",
         "change_jira_id": "testing",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/337"
+    },
+    {
+        "skip_start_date": "18-08-2023",
+        "skip_end_date": "18-08-2023",
+        "environment": "Sandbox",
+        "business_area": "cft",
+        "change_jira_id": "test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/410"
+    },
+    {
+        "skip_start_date": "19-08-2023",
+        "skip_end_date": "19-08-2023",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging",
+            "Preview / Dev",
+            "Test / Perftest",
+            "Demo",
+            "ITHC",
+            "PTL"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/411"
     }
 ]
