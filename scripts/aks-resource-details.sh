@@ -108,5 +108,5 @@ done < <(jq -r 'last | .environment[]' issues_list.json || jq -r 'last | .enviro
 echo START_DATE=$start_date >>$GITHUB_ENV
 echo END_DATE=$end_date >>$GITHUB_ENV
 
-rm output.txt
+rm sku_details.txt
 nodeSummary >>sku_details.txt
