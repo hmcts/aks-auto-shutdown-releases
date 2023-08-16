@@ -64,7 +64,7 @@ with open("sku_details.txt", "r") as filestream:
         sku_cost = azPriceAPI(sku)
         combined_total=(combined_total + calculate_cost(sku_cost, count, business_days, weekend_days))
 
-    cost_output = round(total_combined_cost, 2)
+    cost_output = round(combined_total, 2)
     cost_output_formatted = f"{cost_output:,}"
 
 os.remove("/scripts/sku_details.txt")
