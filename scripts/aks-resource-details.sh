@@ -6,6 +6,25 @@ GREEN='\033[0;32m'
 
 node_count=0
 business_area_entry=$(jq -r '. | last | .business_area' issues_list.json)
+declare -A sku_sizes
+
+function countSku() {
+    if [ -v sku_sizes[$1] ]; then
+        echo "adding $nodepool_count nodes to existing count for $1"
+        sku_count=$(echo "${sku_sizes[$1]}")
+        node_sku_count=$(($sku_count + $nodepool_count))
+        sku_sizes[$1]=$node_sku_count
+    else
+        echo "adding $1 to array with $2 nodes"
+        sku_sizes[$1]=$2
+    fi
+}
+
+function nodeSummary() {
+    for sku in "${!sku_sizes[@]}"; do
+        echo "${sku},${sku_sizes[${sku}]}"
+    done
+}
 
 function get_costs() {
     CLUSTERS=$(az resource list --resource-type Microsoft.ContainerService/managedClusters --query "[?tags.autoShutdown == 'true']" -o json)
@@ -26,13 +45,12 @@ function get_costs() {
 
         if [[ ${env_entry} =~ ${cluster_env} ]] && [[ $cluster_business_area == $business_area_entry ]]; then
             nodepool_details=$(az aks nodepool list --cluster-name $cluster_name --resource-group $RESOURCE_GROUP -o json)
-            nodepool_sku=$(echo $nodepool_details | jq '.[] | select(.name=="linux")' | jq '.vmSize')
             while read nodepool; do
                 nodepool_count=$(jq -r '."count"' <<< $nodepool)
                 nodepool_name=$(jq -r '."name"' <<< $nodepool)
                 nodepool_sku_output=$(jq -r '."vmSize"' <<< $nodepool)
                 echo "Including $cluster_name in shutdown skip cost. It has $nodepool_count nodes with a size of $nodepool_sku_output in nodepool $nodepool_name"
-                node_count=$(($node_count + $nodepool_count))
+                countSku $nodepool_sku_output $nodepool_count
                 continue
             done < <(jq -c '.[]' <<<$nodepool_details)
         fi
@@ -85,10 +103,10 @@ while read i; do
     fi
 done < <(jq -r 'last | .environment[]' issues_list.json || jq -r 'last | .environment' issues_list.json)
 
-echo "==================="
-echo "total nodes: $node_count with a size of $nodepool_sku"
-
-echo AKS_NODE_COUNT=$node_count >>$GITHUB_ENV
-echo AKS_NODE_SKU=$nodepool_sku >>$GITHUB_ENV
+#echo AKS_NODE_COUNT=$node_count >>$GITHUB_ENV
+#echo AKS_NODE_SKU=$nodepool_sku >>$GITHUB_ENV
 echo START_DATE=$start_date >>$GITHUB_ENV
 echo END_DATE=$end_date >>$GITHUB_ENV
+
+rm output.txt
+nodeSummary >>output.txt
