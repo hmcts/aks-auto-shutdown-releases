@@ -66,9 +66,10 @@ with open("sku_details.txt", "r") as filestream:
 
     cost_output = round(total_combined_cost, 2)
     cost_output_formatted = f"{cost_output:,}"
+
 os.remove("/scripts/sku_details.txt")
 
-    with open(env_file_path, 'a') as env_file:
-        env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
-        env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
-        env_file.close()
+with open(env_file_path, 'a') as env_file:
+    env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
+    env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
+    env_file.close()
