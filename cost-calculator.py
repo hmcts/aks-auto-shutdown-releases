@@ -14,6 +14,7 @@ import os
 start_date = os.getenv("START_DATE")
 end_date = os.getenv("END_DATE")
 env_file_path = os.getenv("GITHUB_ENV")
+total_combined_cost = 0
 
 def azPriceAPI(vm_sku):
     #Microsoft Retail Rates Prices API query and response. (https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices)
@@ -52,9 +53,11 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     total_hours = (bus_hours + weekend_hours)
     vm_cost = (env_rate * total_hours)*vm_num_int
     total_cost = ((vm_cost // 100) * 25) + vm_cost
-    cost_output = round(total_cost, 2)
-    cost_output_formatted = f"{cost_output:,}"
+    total_combined_cost = (total_combined_cost + total_cost)
 
+def write_cost():
+    cost_output = round(total_combined_cost, 2)
+    cost_output_formatted = f"{cost_output:,}"
     with open(env_file_path, 'a') as env_file:
         env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
         env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
@@ -68,4 +71,5 @@ with open("sku_details.txt", "r") as filestream:
         sku_cost = azPriceAPI(sku)
         calculate_cost(sku_cost, count, business_days, weekend_days)
 
+write_cost
 os.remove("sku_details.txt")
