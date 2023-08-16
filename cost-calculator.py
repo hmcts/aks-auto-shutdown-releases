@@ -7,23 +7,26 @@ import numpy as np
 import os
 
 #Read GitHub environment variables
-vm_sku_var = os.getenv('AKS_NODE_SKU')
-vm_sku = vm_sku_var.replace("\"", "")
-vm_num = os.getenv("AKS_NODE_COUNT")
-vm_num_int = int(vm_num)
+#vm_sku_var = os.getenv('AKS_NODE_SKU')
+#vm_sku = vm_sku_var.replace("\"", "")
+#vm_num = os.getenv("AKS_NODE_COUNT")
+#vm_num_int = int(vm_num)
 start_date = os.getenv("START_DATE")
 end_date = os.getenv("END_DATE")
 env_file_path = os.getenv("GITHUB_ENV")
 
-#Microsoft Retail Rates Prices API query and response. (https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices)
-api_url = "https://prices.azure.com/api/retail/prices?currencyCode='GBP&api-version=2021-10-01-preview"
-query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines Ddsv5 Series'"
-response = requests.get(api_url, params={'$filter': query})
-json_data = json.loads(response.text)
+def azPriceAPI(vm_sku):
+    #Microsoft Retail Rates Prices API query and response. (https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices)
+    api_url = "https://prices.azure.com/api/retail/prices?currencyCode='GBP&api-version=2021-10-01-preview"
+    query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines Ddsv5 Series'"
+    response = requests.get(api_url, params={'$filter': query})
+    json_data = json.loads(response.text)
 
-#Get retail price from json API response
-for item in json_data['Items']:
-    vm_hour_rate = item['retailPrice']
+    #Get retail price from json API response
+    for item in json_data['Items']:
+        vm_hour_rate = item['retailPrice']
+    
+    return vm_hour_rate
 
 #Read start/end dates from env vars
 start = parse(start_date, dayfirst=True).date()
@@ -49,8 +52,6 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
     total_hours = (bus_hours + weekend_hours)
     vm_cost = (env_rate * total_hours)*vm_num_int
     total_cost = ((vm_cost // 100) * 25) + vm_cost
-    #cost_output = round(total_cost, 2)
-    #cost_output_format = f"{cost_output:,}"
     cost_output = round(total_cost, 2)
     cost_output_formatted = f"{cost_output:,}"
 
@@ -59,4 +60,12 @@ def calculate_cost(env_rate, vm_num_int, skip_bus_days, skip_weekend_days):
         env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
         env_file.close()
 
-calculate_cost(vm_hour_rate, vm_num_int, business_days, weekend_days)
+with open("sku_details.txt", "r") as filestream:
+    for line in filestream:
+        currentLine = line.split(",")
+        sku = str(currentLine[0])
+        count = int(currentLine[1])
+        sku_cost = azPriceAPI(sku)
+        calculate_cost(sku_cost, count, business_days, weekend_days)
+
+os.remove("sku_details.txt")

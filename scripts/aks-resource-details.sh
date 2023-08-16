@@ -109,4 +109,4 @@ echo START_DATE=$start_date >>$GITHUB_ENV
 echo END_DATE=$end_date >>$GITHUB_ENV
 
 rm output.txt
-nodeSummary >>output.txt
+nodeSummary >>sku_details.txt
