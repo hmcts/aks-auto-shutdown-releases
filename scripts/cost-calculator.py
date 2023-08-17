@@ -25,7 +25,7 @@ diff = (end - start).days
 total_days = (diff +1)
 weekend_days = (total_days - business_days)
 
-def azPriceAPI(vm_sku):
+def azPriceAPI(vm_sku, productNameVar):
     #Microsoft Retail Rates Prices API query and response. (https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices)
     api_url = "https://prices.azure.com/api/retail/prices?currencyCode='GBP&api-version=2021-10-01-preview"
     query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines " + productNameVar + " Series'"
