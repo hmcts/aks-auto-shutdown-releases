@@ -28,7 +28,7 @@ weekend_days = (total_days - business_days)
 def azPriceAPI(vm_sku):
     #Microsoft Retail Rates Prices API query and response. (https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices)
     api_url = "https://prices.azure.com/api/retail/prices?currencyCode='GBP&api-version=2021-10-01-preview"
-    query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines Ddsv5 Series'"
+    query = "armRegionName eq 'uksouth' and skuName eq '" + vm_sku + "' and priceType eq 'Consumption' and productName eq 'Virtual Machines " + productNameVar + " Series'"
     response = requests.get(api_url, params={'$filter': query})
     json_data = json.loads(response.text)
 
@@ -59,7 +59,9 @@ with open("sku_details.txt", "r") as filestream:
         currentLine = line.split(",")
         sku = str(currentLine[0])
         node_count = int(currentLine[1])
-        sku_cost = azPriceAPI(sku)
+        sku_split = sku.split('_')
+        productNameVar = sku_split[1] + sku_split[2]
+        sku_cost = azPriceAPI(sku, productNameVar)
         combined_total=(combined_total + calculate_cost(sku_cost, node_count, business_days, weekend_days))
 #Round  to 2 decimal places to represent currency.
 #Format value with appropriate comma for human readable currency.
