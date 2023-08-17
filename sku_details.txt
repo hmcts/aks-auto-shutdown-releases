@@ -1,0 +1,3 @@
+Standard_D4ds_v5,Linux,23
+Standard_D4ds_v5,Windows,10
+Standard_D4pds_v5,Linux,8
