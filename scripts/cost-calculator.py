@@ -60,7 +60,7 @@ with open("sku_details.txt", "r") as filestream:
         sku = str(currentLine[0])
         node_count = int(currentLine[1])
         sku_split = sku.split('_')
-        sku_type = '' .join((z for z in vm_property[1] if not z.isdigit()))
+        sku_type = '' .join((z for z in sku_split[1] if not z.isdigit()))
         productNameVar = sku_type + sku_split[2]
         sku_cost = azPriceAPI(sku, productNameVar)
         combined_total=(combined_total + calculate_cost(sku_cost, node_count, business_days, weekend_days))
