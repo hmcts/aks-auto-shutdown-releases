@@ -6,8 +6,11 @@ GREEN='\033[0;32m'
 
 node_count=0
 business_area_entry=$(jq -r '. | last | .business_area' issues_list.json)
+#declare associative array
 declare -A sku_sizes
 
+#Function to add SKU and node count to array.
+#Create new entry if SKU does not already exist. Update entry if SKU already exists in array.
 function countSku() {
     if [ -v sku_sizes[$1] ]; then
         echo "adding $nodepool_count nodes to existing count for $1"
@@ -19,13 +22,13 @@ function countSku() {
         sku_sizes[$1]=$2
     fi
 }
-
+#Print array summary
 function nodeSummary() {
     for sku in "${!sku_sizes[@]}"; do
         echo "${sku},${sku_sizes[${sku}]}"
     done
 }
-
+#Get nodepool details from Azure, node count, nodepool name, nodepool SKU...
 function get_costs() {
     CLUSTERS=$(az resource list --resource-type Microsoft.ContainerService/managedClusters --query "[?tags.autoShutdown == 'true']" -o json)
 
@@ -57,6 +60,8 @@ function get_costs() {
     done < <(jq -c '.[]' <<<$CLUSTERS) # end_of_cluster_loop
 }
 
+#Set subscription based on user entry.
+#If statements used to deal with subscription naming convention and enviornment dropdown values. Eg "AAT / Staging"
 while read i; do
     if [[ $business_area_entry =~ "Cross-Cutting" ]]; then
         echo "processing $i in $business_area_entry"
@@ -103,10 +108,12 @@ while read i; do
     fi
 done < <(jq -r 'last | .environment[]' issues_list.json || jq -r 'last | .environment' issues_list.json)
 
-#echo AKS_NODE_COUNT=$node_count >>$GITHUB_ENV
-#echo AKS_NODE_SKU=$nodepool_sku >>$GITHUB_ENV
+#Add GitHub env vars
 echo START_DATE=$start_date >>$GITHUB_ENV
 echo END_DATE=$end_date >>$GITHUB_ENV
 
+#Remove temp text file.
 rm sku_details.txt
+#Call node summary function and output to tempory text file.
+#Temp file used by "cost-calculator.py" script for cost calculations.
 nodeSummary >>sku_details.txt
