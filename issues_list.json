@@ -4,7 +4,8 @@
         "skip_end_date": "08-09-2023",
         "environment": "ITHC",
         "business_area": "cft",
-        "change_jira_id": "N/A",
-        "issue_link": "https://github.com/hmcts/auto-shutdown/issues/118"
+
+        "change_jira_id": "testing",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/337"
     }
 ]
