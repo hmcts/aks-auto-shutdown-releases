@@ -23,7 +23,8 @@ except FileNotFoundError:
 for x in range(len(listObj)):
     d = listObj[x]
     end_date = parse(d["skip_end_date"], dayfirst=True).date()
-    if today >= end_date:
+    #logic: if entry is valid, it will write to a new file, which replaces the exisiting file.
+    if today > end_date:
         print("======== Deleting ========")
         print(d)
     else:

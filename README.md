@@ -1,4 +1,5 @@
 # aks-auto-shutdown
+Config for Auto-Shutdown/Start of the AKS clusters
 
 In the near future, all environments excluding Production will be automatically shutdown. This action is to reduce the unnecessary infrastructure costs while the environments are not in use.
 
@@ -9,14 +10,14 @@ In the near future, all environments excluding Production will be automatically 
 ## Skip shutdown functionality
 
 In the event that an environment or environments are needed outside of the default hours, you can raise an "issue" to automatically exclude it from the shutdown schedule.
-- [Complete this issue form](https://github.com/hmcts/aks-auto-shutdown/issues/new?assignees=&labels=&projects=&template=shutdown_form.yaml).
-- Multile enviornments within the same "Business area" can be selected at the same time.
-- "Cross-cutting" = Shared Services
+- [Complete this issue form](https://github.com/hmcts/aks-auto-shutdown/issues/new?assignees=&labels=&projects=&template=skip-auto-shutdown-request.yaml).
+- Multiple environments within the same "Business area" can be selected at the same time.
+- "Cross-Cutting" = Shared Services
 - Enter the "start date" for when automatic shutdown skips should begin.
 - If available, enter an end date for when your desired enviornment nolonger needs to be skipped from the automatic shutdown schedule.
-- If no end date is provided, it will defautl to the same day as the start date.
+- If no end date is provided, it will default to the same day as the start date.
 - Select "Submit new issue"
-- Wait for form processing to complete (~30 seconds) - you will see feedback comments if there are errors or when processing is complete.
+- Wait for form processing to complete (~5 seconds) - you will see feedback comments if there are errors or when processing is complete.
     - In the event you need to edit your issue due to an error (unexpected date format error).
     - You can select the three dots (...) followed by "Edit"
     - Make your change

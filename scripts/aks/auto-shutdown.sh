@@ -51,11 +51,11 @@ jq -c '.[]' <<< $CLUSTERS | while read cluster; do
             fi
         done < <(jq -c '.[]' issues_list.json)
         if [[ $SKIP == "false" ]]; then
-            echo -e "${GREEN}SIMULATION: About to shutdown cluster $cluster_name (rg:$RESOURCE_GROUP)"
+            echo -e "${GREEN}About to shutdown cluster $cluster_name (rg:$RESOURCE_GROUP)"
             #echo az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
             #az aks stop --resource-group $RESOURCE_GROUP --name $cluster_name --no-wait || echo Ignoring any errors stopping cluster
         else
-            echo -e "${AMBER}SIMULATION: cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
+            echo -e "${AMBER}cluster $cluster_name (rg:$RESOURCE_GROUP) has been skipped from todays shutdown schedule"
         fi
     done # end_of_cluster_loop
 done
