@@ -10,7 +10,7 @@ import os
 start_date = os.getenv("START_DATE")
 end_date = os.getenv("END_DATE")
 env_file_path = os.getenv("GITHUB_ENV")
-error_in_costs = false
+error_in_costs = "false"
 
 #Read start/end dates from env vars
 start = parse(start_date, dayfirst=True).date()
@@ -46,7 +46,7 @@ def azPriceAPI(vm_sku, productNameVar, osQuery,retry=0):
             return azPriceAPI(vm_sku, productNameVar, osQuery,retry+1)
         else:
             print("Unable to get costs, defaulting to £0.00")
-            error_in_costs = true
+            error_in_costs = "true"
             default_rate = 0
             return default_rate
 
