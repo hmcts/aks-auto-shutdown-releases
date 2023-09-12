@@ -10,6 +10,7 @@ import os
 start_date = os.getenv("START_DATE")
 end_date = os.getenv("END_DATE")
 env_file_path = os.getenv("GITHUB_ENV")
+error_in_costs = false
 
 #Read start/end dates from env vars
 start = parse(start_date, dayfirst=True).date()
@@ -40,11 +41,12 @@ def azPriceAPI(vm_sku, productNameVar, osQuery,retry=0):
 
     #API occasionally fails to return a value which was causing issues in cost feedback to users. See DTSPO-15193
     #Retry will attempt up to 50 retries. If it is still unable to return a value, the rate will be defaulted to 0.
-    except KeyError:
+    except:
         if retry < 50: #Edit retry limit here.
             return azPriceAPI(vm_sku, productNameVar, osQuery,retry+1)
         else:
             print("Unable to get costs, defaulting to £0.00")
+            error_in_costs = true
             default_rate = 0
             return default_rate
 
@@ -93,4 +95,5 @@ os.remove("sku_details.txt")
 with open(env_file_path, 'a') as env_file:
     env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
     env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
+    env_file.write('\n' + "COST_ERRORS=" + str(error_in_costs))
     env_file.close()
