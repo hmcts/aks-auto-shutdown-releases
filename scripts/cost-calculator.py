@@ -89,7 +89,7 @@ with open("sku_details.txt", "r") as filestream:
     cost_output_formatted = f"{cost_output:,}"
 
 #Delete temp text file.
-os.remove("sku_details.txt")
+#os.remove("sku_details.txt")
 
 #Update GitHub env vars with values for issue comment and for pipeline logic.
 with open(env_file_path, 'a') as env_file:
