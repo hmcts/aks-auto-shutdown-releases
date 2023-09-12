@@ -25,6 +25,7 @@ diff = (end - start).days
 total_days = (diff +1)
 weekend_days = (total_days - business_days)
 
+#FUnction to add entries to the GitHub env list.
 def writeVar(varName, varValue):
     with open(env_file_path, 'a') as env_file:
         env_file.write('\n' + varName + "=" + str(varValue) + '\n')
@@ -93,14 +94,7 @@ with open("sku_details.txt", "r") as filestream:
     cost_output_formatted = f"{cost_output:,}"
 
 #Delete temp text file.
-#os.remove("sku_details.txt")
-
-#Update GitHub env vars with values for issue comment and for pipeline logic.
-#with open(env_file_path, 'a') as env_file:
- #   env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
-  #  env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
-   # env_file.write('\n' + "COST_ERRORS=" + str(error_in_costs))
-    #env_file.close()
+os.remove("sku_details.txt")
 
 writeVar("COST_DETAILS", cost_output)
 writeVar("COST_DETAILS_FORMATTED", cost_output_formatted)
