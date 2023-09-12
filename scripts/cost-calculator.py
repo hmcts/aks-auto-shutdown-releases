@@ -10,7 +10,6 @@ import os
 start_date = os.getenv("START_DATE")
 end_date = os.getenv("END_DATE")
 env_file_path = os.getenv("GITHUB_ENV")
-error_in_costs = "false"
 
 #Read start/end dates from env vars
 start = parse(start_date, dayfirst=True).date()
@@ -25,6 +24,11 @@ business_days = np.busday_count(start, (end + timedelta(days=1)))
 diff = (end - start).days
 total_days = (diff +1)
 weekend_days = (total_days - business_days)
+
+def writeVar(varName, varValue):
+    with open(env_file_path, 'a') as env_file:
+        env_file.write('\n' + varName + "=" + str(varValue) + '\n')
+        env_file.close()
 
 def azPriceAPI(vm_sku, productNameVar, osQuery,retry=0):
     try:
@@ -46,7 +50,7 @@ def azPriceAPI(vm_sku, productNameVar, osQuery,retry=0):
             return azPriceAPI(vm_sku, productNameVar, osQuery,retry+1)
         else:
             print("Unable to get costs, defaulting to £0.00")
-            error_in_costs = "true"
+            writeVar("ERROR_IN_COSTS", "true")
             default_rate = 0
             return default_rate
 
@@ -92,8 +96,11 @@ with open("sku_details.txt", "r") as filestream:
 #os.remove("sku_details.txt")
 
 #Update GitHub env vars with values for issue comment and for pipeline logic.
-with open(env_file_path, 'a') as env_file:
-    env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
-    env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
-    env_file.write('\n' + "COST_ERRORS=" + str(error_in_costs))
-    env_file.close()
+#with open(env_file_path, 'a') as env_file:
+ #   env_file.write('\n' + "COST_DETAILS=" + str(cost_output) + '\n')
+  #  env_file.write("COST_DETAILS_FORMATTED=" + str(cost_output_formatted))
+   # env_file.write('\n' + "COST_ERRORS=" + str(error_in_costs))
+    #env_file.close()
+
+writeVar("COST_DETAILS", cost_output)
+writeVar("COST_DETAILS_FORMATTED", cost_output_formatted)
