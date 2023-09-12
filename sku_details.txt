@@ -1,2 +1,0 @@
-Standard_D4ds_v5,Linux,16
-Standard_D4ds_v5test,Linux,1
