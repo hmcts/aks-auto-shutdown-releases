@@ -113,7 +113,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            We have been unable to estimate the cost of this skip request. Your skip request has still been successfully processed.
+            We have been unable to estimate the cost of this skip request.
 
       - name: Add high cost label
         if: env.COST_DETAILS > 5000
