@@ -122,5 +122,4 @@ rm sku_details.txt
 nodeSummary >>sku_details.txt
 
 #adding test entry to cause cost failure scenario. Uncomment as needed.
-echo "Standard_D4ds_v5test,Linux,1" >>sku_details.txt
-echo "Standard_D4ds_v6test,Linux,1" >>sku_details.txt
+#echo "Standard_D4ds_v5test,Linux,1" >>sku_details.txt
