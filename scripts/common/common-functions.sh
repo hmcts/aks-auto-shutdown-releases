@@ -20,6 +20,12 @@ function notification() {
         ${registrySlackWebhook}
 }
 
+function get_current_date() {
+  local current_date_formatting
+  current_date_formatting=$($date_command +'%Y-%m-%d %H:%M')
+  $date_command -d "$current_date_formatting 00:00:00" +%s
+}
+
 function get_current_date_seconds() {
   local current_date_formatting
   current_date_formatting=$($date_command +'%Y-%m-%d')

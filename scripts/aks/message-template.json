@@ -29,6 +29,10 @@
 				{
 					"type": "mrkdwn",
 					"text": "*Value*\n£"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Enviornment*\n"
 				}
 			]
 		}

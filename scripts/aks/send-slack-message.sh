@@ -11,10 +11,11 @@ rm slack-payload.json
 id=$2
 request_url="*<$3|$id>*"
 business_area=$4
-current_date=$(get_current_date_seconds)
+current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
+environment="$8"
 
 # Use jq with variables
 jq --arg new_url "$request_url" \
@@ -23,12 +24,14 @@ jq --arg new_url "$request_url" \
    --arg start_date "$start_date" \
    --arg end_date "$end_date" \
    --arg cost_value "$cost_value" \
+   --arg cost_value "$environment" \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*When:*\n\($current_date)" |
     .blocks[1].fields[2].text |= "*Start Date:*\n\($start_date)" |
     .blocks[1].fields[3].text |= "*End Date:*\n\($end_date)" |
-    .blocks[1].fields[4].text |= "*Value:*\n\($cost_value)"' scripts/aks/message-template.json > slack-payload.json
+    .blocks[1].fields[4].text |= "*Value:*\n\($cost_value)" |
+    .blocks[1].fields[4].text |= "*Environment:*\n\($environment)"' scripts/aks/message-template.json > slack-payload.json
 
 MESSAGE=$(< slack-payload.json)
 
