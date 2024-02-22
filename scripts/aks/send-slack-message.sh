@@ -15,7 +15,14 @@ current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
-environment=$($8 | jq -r '.Environment | join(",")')
+env_input="$8"
+environment=$($env_input | jq -r '.Environment | join(",")')
+
+echo "env_input"
+echo $env_input
+
+echo "environment"
+echo $environment
 
 # Use jq with variables
 jq --arg new_url "$request_url" \
