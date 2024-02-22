@@ -122,7 +122,7 @@ jobs:
           env.APPROVAL_NEEDED = true
 
       - name: Add high cost label
-        if: env.COST_DETAILS >= 2000 && < 6000
+        if: env.COST_DETAILS >= 2000 && env.COST_DETAILS < 6000
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "High Cost"
