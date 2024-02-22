@@ -1,4 +1,5 @@
 #!/bin/bash
+source scripts/common/common-functions.sh
 
 WEBHOOK_URL=$1
 #curl -s -X POST --data-urlencode "payload={\"channel\": \"${CHANNEL_NAME}\", \"username\": \"Plato\", \"text\": \"${MESSAGE}\", \"icon_emoji\": \":plato:\"}" ${WEBHOOK_URL}
@@ -10,7 +11,7 @@ rm slack-payload.json
 id=$2
 request_url="*<$3|$id>*"
 business_area=$4
-current_date=$(DATE)
+current_date=$(get_current_date_seconds)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
