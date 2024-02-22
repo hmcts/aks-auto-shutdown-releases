@@ -84,5 +84,14 @@
         "business_area": "cft",
         "change_jira_id": "dtspo",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/472"
+    },
+    {
+        "start_date": "04-03-2024",
+        "end_date": "04-03-2024",
+        "request_type": "stop",
+        "environment": "Test / Perftest",
+        "business_area": "cft",
+        "change_jira_id": "dtspo-0004",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/473"
     }
 ]
