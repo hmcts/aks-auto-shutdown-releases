@@ -28,7 +28,7 @@ jq --arg new_url "$request_url" \
     .blocks[1].fields[1].text |= "*When:*\n\($current_date)" |
     .blocks[1].fields[2].text |= "*Start Date:*\n\($start_date)" |
     .blocks[1].fields[3].text |= "*End Date:*\n\($end_date)" |
-    .blocks[1].fields[4].text |= "*Value:*\n\($cost_value)"' message-template.json > slack-payload.json
+    .blocks[1].fields[4].text |= "*Value:*\n\($cost_value)"' scripts/aks/message-template.json > slack-payload.json
 
 MESSAGE=$(< slack-payload.json)
 
