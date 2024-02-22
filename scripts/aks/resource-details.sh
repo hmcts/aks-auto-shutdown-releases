@@ -78,8 +78,6 @@ while read i; do
     get_costs
 done < <(jq -r 'last | .environment[]' issues_list.json || jq -r 'last | .environment' issues_list.json)
 
-
-env_test=$(jq -r 'last | .environment[]' issues_list.json || jq -r 'last | .environment' issues_list.json)
 #Add GitHub env vars
 echo START_DATE=$start_date >>$GITHUB_ENV
 echo END_DATE=$end_date >>$GITHUB_ENV

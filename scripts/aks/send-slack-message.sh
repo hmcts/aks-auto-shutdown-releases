@@ -15,13 +15,10 @@ current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
-environment="$8"
+environment=$8
 
 echo "environment"
 echo $environment
-
-echo "current_date"
-echo $current_date
 
 # Use jq with variables
 jq --arg new_url "$request_url" \
