@@ -15,11 +15,7 @@ current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
-env_input=$8
-environment=$($9 | jq -r '.Environment | join(",")')
-
-echo "env_input"
-echo $env_input
+environment="$8"
 
 echo "environment"
 echo $environment

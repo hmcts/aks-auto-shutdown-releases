@@ -21,8 +21,7 @@ function notification() {
 }
 
 function get_current_date() {
-  local current_date_formatting
-  current_date_formatting=$($date_command +'%Y-%m-%d %H:%M')
+  $date_command +'%Y-%m-%d %H:%M'
 }
 
 function get_current_date_seconds() {
