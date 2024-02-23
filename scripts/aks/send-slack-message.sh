@@ -15,7 +15,7 @@ current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
-environment=$8
+environment="'$8'"
 
 echo "environment"
 echo $environment
@@ -27,7 +27,7 @@ jq --arg new_url "$request_url" \
    --arg start_date "$start_date" \
    --arg end_date "$end_date" \
    --arg cost_value "$cost_value" \
-   --arg environment "$environment" \
+   --arg environment $environment \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |
