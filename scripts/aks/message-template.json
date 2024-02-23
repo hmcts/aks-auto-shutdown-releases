@@ -16,7 +16,7 @@
 				},
 				{
 					"type": "mrkdwn",
-					"text": "*When:*\n"
+					"text": "*Environment:*\n"
 				},
 				{
 					"type": "mrkdwn",
@@ -32,7 +32,7 @@
 				},
 				{
 					"type": "mrkdwn",
-					"text": "*Enviornment*\n"
+					"text": "*Submitted*\n"
 				}
 			]
 		}
