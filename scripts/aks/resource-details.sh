@@ -43,7 +43,7 @@ function get_costs() {
         cluster_business_area=${cluster_business_area/ss/cross-cutting}
 
         business_area_entry=$(jq -r '. | last | .business_area' issues_list.json)
-        env_entry=$(jq '. | last | .environment' issues_list.json)
+        env_entry=$(jq -r -s '. | last | .environment' issues_list.json)
         start_date=$(jq -r '. | last | .start_date' issues_list.json)
         end_date=$(jq -r '. | last | .end_date' issues_list.json)
         request_url=$(jq -r '. | last | .issue_link' issues_list.json)
