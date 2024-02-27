@@ -29,7 +29,7 @@ jq --arg new_url "$request_ur_link" \
    --arg start_date "$START_DATE" \
    --arg end_date "$END_DATE" \
    --arg cost_value "£$COST_DETAILS_FORMATTED" \
-   --arg environment $environment \
+   --arg environment "$test_env" \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |
