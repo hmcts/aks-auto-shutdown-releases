@@ -15,7 +15,7 @@ current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
-environment=$8
+environment="$8"
 
 echo "raw script input:"
 echo $environment
