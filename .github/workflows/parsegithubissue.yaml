@@ -128,7 +128,7 @@ jobs:
           labels: "High Cost"
 
       - name: Add very high cost label
-        if: env.APPROVAL_NEEDED == true
+        if: env.APPROVAL_NEEDED == 'true'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Very high cost"
