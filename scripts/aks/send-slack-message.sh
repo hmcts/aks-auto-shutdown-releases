@@ -17,11 +17,12 @@ end_date="$6"
 cost_value="£$7"
 environment=$8
 
+echo "raw script input: $environment"
 var_without_brackets="${environment//[\"[]/}"
+echo "var without brackets: $var_without_brackets"
 var_without_quotes="${var_without_brackets//]/}"
 
-echo "environment"
-echo $var_without_quotes
+echo "var without quotes: $var_without_quotes"
 
 # Use jq with variables
 jq --arg new_url "$request_url" \
