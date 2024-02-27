@@ -10,10 +10,11 @@ rm slack-payload.json
 id=$CHANGE_JIRA_ID
 request_ur_link="*<$REQUEST_URL|$id>*"
 current_date=$(get_current_date)
+environment="TEST"
 
-echo "raw script input:"
-
-environment=$(echo $NEW_DATA | jq -r '.Environment | join(", ")')
+echo "jq output:"
+test_env=$(echo "$NEW_DATA" | jq -r '.Environment | join(", ")')
+echo $test_env
 
 #var_without_brackets="${environment//[\"[]/}"
 #echo "var without brackets: $var_without_brackets"
