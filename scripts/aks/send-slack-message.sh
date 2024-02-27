@@ -13,7 +13,9 @@ current_date=$(get_current_date)
 environment="TEST"
 
 echo "jq output:"
-test_env=$(echo "$new_data" | jq -r 'if .Environment | type == "array" then .Environment | join(", ") else .Environment end')
+#test_env=$(echo "$new_data" | jq -r 'if .Environment | type == "array" then .Environment | join(", ") else .Environment end')
+test_env=$(echo "$new_data" | jq -r 'if .Environment | type == "array" then .Environment[] | tostring else .Environment end')
+
 echo $test_env
 
 #var_without_brackets="${environment//[\"[]/}"
