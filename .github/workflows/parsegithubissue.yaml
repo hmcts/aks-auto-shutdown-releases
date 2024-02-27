@@ -119,7 +119,7 @@ jobs:
         if: env.COST_DETAILS >= 6000
         continue-on-error: true
         run: |
-          env.APPROVAL_NEEDED = true
+          echo "APPROVAL_NEEDED=true" >> $GITHUB_ENV
 
       - name: Add high cost label
         if: env.COST_DETAILS >= 2000 && env.COST_DETAILS < 6000
