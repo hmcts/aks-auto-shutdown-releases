@@ -19,11 +19,11 @@ environment=$8
 
 echo "raw script input:"
 echo $environment
-var_without_brackets="${environment//[\"[]/}"
-echo "var without brackets: $var_without_brackets"
-var_without_quotes="${var_without_brackets//\"]/}"
+#var_without_brackets="${environment//[\"[]/}"
+#echo "var without brackets: $var_without_brackets"
+#var_without_quotes="${var_without_brackets//\"]/}"
 
-echo "var without quotes: $var_without_quotes"
+#echo "var without quotes: $var_without_quotes"
 
 # Use jq with variables
 jq --arg new_url "$request_url" \
@@ -32,7 +32,7 @@ jq --arg new_url "$request_url" \
    --arg start_date "$start_date" \
    --arg end_date "$end_date" \
    --arg cost_value "$cost_value" \
-   --arg environment "$var_without_quotes" \
+   --arg environment "$environment" \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |

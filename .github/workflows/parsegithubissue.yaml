@@ -199,4 +199,4 @@ jobs:
       - name: Send slack message
         if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
-        run: ./scripts/aks/send-slack-message.sh ${{ env.SLACK_WEBHOOK }} ${{ env.CHANGE_JIRA_ID }} ${{ env.REQUEST_URL }} ${{ env.BUSINESS_AREA_ENTRY }} ${{ env.START_DATE }} ${{ env.END_DATE }} ${{ env.COST_DETAILS_FORMATTED }} ${{ env.ENVIRONMENT }}
+        run: ./scripts/aks/send-slack-message.sh ${{ env.SLACK_WEBHOOK }} ${{ env.CHANGE_JIRA_ID }} ${{ env.REQUEST_URL }} ${{ env.BUSINESS_AREA_ENTRY }} ${{ env.START_DATE }} ${{ env.END_DATE }} ${{ env.COST_DETAILS_FORMATTED }} "${{ env.ENVIRONMENT }}"
