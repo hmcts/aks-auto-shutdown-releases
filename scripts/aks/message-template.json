@@ -33,6 +33,10 @@
 				{
 					"type": "mrkdwn",
 					"text": "*Submitted*\n"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Submitter*\n"
 				}
 			]
 		}
