@@ -15,10 +15,10 @@ current_date=$(get_current_date)
 start_date="$5"
 end_date="$6"
 cost_value="£$7"
-environment=$8
-
+new_data=$8
+environment="TEST"
 echo "raw script input:"
-echo $environment
+echo $new_data
 #var_without_brackets="${environment//[\"[]/}"
 #echo "var without brackets: $var_without_brackets"
 #var_without_quotes="${var_without_brackets//\"]/}"
