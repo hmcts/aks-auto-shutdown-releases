@@ -10,15 +10,8 @@ rm slack-payload.json
 id=$CHANGE_JIRA_ID
 request_ur_link="*<$REQUEST_URL|$id>*"
 current_date=$(get_current_date)
-environment="TEST"
 
-echo "jq output:"
-#test_env=$(echo "$new_data" | jq -r '.Environment | join(", ")')
-# Assuming your variable is named var
-clean_var=$(echo "$ENVIRONMENT" | sed 's/\[//; s/\]//; s/"//g')
-
-
-echo $clean_var
+environment_field=$(echo "$ENVIRONMENT" | sed 's/\[//; s/\]//; s/"//g')
 
 #var_without_brackets="${environment//[\"[]/}"
 #echo "var without brackets: $var_without_brackets"
@@ -33,7 +26,7 @@ jq --arg new_url "$request_ur_link" \
    --arg start_date "$START_DATE" \
    --arg end_date "$END_DATE" \
    --arg cost_value "£$COST_DETAILS_FORMATTED" \
-   --arg environment "$clean_var" \
+   --arg environment "$environment_field" \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |

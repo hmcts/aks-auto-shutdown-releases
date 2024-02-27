@@ -21,7 +21,7 @@ function notification() {
 }
 
 function get_current_date() {
-  $date_command +'%Y-%m-%d %H:%M'
+  $date_command +'%d-%m-%Y %H:%M'
 }
 
 function get_current_date_seconds() {
