@@ -13,7 +13,9 @@ current_date=$(get_current_date)
 environment="TEST"
 
 echo "raw script input:"
-echo $NEW_DATA
+
+echo "$NEW_DATA" | jq -r '.Environment | join(", ")'
+
 #var_without_brackets="${environment//[\"[]/}"
 #echo "var without brackets: $var_without_brackets"
 #var_without_quotes="${var_without_brackets//\"]/}"
