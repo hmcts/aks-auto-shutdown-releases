@@ -14,8 +14,11 @@ environment="TEST"
 
 echo "jq output:"
 #test_env=$(echo "$new_data" | jq -r '.Environment | join(", ")')
+# Assuming your variable is named var
+clean_var=$(echo "$ENVIRONMENT" | sed 's/\[//; s/\]//; s/"//g')
 
-echo $ENVIRONMENT
+
+echo $clean_var
 
 #var_without_brackets="${environment//[\"[]/}"
 #echo "var without brackets: $var_without_brackets"
@@ -30,7 +33,7 @@ jq --arg new_url "$request_ur_link" \
    --arg start_date "$START_DATE" \
    --arg end_date "$END_DATE" \
    --arg cost_value "£$COST_DETAILS_FORMATTED" \
-   --arg environment "$ENVIRONMENT" \
+   --arg environment "$clean_var" \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |
