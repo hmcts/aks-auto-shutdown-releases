@@ -20,7 +20,7 @@ environment=$8
 echo "raw script input: $environment"
 var_without_brackets="${environment//[\"[]/}"
 echo "var without brackets: $var_without_brackets"
-var_without_quotes="${var_without_brackets//]/}"
+var_without_quotes="${var_without_brackets//\"]/}"
 
 echo "var without quotes: $var_without_quotes"
 
@@ -43,3 +43,4 @@ jq --arg new_url "$request_url" \
 MESSAGE=$(< slack-payload.json)
 
 curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" ${WEBHOOK_URL}
+
