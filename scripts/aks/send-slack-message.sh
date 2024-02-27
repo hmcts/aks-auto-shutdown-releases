@@ -1,24 +1,19 @@
 #!/bin/bash
 source scripts/common/common-functions.sh
 
-WEBHOOK_URL=$1
 #curl -s -X POST --data-urlencode "payload={\"channel\": \"${CHANNEL_NAME}\", \"username\": \"Plato\", \"text\": \"${MESSAGE}\", \"icon_emoji\": \":plato:\"}" ${WEBHOOK_URL}
 rm slack-payload.json
 
 # Define Bash variables
 
 # Define Bash variables
-id=$2
-request_url="*<$3|$id>*"
-business_area=$4
+id=$CHANGE_JIRA_ID
+request_ur_link="*<$REQUEST_URL|$id>*"
 current_date=$(get_current_date)
-start_date="$5"
-end_date="$6"
-cost_value="£$7"
-new_data=$8
 environment="TEST"
+
 echo "raw script input:"
-echo $new_data
+echo $NEW_DATA
 #var_without_brackets="${environment//[\"[]/}"
 #echo "var without brackets: $var_without_brackets"
 #var_without_quotes="${var_without_brackets//\"]/}"
@@ -26,12 +21,12 @@ echo $new_data
 #echo "var without quotes: $var_without_quotes"
 
 # Use jq with variables
-jq --arg new_url "$request_url" \
-   --arg business_area "$business_area" \
+jq --arg new_url "$request_ur_link" \
+   --arg business_area "$BUSINESS_AREA_ENTRY" \
    --arg current_date "$current_date" \
-   --arg start_date "$start_date" \
-   --arg end_date "$end_date" \
-   --arg cost_value "$cost_value" \
+   --arg start_date "$START_DATE" \
+   --arg end_date "$END_DATE" \
+   --arg cost_value "£$COST_DETAILS_FORMATTED" \
    --arg environment $environment \
    '.blocks[0].text.text |= "You have a new request:\n\($new_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
@@ -43,5 +38,5 @@ jq --arg new_url "$request_url" \
 
 MESSAGE=$(< slack-payload.json)
 
-curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" ${WEBHOOK_URL}
+curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" ${SLACK_WEBHOOK}
 
