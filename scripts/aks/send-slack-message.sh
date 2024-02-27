@@ -43,4 +43,3 @@ jq --arg new_url "$request_url" \
 MESSAGE=$(< slack-payload.json)
 
 curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" ${WEBHOOK_URL}
-rm slack-payload.json
