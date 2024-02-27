@@ -209,3 +209,4 @@ jobs:
           END_DATE: ${{ env.END_DATE }}
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           NEW_DATA: ${{ env.NEW_DATA }}
+          ENVIRONMENT: ${{ env.ENVIRONMENT }}
