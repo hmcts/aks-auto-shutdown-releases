@@ -28,7 +28,7 @@
 				},
 				{
 					"type": "mrkdwn",
-					"text": "*Value*\n£"
+					"text": "*Submitter*\n"
 				},
 				{
 					"type": "mrkdwn",
@@ -36,7 +36,7 @@
 				},
 				{
 					"type": "mrkdwn",
-					"text": "*Submitter*\n"
+					"text": "*Value*\n£"
 				}
 			]
 		}

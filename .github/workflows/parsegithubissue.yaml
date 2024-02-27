@@ -209,4 +209,4 @@ jobs:
           END_DATE: ${{ env.END_DATE }}
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
-          SUBMITTER: ${{ github.actor }}
+          REQUESTER: ${{ github.actor }}
