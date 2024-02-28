@@ -176,14 +176,8 @@ jobs:
         with:
           labels: "Error in form"
 
-      - name: Add approved label
-        if: env.APPROVAL_NEEDED == 'false'
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: "approved"
-
       - name: Commit to master
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_NEEDED == 'true'
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -195,7 +189,7 @@ jobs:
           echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
     
       - name: Close Issue
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_NEEDED == 'true'
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
