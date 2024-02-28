@@ -5,6 +5,7 @@ on:
     types:
       - opened
       - edited
+      - labeled
   workflow_dispatch:
 env:
   GH_TOKEN: ${{ secrets.PLATFORM_USER_TOKEN }}
@@ -176,7 +177,7 @@ jobs:
           labels: "Error in form"
 
       - name: Commit to master
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_NEEDED == 'false'
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -188,7 +189,7 @@ jobs:
           echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
     
       - name: Close Issue
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_NEEDED == 'false'
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -210,27 +211,3 @@ jobs:
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.actor }}
-
-      - name: Create commits
-        if: ${{ env.APPROVAL_NEEDED == 'true' }}
-        run: |
-          git config user.name hmcts-platform-operations
-          git config user.email github-platform-operations@hmcts.net
-          git add .
-          git commit -m parseissue-${{ github.event.issue.number }}
-
-      - name: Create Pull Request
-        if: ${{ env.APPROVAL_NEEDED == 'true' }}
-        id: cpr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          commit-message: ${{ github.event.issue.number }}
-          committer: github-platform-operations@hmcts.net
-          author: github-platform-operations@hmcts.net
-          signoff: false
-          branch: ${{ github.event.issue.number }}
-          delete-branch: true
-          title: '[Example] ${{ github.event.issue.number }} - needs approval'
-          body: |
-            Auto Shutdown request - ${{ github.event.issue.number }}
-          draft: false
