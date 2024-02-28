@@ -211,15 +211,8 @@ jobs:
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.actor }}
 
-jobs:
-  createPullRequest:
-    runs-on: ubuntu-latest
-    if: ${{ env.APPROVAL_NEEDED == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ env.GH_TOKEN }}
       - name: Create commits
+        if: ${{ env.APPROVAL_NEEDED == 'true' }}
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -227,6 +220,7 @@ jobs:
           git commit -m parseissue-${{ github.event.issue.number }}
 
       - name: Create Pull Request
+        if: ${{ env.APPROVAL_NEEDED == 'true' }}
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
