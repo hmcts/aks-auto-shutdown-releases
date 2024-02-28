@@ -220,5 +220,14 @@
         "business_area": "cft",
         "change_jira_id": "DTSPO-006",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/544"
+    },
+    {
+        "start_date": "10-05-2024",
+        "end_date": "10-05-2024",
+        "request_type": "stop",
+        "environment": "ITHC",
+        "business_area": "cross-cutting",
+        "change_jira_id": "test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/548"
     }
 ]
