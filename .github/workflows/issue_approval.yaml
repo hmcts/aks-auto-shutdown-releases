@@ -1,0 +1,33 @@
+name: Auto Parse github form
+run-name: ${{ github.actor }} - issue:${{ github.event.issue.number }}
+on:
+  issues:
+    types: [ labled ]
+  workflow_dispatch:
+env:
+  GH_TOKEN: ${{ secrets.PLATFORM_USER_TOKEN }}
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+permissions:
+  id-token: write
+jobs:
+  approval_granted:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'approved')
+    steps:
+      - name: 
+        run: |
+          git config user.name hmcts-platform-operations
+          git config user.email github-platform-operations@hmcts.net
+          git add .
+          git commit -m parseissue-${{ github.event.issue.number }}
+          git push
+          commit_tree_url=$(gh browse -c -n)
+          commit_url=${commit_tree_url/tree/commit}
+          echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
+
+    #Adds label for user feedback
+      - name: add processing label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "Processing"
