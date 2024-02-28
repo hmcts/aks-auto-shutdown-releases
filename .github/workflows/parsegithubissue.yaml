@@ -176,6 +176,12 @@ jobs:
         with:
           labels: "Error in form"
 
+      - name: Add approved label
+        if: env.APPROVAL_NEEDED == 'false'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "approved"
+
       - name: Commit to master
         if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
         run: |
