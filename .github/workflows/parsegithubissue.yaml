@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.user.login != 'renovate[bot]' }}
     steps:
+      - name: check user permission
+        uses: 74th/workflow-permission-action@1.0.0
+        if: contains(github.event.issue.labels.*.name, 'approved')
+        with:
+          users: hippogriffin
     #Adds reaction for user feedback
       - name: Add eyes reaction
         uses: aidan-mundy/react-to-issue@v1.1.2
