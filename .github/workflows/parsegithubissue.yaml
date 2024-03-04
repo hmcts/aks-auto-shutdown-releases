@@ -23,7 +23,7 @@ jobs:
         uses: 74th/workflow-permission-action@1.0.0
         if: contains(github.event.issue.labels.*.name, 'approved')
         with:
-          users: hippogriffin
+          users: endakelly
     #Adds reaction for user feedback
       - name: Add eyes reaction
         uses: aidan-mundy/react-to-issue@v1.1.2
