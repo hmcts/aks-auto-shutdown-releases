@@ -34,10 +34,11 @@ jobs:
       - name: exit flow    
         run: exit 1
 
-  parse:
+  process_request:
     permissions: write-all
     runs-on: ubuntu-latest
-    if: success() && github.event.issue.user.login != 'renovate[bot]'
+    needs: approval-check
+    if: github.event.issue.user.login != 'renovate[bot]'
     steps:
     #Adds reaction for user feedback
       - name: Add eyes reaction
