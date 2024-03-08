@@ -13,34 +13,37 @@ env:
   APPROVAL_NEEDED: false
 permissions:
   id-token: write
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   approval-check:
     permissions: write-all
     runs-on: ubuntu-latest
     if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor && github.event.issue.user.login != 'renovate[bot]'
     steps:
+
+
+  process-request:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: github.event.issue.user.login != 'renovate[bot]'
+    steps:
       - name: Cannot self approve comment
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Requester cannot also be approver - please seek a second approver.
       - name: Remove approved label
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: |
             approved
 
       - name: exit flow    
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
         run: exit 1
 
-  process-request:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    if: ${{ success() }} && github.event.issue.user.login != 'renovate[bot]'
-    steps:
     #Adds reaction for user feedback
       - name: Add eyes reaction
         uses: aidan-mundy/react-to-issue@v1.1.2
