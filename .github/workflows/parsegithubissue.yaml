@@ -13,13 +13,11 @@ env:
   APPROVAL_NEEDED: false
 permissions:
   id-token: write
-
-if: github.event.issue.user.login != 'renovate[bot]'
 jobs:
   approval-check:
     permissions: write-all
     runs-on: ubuntu-latest
-    if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
+    if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor && github.event.issue.user.login != 'renovate[bot]'
     steps:
       - name: Cannot self approve comment
         uses: peter-evans/create-or-update-comment@v3.1.0
