@@ -14,13 +14,6 @@ env:
 permissions:
   id-token: write
 jobs:
-  approval-check:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor && github.event.issue.user.login != 'renovate[bot]'
-    steps:
-
-
   process-request:
     permissions: write-all
     runs-on: ubuntu-latest
