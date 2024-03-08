@@ -13,7 +13,8 @@ env:
   APPROVAL_NEEDED: false
 permissions:
   id-token: write
-if: ${{ github.event.issue.user.login != 'renovate[bot]' }}
+
+if: github.event.issue.user.login != 'renovate[bot]'
 jobs:
   approval-check:
     permissions: write-all
