@@ -47,8 +47,16 @@ jobs:
             Your request has been denied, most likely due to associated costs being too high.
             Closing issue.
 
-      - name: exit flow if approver == requester || contains(github.event.issue.labels.*.name, 'denied')   
-        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
+      - name: Remove labels
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: contains(github.event.issue.labels.*.name, 'denied')
+        with:
+          labels: |
+            Processing
+            Success
+
+      - name: exit flow if approver == requester   
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'denied')
         run: exit 1
 
     #Adds reaction for user feedback
@@ -238,7 +246,7 @@ jobs:
             Auto-closing issue.
 
       - name: Send slack message
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
+        if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
         run: ./scripts/aks/send-slack-message.sh
         env:
