@@ -16,6 +16,7 @@ jq --arg issue_url "$request_ur_link" \
    --arg current_date "$current_date" \
    --arg cost_value "£$COST_DETAILS_FORMATTED" \
    --arg status "$APPROVAL_STATE" \
+   --arg raw_issue_url "$REQUEST_URL" \
    '.blocks[0].text.text |= "You have a new request:\n\($issue_url)" | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |
@@ -25,7 +26,7 @@ jq --arg issue_url "$request_ur_link" \
     .blocks[1].fields[5].text |= "*Submitted:*\n\($current_date)" |
     .blocks[1].fields[6].text |= "*Value:*\n\($cost_value)" |
     .blocks[1].fields[7].text |= "*Status:*\n\($status)" |
-    .blocks[2].elements[0].value |= $issue_url' scripts/aks/message-template.json > slack-payload.json
+    .blocks[2].elements[0].url |= $issue_url' scripts/aks/message-template.json > slack-payload.json
 
 MESSAGE=$(< slack-payload.json)
 

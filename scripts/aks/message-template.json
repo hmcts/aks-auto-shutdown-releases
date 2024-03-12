@@ -55,7 +55,7 @@
 						"text": "Review Request"
 					},
 					"style": "primary",
-					"value": "request_url"
+					"url": "request_url"
 				}
 			]
 		}		

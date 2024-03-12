@@ -20,7 +20,7 @@ jobs:
     if: github.event.issue.user.login != 'renovate[bot]'
     steps:
       - name: Cannot self approve comment
-        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -28,7 +28,7 @@ jobs:
             Requester cannot also be approver - please seek a second approver.
 
       - name: Remove approved label
-        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: |
@@ -56,7 +56,7 @@ jobs:
             Success
 
       - name: exit flow if approver == requester   
-        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'denied')
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
         run: exit 1
 
     #Adds reaction for user feedback
@@ -184,8 +184,8 @@ jobs:
         with:
           labels: "Cost Error"
 
-      - name: Very High Cost approval gate
-        if: env.COST_DETAILS >= 5000
+      - name: Very High Cost approval comment
+        if: env.COST_DETAILS >= 5000 && github.event.issue.user.login == github.actor
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
