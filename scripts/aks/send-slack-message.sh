@@ -26,7 +26,7 @@ jq --arg issue_url "$request_ur_link" \
     .blocks[1].fields[5].text |= "*Submitted:*\n\($current_date)" |
     .blocks[1].fields[6].text |= "*Value:*\n\($cost_value)" |
     .blocks[1].fields[7].text |= "*Status:*\n\($status)" |
-    .blocks[2].elements[0].url |= $issue_url' scripts/aks/message-template.json > slack-payload.json
+    .blocks[2].elements[0].url |= $raw_issue_url' scripts/aks/message-template.json > slack-payload.json
 
 MESSAGE=$(< slack-payload.json)
 
