@@ -37,8 +37,27 @@
 				{
 					"type": "mrkdwn",
 					"text": "*Value*\n£"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Status*\n"
 				}
 			]
-		}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"emoji": true,
+						"text": "Review Request"
+					},
+					"style": "primary",
+					"value": "click_me_123"
+				}
+			]
+		}		
 	]
 }

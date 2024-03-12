@@ -10,7 +10,7 @@ on:
 env:
   GH_TOKEN: ${{ secrets.PLATFORM_USER_TOKEN }}
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  APPROVAL_NEEDED: false
+  APPROVAL_STATE: "Pending"
 permissions:
   id-token: write
 jobs:
@@ -26,6 +26,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Requester cannot also be approver - please seek a second approver.
+
       - name: Remove approved label
         if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
         uses: actions-ecosystem/action-remove-labels@v1
@@ -33,7 +34,20 @@ jobs:
           labels: |
             approved
 
-      - name: exit flow    
+      - name: set denied status
+        if: contains(github.event.issue.labels.*.name, 'denied')
+        run: echo "APPROVAL_STATE=Denied by ${{ github.actor }}" >> $GITHUB_ENV
+
+      - name: Close Issue with denied
+        if: contains(github.event.issue.labels.*.name, 'denied')
+        uses: peter-evans/close-issue@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment: | 
+            Your request has been denied, most likely due to associated costs being too high.
+            Closing issue.
+
+      - name: exit flow if approver == requester || contains(github.event.issue.labels.*.name, 'denied')   
         if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor
         run: exit 1
 
@@ -134,11 +148,15 @@ jobs:
           body: |
             We have been unable to estimate the cost of this skip request.
 
-      - name: approval-required
-        if: env.COST_DETAILS >= 6000
-        continue-on-error: true
-        run: |
-          echo "APPROVAL_NEEDED=true" >> $GITHUB_ENV
+      - name: Add auto-approved label
+        if: env.COST_DETAILS < 5000
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "auto-approved"
+
+      - name: set auto-approved status
+        if: env.COST_DETAILS < 5000
+        run: echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
 
       - name: Add high cost label
         if: env.COST_DETAILS >= 2000 && env.COST_DETAILS < 6000
@@ -147,7 +165,7 @@ jobs:
           labels: "High Cost"
 
       - name: Add very high cost label
-        if: env.APPROVAL_NEEDED == 'true'
+        if: env.COST_DETAILS >= 5000
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Very high cost"
@@ -159,12 +177,12 @@ jobs:
           labels: "Cost Error"
 
       - name: Very High Cost approval gate
-        if: env.COST_DETAILS >= 6000
+        if: env.COST_DETAILS >= 5000
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Approval has been requested from Platform Operations. This is required due to level of incurred cost associated with this request.
+            Due to the level of cost associated with this request, an approval will be required. Note, you cannot approve your own request.
 
       - name: Remove error labels
         uses: actions-ecosystem/action-remove-labels@v1
@@ -194,8 +212,12 @@ jobs:
         with:
           labels: "Error in form"
 
+      - name: set approved status
+        if: contains(github.event.issue.labels.*.name, 'approved')
+        run: echo "APPROVAL_STATE=Approved by ${{ github.actor }}" >> $GITHUB_ENV
+
       - name: Commit to master
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_NEEDED == 'false'
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'auto-approved')
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -206,8 +228,8 @@ jobs:
           commit_url=${commit_tree_url/tree/commit}
           echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
     
-      - name: Close Issue
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_NEEDED == 'false'
+      - name: Close Issue with success
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'auto-approved')
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -216,7 +238,7 @@ jobs:
             Auto-closing issue.
 
       - name: Send slack message
-        if: env.PROCESS_SUCCESS == 'true'
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved')
         continue-on-error: true
         run: ./scripts/aks/send-slack-message.sh
         env:
@@ -229,3 +251,4 @@ jobs:
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.event.issue.user.login }}
+          APPROVAL_STATE: ${{ env.APPROVAL_STATE }}
