@@ -10,7 +10,9 @@ on:
 env:
   GH_TOKEN: ${{ secrets.PLATFORM_USER_TOKEN }}
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  APPROVAL_STATE: "Pending"
+  APPROVAL_STATE: "Pending Approval"
+  AUTO_APPROVAL_VALUE: 5000
+  HIGH_COST_THRESHOLD: 2000
 permissions:
   id-token: write
 jobs:
@@ -55,7 +57,7 @@ jobs:
             Processing
             Success
 
-      - name: exit flow if approver == requester   
+      - name: exit flow if approver == requester 
         if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
         run: exit 1
 
@@ -157,23 +159,31 @@ jobs:
             We have been unable to estimate the cost of this skip request.
 
       - name: Add auto-approved label
-        if: env.COST_DETAILS < 5000
+        if: env.COST_DETAILS < ${{ env.AUTO_APPROVAL_VALUE }}
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "auto-approved"
 
       - name: set auto-approved status
-        if: env.COST_DETAILS < 5000
+        if: env.COST_DETAILS < ${{ env.AUTO_APPROVAL_VALUE }}
         run: echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
 
+      - name: Add auto approval comment
+        if: env.COST_DETAILS < ${{ env.AUTO_APPROVAL_VALUE }}
+        uses: peter-evans/create-or-update-comment@v3.1.0
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            You request has been automatically approved.
+
       - name: Add high cost label
-        if: env.COST_DETAILS >= 2000 && env.COST_DETAILS < 6000
+        if: env.COST_DETAILS >= ${{ env.HIGH_COST_THRESHOLD }} && env.COST_DETAILS < ${{ env.AUTO_APPROVAL_VALUE }}
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "High Cost"
 
       - name: Add very high cost label
-        if: env.COST_DETAILS >= 5000
+        if: env.COST_DETAILS >= ${{ env.AUTO_APPROVAL_VALUE }}
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Very high cost"
@@ -185,7 +195,7 @@ jobs:
           labels: "Cost Error"
 
       - name: Very High Cost approval comment
-        if: env.COST_DETAILS >= 5000 && github.event.issue.user.login == github.actor
+        if: env.COST_DETAILS >= ${{ env.AUTO_APPROVAL_VALUE }} && github.event.issue.user.login == github.actor
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
