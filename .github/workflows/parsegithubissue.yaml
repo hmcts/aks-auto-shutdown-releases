@@ -72,8 +72,8 @@ jobs:
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Processing"
-    #Remove labels
-      - name: Remove labels
+
+      - name: Add labels
         uses: actions-ecosystem/action-remove-labels@v1
         if: env.PROCESS_SUCCESS == 'false'
         with:
