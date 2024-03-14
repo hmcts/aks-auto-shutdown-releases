@@ -57,9 +57,14 @@ jobs:
           labels: |
             Processing
 
+      - name: exit flow if denied
+        if: contains(github.event.issue.labels.*.name, 'denied')
+        run: exit 0
+
       - name: exit flow if approver == requester 
         if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
         run: exit 1
+
 
     #Adds reaction for user feedback
       - name: Add eyes reaction
@@ -72,8 +77,8 @@ jobs:
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Processing"
-
-      - name: Add labels
+    #Remove labels
+      - name: Remove labels
         uses: actions-ecosystem/action-remove-labels@v1
         if: env.PROCESS_SUCCESS == 'false'
         with:
@@ -88,6 +93,7 @@ jobs:
           token: ${{ env.GH_TOKEN }}
 
       - name: Parse issue
+        id: parse_issue
         uses: onmax/issue-form-parser@v1.4
         with:
           issue_number: ${{ github.event.issue.number }}
@@ -139,32 +145,6 @@ jobs:
         continue-on-error: true
         run: |
           python ./scripts/cost-calculator.py || echo "Calculating cost failed"
-
-      - name: Send denied slack message
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'denied')
-        run: ./scripts/aks/send-slack-message.sh
-        env:
-          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
-          CHANGE_JIRA_ID: ${{ env.CHANGE_JIRA_ID }}
-          REQUEST_URL: ${{ env.REQUEST_URL }}
-          BUSINESS_AREA_ENTRY: ${{ env.BUSINESS_AREA_ENTRY }}
-          START_DATE: ${{ env.START_DATE }}
-          END_DATE: ${{ env.END_DATE }}
-          COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
-          ENVIRONMENT: ${{ env.ENVIRONMENT }}
-          REQUESTER: ${{ github.event.issue.user.login }}
-          APPROVAL_STATE: ${{ env.APPROVAL_STATE }}
-
-      - name: Remove processing labels
-        uses: actions-ecosystem/action-remove-labels@v1
-        if: env.PROCESS_SUCCESS == 'true'
-        with:
-          labels: |
-            Processing
-
-      - name: exit flow if denied
-        if: contains(github.event.issue.labels.*.name, 'denied')
-        run: exit 0
 
       - name: Add cost details as a comment
         if: env.PROCESS_SUCCESS == 'true' && env.ERROR_IN_COSTS != 'true'
@@ -277,6 +257,10 @@ jobs:
             Success! Your [commit](${{ env.COMMIT_URL }}) has been added to the json exclusions file.
             Auto-closing issue.
 
+  send-slack-message:
+    runs-on: ubuntu-latest
+    needs: process-request
+    steps:
       - name: Send slack message
         if: env.PROCESS_SUCCESS == 'true'
         run: ./scripts/aks/send-slack-message.sh
