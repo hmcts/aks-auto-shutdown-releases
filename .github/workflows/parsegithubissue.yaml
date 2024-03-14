@@ -30,11 +30,12 @@ jobs:
             Requester cannot also be approver - please seek a second approver.
 
       - name: Remove approved label
-        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
+        if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved')
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: |
             approved
+            auto-approved
 
       - name: set denied status
         if: contains(github.event.issue.labels.*.name, 'denied')
