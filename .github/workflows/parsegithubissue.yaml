@@ -177,7 +177,7 @@ jobs:
             You request has been automatically approved.
 
       - name: Add high cost label
-        if: env.COST_DETAILS >= env.HIGH_COST_THRESHOLD && env.COST_DETAILS < env.AUTO_APPROVAL_VALUE
+        if: ${{ env.COST_DETAILS >= env.HIGH_COST_THRESHOLD && env.COST_DETAILS < env.AUTO_APPROVAL_VALUE }}
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "High Cost"
@@ -195,7 +195,7 @@ jobs:
           labels: "Cost Error"
 
       - name: Very High Cost approval comment
-        if: env.COST_DETAILS >= env.AUTO_APPROVAL_VALUE && github.event.issue.user.login == github.actor
+        if: ${{ env.COST_DETAILS >= env.AUTO_APPROVAL_VALUE && github.event.issue.user.login == github.actor }}
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
