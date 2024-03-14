@@ -158,6 +158,11 @@ jobs:
           body: |
             We have been unable to estimate the cost of this skip request.
 
+      - name: PRINT VARS for DEBUG
+        run: |
+          echo ${{ env.COST_DETAILS }}
+          echo ${{ env.AUTO_APPROVAL_VALUE }}
+
       - name: Add auto-approved label
         if: ${{ env.COST_DETAILS < env.AUTO_APPROVAL_VALUE }}
         uses: actions-ecosystem/action-add-labels@v1
@@ -235,7 +240,7 @@ jobs:
         run: echo "APPROVAL_STATE=Approved by ${{ github.actor }}" >> $GITHUB_ENV
 
       - name: Commit to master
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'auto-approved')
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == "auto-approved"
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -247,7 +252,7 @@ jobs:
           echo "COMMIT_URL=$(echo $commit_url)" >> $GITHUB_ENV
     
       - name: Close Issue with success
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'auto-approved')
+        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'approved') || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == "auto-approved"
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
