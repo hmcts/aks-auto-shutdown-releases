@@ -146,8 +146,9 @@ jobs:
         if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
         run: |
-          COST_DETAILS_INT=$((${COST_DETAILS}))
-          echo "COST_DETAILS_INT=$COST_DETAILS_INT" >> $GITHUB_ENV
+          COST_DETAILS_INT=$((COST_DETAILS))  # Convert string to integer
+          echo "Integer variable: $COST_DETAILS_INT"
+          echo "COST_DETAILS_INT=$COST_DETAILS_INT" >> $GITHUB_ENV  # Set integer variable in the environment
 
 
       - name: Send denied slack message
