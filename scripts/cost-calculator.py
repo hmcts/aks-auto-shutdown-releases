@@ -31,11 +31,6 @@ def writeStringVar(varName, varValue):
         env_file.write('\n' + varName + "=" + str(varValue) + '\n')
         env_file.close()
 
-def writeIntVar(varName, varValue):
-    with open(env_file_path, 'a') as env_file:
-        env_file.write('\n' + varName + "=" + varValue + '\n')
-        env_file.close()
-
 def azPriceAPI(vm_sku, productNameVar, osQuery,retry=0):
     try:
         #Microsoft Retail Rates Prices API query and response. (https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices)
@@ -101,5 +96,5 @@ with open("sku_details.txt", "r") as filestream:
 #Delete temp text file.
 os.remove("sku_details.txt")
 
-writeIntVar("COST_DETAILS", cost_output)
+writeStringVar("COST_DETAILS", cost_output)
 writeStringVar("COST_DETAILS_FORMATTED", cost_output_formatted)

@@ -142,6 +142,14 @@ jobs:
         run: |
           python ./scripts/cost-calculator.py || echo "Calculating cost failed"
 
+      - name: set integer var for costs
+        if: env.PROCESS_SUCCESS == 'true'
+        continue-on-error: true
+        run: |
+          COST_DETAILS_INT=$((${COST_DETAILS}))
+          echo "COST_DETAILS_INT=$COST_DETAILS_INT" >> $GITHUB_ENV
+
+
       - name: Send denied slack message
         if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'denied')
         run: ./scripts/aks/send-slack-message.sh
@@ -179,21 +187,21 @@ jobs:
 
       - name: PRINT VARS for DEBUG
         run: |
-          echo ${{ env.COST_DETAILS }}
+          echo ${{ env.COST_DETAILS_INT }}
           echo ${{ env.AUTO_APPROVAL_THRESHOLD }}
 
       - name: Add auto-approved label
-        if: env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD
+        if: env.COST_DETAILS_INT < env.AUTO_APPROVAL_THRESHOLD
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "auto-approved"
 
       - name: set auto-approved status
-        if: env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD
+        if: env.COST_DETAILS_INT < env.AUTO_APPROVAL_THRESHOLD
         run: echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
 
       - name: Add auto approval comment
-        if: env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD
+        if: env.COST_DETAILS_INT < env.AUTO_APPROVAL_THRESHOLD
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -201,13 +209,13 @@ jobs:
             You request has been automatically approved.
 
       - name: Add high cost label
-        if: ${{ env.COST_DETAILS >= env.HIGH_COST_THRESHOLD && env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD }}
+        if: ${{ env.COST_DETAILS_INT >= env.HIGH_COST_THRESHOLD && env.COST_DETAILS_INT < env.AUTO_APPROVAL_THRESHOLD }}
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "High Cost"
 
       - name: Add very high cost label
-        if: env.COST_DETAILS >= env.AUTO_APPROVAL_THRESHOLD
+        if: env.COST_DETAILS_INT >= env.AUTO_APPROVAL_THRESHOLD
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Very high cost"
@@ -219,7 +227,7 @@ jobs:
           labels: "Cost Error"
 
       - name: Very High Cost approval comment
-        if: ${{ env.COST_DETAILS >= env.AUTO_APPROVAL_THRESHOLD && github.event.issue.user.login == github.actor }}
+        if: ${{ env.COST_DETAILS_INT >= env.AUTO_APPROVAL_THRESHOLD && github.event.issue.user.login == github.actor }}
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
