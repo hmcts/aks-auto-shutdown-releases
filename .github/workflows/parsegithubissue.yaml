@@ -19,6 +19,18 @@ jobs:
   process-request:
     permissions: write-all
     runs-on: ubuntu-latest
+    outputs:
+      PROCESS_SUCCESS: ${{ steps.process-data.PROCESS_SUCCESS }}
+      CHANGE_JIRA_ID: ${{ steps.get-resource-details.CHANGE_JIRA_ID }}
+      REQUEST_URL: ${{ steps.get-resource-details.REQUEST_URL }}
+      BUSINESS_AREA_ENTRY: ${{ steps.get-resource-details.BUSINESS_AREA_ENTRY }}
+      START_DATE: ${{ steps.get-resource-details.START_DATE }}
+      END_DATE: ${{ steps.get-resource-details.END_DATE }}
+      ENVIRONMENT: ${{ steps.get-resource-details.ENVIRONMENT }}
+      COST_DETAILS_FORMATTED: ${{ steps.cost-calculator.COST_DETAILS_FORMATTED }}
+      APPROVAL_STATE: ${{ steps.approval-denied.APPROVAL_STATE }}
+      APPROVAL_STATE: ${{ steps.approval-auto-approved.APPROVAL_STATE }}
+      APPROVAL_STATE: ${{ steps.approval-approved.APPROVAL_STATE }}
     if: github.event.issue.user.login != 'renovate[bot]'
     steps:
       - name: Cannot self approve comment
@@ -38,6 +50,7 @@ jobs:
             auto-approved
 
       - name: set denied status
+        id: approval-denied
         if: contains(github.event.issue.labels.*.name, 'denied')
         run: echo "APPROVAL_STATE=Denied by ${{ github.actor }}" >> $GITHUB_ENV
 
@@ -116,6 +129,7 @@ jobs:
           pip3 install -r requirements.txt
 
       - name: process form data
+        id: process-data
         continue-on-error: true
         run: |
           python ./scripts/file_handling.py
@@ -136,11 +150,13 @@ jobs:
           tenant-id: 531ff96d-0ae9-462a-8d2d-bec7c0b42082 # HMCTS.NET
           allow-no-subscriptions: true
       - name: get aks resource details
+        id: get-resource-details
         if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
         run: ./scripts/aks/resource-details.sh
 
       - name: process costs
+        id: cost-calculator
         if: env.PROCESS_SUCCESS == 'true'
         continue-on-error: true
         run: |
@@ -174,6 +190,7 @@ jobs:
           labels: "auto-approved"
 
       - name: set auto-approved status
+        id: approval-auto-approved
         if: env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD
         run: echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
 
@@ -233,6 +250,7 @@ jobs:
           labels: "Error in form"
 
       - name: set approved status
+        id: approval-approved
         if: contains(github.event.issue.labels.*.name, 'approved')
         run: echo "APPROVAL_STATE=Approved by ${{ github.actor }}" >> $GITHUB_ENV
 
