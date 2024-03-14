@@ -56,7 +56,6 @@ jobs:
         with:
           labels: |
             Processing
-            Success
 
       - name: exit flow if approver == requester 
         if: contains(github.event.issue.labels.*.name, 'approved') && github.event.issue.user.login == github.actor || contains(github.event.issue.labels.*.name, 'auto-approved') && github.event.issue.user.login == github.actor
@@ -79,7 +78,6 @@ jobs:
         if: env.PROCESS_SUCCESS == 'false'
         with:
           labels: |
-            Success
             Error in form
             High Cost
 
@@ -222,13 +220,6 @@ jobs:
         with:
           labels: |
             Processing
-            Success
-
-      - name: Add success label
-        if: env.PROCESS_SUCCESS == 'true'
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: "Success"
 
       - name: Add error label
         if: env.PROCESS_SUCCESS != 'true'
@@ -261,9 +252,14 @@ jobs:
             Success! Your [commit](${{ env.COMMIT_URL }}) has been added to the json exclusions file.
             Auto-closing issue.
 
+  send-slack-message:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: github.event.issue.user.login != 'renovate[bot]'
+    needs: process-request
+    steps:
       - name: Send slack message
         if: env.PROCESS_SUCCESS == 'true'
-        continue-on-error: true
         run: ./scripts/aks/send-slack-message.sh
         env:
           SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
