@@ -181,7 +181,7 @@ jobs:
           echo ${{ env.AUTO_APPROVAL_THRESHOLD }}
 
       - name: Add auto-approved label
-        if: ${{ env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD }}
+        if: ${{ env.COST_DETAILS }} < 5000
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "auto-approved"
