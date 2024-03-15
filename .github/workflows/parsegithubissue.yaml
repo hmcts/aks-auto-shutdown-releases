@@ -175,11 +175,6 @@ jobs:
           body: |
             We have been unable to estimate the cost of this skip request.
 
-      - name: PRINT VARS for DEBUG
-        run: |
-          echo ${{ env.COST_DETAILS }}
-          echo ${{ env.AUTO_APPROVAL_THRESHOLD }}
-
       - name: Add auto-approved label
         if: env.COST_DETAILS < 5000
         uses: actions-ecosystem/action-add-labels@v1
@@ -187,11 +182,11 @@ jobs:
           labels: "auto-approved"
 
       - name: set auto-approved status
-        if: ${{ env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD }}
+        if: env.COST_DETAILS < 5000
         run: echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
 
       - name: Add auto approval comment
-        if: ${{ env.COST_DETAILS < env.AUTO_APPROVAL_THRESHOLD }}
+        if: env.COST_DETAILS < 5000
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -200,7 +195,7 @@ jobs:
 
 
       - name: Add very high cost label
-        if: env.COST_DETAILS >= env.AUTO_APPROVAL_THRESHOLD
+        if: env.COST_DETAILS >= 5000
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "Very high cost"
@@ -212,7 +207,7 @@ jobs:
           labels: "Cost Error"
 
       - name: Very High Cost approval comment
-        if: ${{ env.COST_DETAILS >= env.AUTO_APPROVAL_THRESHOLD && github.event.issue.user.login == github.actor }}
+        if: env.COST_DETAILS >= 5000 && github.event.issue.user.login == github.actor
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
