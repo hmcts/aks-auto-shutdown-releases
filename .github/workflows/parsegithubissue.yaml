@@ -12,7 +12,6 @@ env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
   APPROVAL_STATE: "Pending Approval"
   AUTO_APPROVAL_THRESHOLD: 5000
-  HIGH_COST_THRESHOLD: 2000
 permissions:
   id-token: write
 jobs:
@@ -80,7 +79,6 @@ jobs:
         with:
           labels: |
             Error in form
-            High Cost
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -200,11 +198,6 @@ jobs:
           body: |
             You request has been automatically approved.
 
-      - name: Add high cost label
-        if: env.COST_DETAILS >= env.HIGH_COST_THRESHOLD
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          labels: "High Cost"
 
       - name: Add very high cost label
         if: env.COST_DETAILS >= env.AUTO_APPROVAL_THRESHOLD
