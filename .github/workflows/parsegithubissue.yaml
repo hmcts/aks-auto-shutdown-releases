@@ -235,6 +235,13 @@ jobs:
         with:
           labels: "Error in form"
 
+      - name: Remove high cost label
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: env.COST_DETAILS < 5000
+        with:
+          labels: |
+            Very high cost
+
       - name: set approved status
         if: contains(github.event.issue.labels.*.name, 'approved')
         run: echo "APPROVAL_STATE=Approved by ${{ github.actor }}" >> $GITHUB_ENV
