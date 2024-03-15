@@ -10,5 +10,85 @@
         "business_area": "cft",
         "change_jira_id": "jh-1",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/521"
+<<<<<<< HEAD
+=======
+    },
+    {
+        "start_date": "15-07-2024",
+        "end_date": "28-07-2024",
+        "request_type": "stop",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging",
+            "Preview / Dev",
+            "Test / Perftest",
+            "Demo",
+            "ITHC",
+            "PTL"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/612"
+    },
+    {
+        "start_date": "15-07-2024",
+        "end_date": "15-07-2024",
+        "request_type": "stop",
+        "environment": "Sandbox",
+        "business_area": "cft",
+        "change_jira_id": "low cost auto approval",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/614"
+    },
+    {
+        "start_date": "10-07-2024",
+        "end_date": "10-07-2024",
+        "request_type": "stop",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging",
+            "Preview / Dev",
+            "Test / Perftest",
+            "Demo",
+            "ITHC",
+            "PTL"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "high cost deny",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/615"
+    },
+    {
+        "start_date": "01-07-2024",
+        "end_date": "01-07-2024",
+        "request_type": "stop",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging",
+            "Preview / Dev",
+            "Test / Perftest",
+            "Demo",
+            "ITHC",
+            "PTL"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "high cost edit test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/616"
+    },
+    {
+        "start_date": "01-08-2024",
+        "end_date": "02-08-2024",
+        "request_type": "stop",
+        "environment": [
+            "Sandbox",
+            "AAT / Staging",
+            "Preview / Dev",
+            "Test / Perftest",
+            "Demo",
+            "ITHC",
+            "PTL"
+        ],
+        "business_area": "cft",
+        "change_jira_id": "high cost edit test 2",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/617"
+>>>>>>> 0e98d2adcaf95b227297ed4b0b5a41b0852e4779
     }
 ]
