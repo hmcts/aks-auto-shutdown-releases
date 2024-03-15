@@ -261,7 +261,7 @@ jobs:
 
     #Add approval comment
       - name: Add auto approval comment
-        if: env.APPROVAL_STATE == Approved by ${{ github.actor }}
+        if: env.APPROVAL_STATE == 'Approved by ${{ github.actor }}'
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -269,7 +269,7 @@ jobs:
             ${{ env.APPROVAL_STATE }}
 
       - name: Commit to master
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == Approved by ${{ github.actor }} || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
+        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved by ${{ github.actor }}' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -285,10 +285,10 @@ jobs:
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: |
-            Procesing
+            Processing
     
       - name: Close Issue with success
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == Approved by ${{ github.actor }} || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
+        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved by ${{ github.actor }}' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
