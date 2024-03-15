@@ -159,7 +159,7 @@ jobs:
 
       - name: exit flow if denied
         if: contains(github.event.issue.labels.*.name, 'denied')
-        run: exit 0
+        run: exit 1
 
       - name: Add cost details as a comment
         if: env.PROCESS_SUCCESS == 'true' && env.ERROR_IN_COSTS != 'true'
