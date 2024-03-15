@@ -19,17 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.issue.user.login != 'renovate[bot]'
     steps:
-    #Remove labels from a previous run
-      - name: Remove labels
-        if: contains(github.event.issue.labels.*.name, 'Cost Error') || contains(github.event.issue.labels.*.name, 'Pending Approval') || contains(github.event.issue.labels.*.name, 'Success') || contains(github.event.issue.labels.*.name, 'Very high cost')
-        uses: actions-ecosystem/action-remove-labels@v1
-        with:
-          labels: |
-            Cost Error
-            Pending approval
-            Success
-            Very high cost
-
     #Adds label for user feedback
       - name: add processing label
         uses: actions-ecosystem/action-add-labels@v1
@@ -82,6 +71,17 @@ jobs:
           labels: |
             Processing
             Pending approval
+
+    #Remove labels from a previous run
+      - name: Remove labels
+        if: contains(github.event.issue.labels.*.name, 'Cost Error') || contains(github.event.issue.labels.*.name, 'Pending Approval') || contains(github.event.issue.labels.*.name, 'Success') || contains(github.event.issue.labels.*.name, 'Very high cost')
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: |
+            Cost Error
+            Pending approval
+            Success
+            Very high cost
 
     #Allows workflow to access repo
       - name: Checkout
@@ -181,7 +181,7 @@ jobs:
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.event.issue.user.login }}
-          APPROVAL_STATE: ${{ env.APPROVAL_STATE }}
+          APPROVAL_STATE: ${{ env.APPROVAL_COMMENT }}
 
     #End workflow if denied label is applied
       - name: exit flow if denied
