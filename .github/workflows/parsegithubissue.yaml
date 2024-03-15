@@ -142,15 +142,6 @@ jobs:
         run: |
           python ./scripts/cost-calculator.py || echo "Calculating cost failed"
 
-      - name: set integer var for costs
-        if: env.PROCESS_SUCCESS == 'true'
-        continue-on-error: true
-        run: |
-          COST_DETAILS_INT=$((COST_DETAILS))  # Convert string to integer
-          echo "Integer variable: $COST_DETAILS_INT"
-          echo "COST_DETAILS_INT=$COST_DETAILS_INT" >> $GITHUB_ENV  # Set integer variable in the environment
-
-
       - name: Send denied slack message
         if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'denied')
         run: ./scripts/aks/send-slack-message.sh
