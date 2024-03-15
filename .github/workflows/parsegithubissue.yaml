@@ -256,24 +256,26 @@ jobs:
 
       - name: set approved status
         if: contains(github.event.issue.labels.*.name, 'approved')
-        run: echo "APPROVAL_STATE=Approved by ${{ github.actor }}" >> $GITHUB_ENV
+        run: |
+          echo "APPROVAL_STATE=Approved" >> $GITHUB_ENV
+          echo "APPROVAL_COMMENT=Approved by ${{ github.actor }}" >> $GITHUB_ENV
 
 
     #Add approval comment
       - name: Add auto approval comment
-        if: env.APPROVAL_STATE == 'Approved by ${{ github.actor }}'
+        if: env.APPROVAL_STATE == 'Approved'
         uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            ${{ env.APPROVAL_STATE }}
+            ${{ env.APPROVAL_COMMENT }}
 
       - name: DEBUG - Output vars
         run: |
           echo ${{ env.APPROVAL_STATE }}
 
       - name: Commit to master
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved by ${{ github.actor }}' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
+        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
         run: |
           git config user.name hmcts-platform-operations
           git config user.email github-platform-operations@hmcts.net
@@ -292,7 +294,7 @@ jobs:
             Processing
     
       - name: Close Issue with success
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved by ${{ github.actor }}' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
+        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -313,4 +315,4 @@ jobs:
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.event.issue.user.login }}
-          APPROVAL_STATE: ${{ env.APPROVAL_STATE }}
+          APPROVAL_STATE: ${{ env.APPROVAL_COMMENT }}
