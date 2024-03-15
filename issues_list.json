@@ -164,5 +164,14 @@
         "business_area": "cft",
         "change_jira_id": "test",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/606"
+    },
+    {
+        "start_date": "08-05-2024",
+        "end_date": "08-05-2024",
+        "request_type": "stop",
+        "environment": "Demo",
+        "business_area": "cross-cutting",
+        "change_jira_id": "test",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/607"
     }
 ]
