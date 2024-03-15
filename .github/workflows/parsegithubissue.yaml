@@ -201,7 +201,7 @@ jobs:
             You request has been automatically approved.
 
       - name: Add high cost label
-        if: env.COST_DETAILS >= ${{ env.HIGH_COST_THRESHOLD }} && env.COST_DETAILS < ${{ env.AUTO_APPROVAL_THRESHOLD }}
+        if: ${{ env.COST_DETAILS >= env.HIGH_COST_THRESHOLD }}
         uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: "High Cost"
