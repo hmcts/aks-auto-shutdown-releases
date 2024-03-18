@@ -104,5 +104,14 @@
         "business_area": "cft",
         "change_jira_id": "High cost approval test",
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/625"
+    },
+    {
+        "start_date": "10-04-2024",
+        "end_date": "10-04-2024",
+        "request_type": "stop",
+        "environment": "Sandbox",
+        "business_area": "cross-cutting",
+        "change_jira_id": "auto approval ID",
+        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/626"
     }
 ]
