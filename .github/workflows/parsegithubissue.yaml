@@ -51,11 +51,14 @@ jobs:
     #if denied label is applied, set environment variable appropriately 
       - name: set denied status
         if: contains(github.event.issue.labels.*.name, 'denied')
-        run: echo "APPROVAL_STATE=Denied by ${{ github.actor }}" >> $GITHUB_ENV
+        run: |
+          echo "APPROVAL_STATE=Denied" >> $GITHUB_ENV
+          echo "APPROVAL_COMMENT=Denied by ${{ github.actor }}" >> $GITHUB_ENV
+          
 
     #if denied label is applied, close issue 
       - name: Close Issue with denied
-        if: contains(github.event.issue.labels.*.name, 'denied')
+        if: env.APPROVAL_STATE == 'Denied'
         uses: peter-evans/close-issue@v3
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -66,7 +69,7 @@ jobs:
     #if denied label is applied, remove processing and pending approval labels
       - name: Remove labels
         uses: actions-ecosystem/action-remove-labels@v1
-        if: contains(github.event.issue.labels.*.name, 'denied')
+        if: env.APPROVAL_STATE == 'Denied'
         with:
           labels: |
             Processing
@@ -169,7 +172,7 @@ jobs:
 
     #Send slack message if denied label applied
       - name: Send denied slack message
-        if: env.PROCESS_SUCCESS == 'true' && contains(github.event.issue.labels.*.name, 'denied')
+        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Denied'
         run: ./scripts/aks/send-slack-message.sh
         env:
           SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
@@ -185,7 +188,7 @@ jobs:
 
     #End workflow if denied label is applied
       - name: exit flow if denied
-        if: contains(github.event.issue.labels.*.name, 'denied')
+        if: env.APPROVAL_STATE == 'Denied'
         run: exit 1
 
     #Add output of cost calculator as a comment to user
