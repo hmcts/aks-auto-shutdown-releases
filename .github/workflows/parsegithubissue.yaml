@@ -173,9 +173,9 @@ jobs:
         run: |
           python ./scripts/cost-calculator.py || echo "Calculating cost failed"
 
-    #Send slack message if denied label applied
+    #Send slack message if approval_state == denied
       - name: Send denied slack message
-        if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Denied'
+        if: env.APPROVAL_STATE == 'Denied'
         run: ./scripts/aks/send-slack-message.sh
         env:
           SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
