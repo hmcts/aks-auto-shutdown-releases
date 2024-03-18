@@ -188,7 +188,7 @@ jobs:
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.event.issue.user.login }}
-          APPROVAL_STATE: ${{ env.APPROVAL_COMMENT }}
+          APPROVAL_COMMENT: ${{ env.APPROVAL_COMMENT }}
 
     #End workflow if approval state == denied
       - name: exit flow if denied
@@ -328,4 +328,4 @@ jobs:
           COST_DETAILS_FORMATTED: ${{ env.COST_DETAILS_FORMATTED }}
           ENVIRONMENT: ${{ env.ENVIRONMENT }}
           REQUESTER: ${{ github.event.issue.user.login }}
-          APPROVAL_STATE: ${{ env.APPROVAL_COMMENT }}
+          APPROVAL_COMMENT: ${{ env.APPROVAL_COMMENT }}
