@@ -292,6 +292,14 @@ jobs:
         with:
           labels: |
             Processing
+
+    #Remove pending approval label if approved
+      - name: Remove processing label
+        if: env.APPROVAL_STATE == 'Approved'
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: |
+            Pending approval
     
       - name: Close Issue with success
         if: env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'Approved' || env.PROCESS_SUCCESS == 'true' && env.APPROVAL_STATE == 'auto-approved'
@@ -307,6 +315,7 @@ jobs:
         run: ./scripts/aks/send-slack-message.sh
         env:
           SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
+          ISSUE_TITLE: $${{ github.event.issue.title }}
           CHANGE_JIRA_ID: ${{ env.CHANGE_JIRA_ID }}
           REQUEST_URL: ${{ env.REQUEST_URL }}
           BUSINESS_AREA_ENTRY: ${{ env.BUSINESS_AREA_ENTRY }}
