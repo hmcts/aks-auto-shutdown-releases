@@ -11,6 +11,7 @@ env:
   GH_TOKEN: ${{ secrets.PLATFORM_USER_TOKEN }}
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
   APPROVAL_STATE: "Pending Approval"
+  APPROVAL_COMMENT: "Auto approved"
 permissions:
   id-token: write
 jobs:

@@ -19,7 +19,7 @@ jq --arg issue_url "$request_url_link" \
    --arg cost_value "£$COST_DETAILS_FORMATTED" \
    --arg status "$APPROVAL_STATE" \
    --arg raw_issue_url "$REQUEST_URL" \
-   '.blocks[0].text.text |= $issue_url | 
+   '.blocks[0].text.text |= $issue_title | 
     .blocks[1].fields[0].text |= "*Business Area:*\n\($business_area)" |
     .blocks[1].fields[1].text |= "*Environment:*\n\($environment)" |
     .blocks[1].fields[2].text |= "*Start Date:*\n\($start_date)" |
