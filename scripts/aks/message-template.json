@@ -51,11 +51,9 @@
 					"type": "button",
 					"text": {
 						"type": "plain_text",
-						"emoji": true,
 						"text": "Review Request"
 					},
 					"style": "primary",
-					"value": "click_me",
 					"url": "request_url"
 				}
 			]
