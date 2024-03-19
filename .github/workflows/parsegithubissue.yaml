@@ -228,7 +228,9 @@ jobs:
     #Set approval_state environment var to auto-approved if cost value is less than £5,000
       - name: set auto-approved status
         if: env.COST_DETAILS < 5000
-        run: echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
+        run: |        
+        echo "APPROVAL_STATE=auto-approved" >> $GITHUB_ENV
+        echo "APPROVAL_COMMENT=Auto approved" >> $GITHUB_ENV
 
     #Add auto approved label if approval_state == auto-approved
       - name: Add auto-approved label
