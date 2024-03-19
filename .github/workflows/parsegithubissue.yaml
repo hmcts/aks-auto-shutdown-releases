@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 env:
   GH_TOKEN: ${{ secrets.PLATFORM_USER_TOKEN }}
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_TEST_CHANNEL }}
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
   APPROVAL_STATE: "Pending Approval"
   APPROVAL_COMMENT: "Pending Approval"
 permissions:
