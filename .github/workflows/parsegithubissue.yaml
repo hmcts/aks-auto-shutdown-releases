@@ -152,6 +152,11 @@ jobs:
             ${{ env.ISSUE_COMMENT }}
             Please edit this issue and select "Update comment" to resubmit.
 
+    #End workflow if for processing finds an error
+      - name: exit flow if approver == requester 
+        if: env.PROCESS_SUCCESS != 'true'
+        run: exit 1
+
     # Login to Azure CLI (for cost analysis)
       - name: 'Az CLI login'
         uses: azure/login@v1
