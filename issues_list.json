@@ -21,18 +21,6 @@
         "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/634"
     },
     {
-        "start_date": "21-03-2024",
-        "end_date": "22-03-2024",
-        "request_type": "stop",
-        "environment": [
-            "Sandbox",
-            "AAT / Staging"
-        ],
-        "business_area": "cft",
-        "change_jira_id": "DTSPO-0001",
-        "issue_link": "https://github.com/hmcts/aks-auto-shutdown-releases/issues/639"
-    },
-    {
         "start_date": "20-04-2024",
         "end_date": "20-04-2024",
         "request_type": "stop",
