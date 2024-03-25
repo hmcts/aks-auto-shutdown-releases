@@ -54,8 +54,7 @@ body:
   id: soft-limit
   attributes:
     label: Do you need this exclusion past 23:00?
+    description: Default is set to no. Shutdown of all environments will occur at 23:00
     options:
       - label: 'Yes'
-  validations:
-    required: true
 
