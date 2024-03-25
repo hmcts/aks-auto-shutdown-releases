@@ -50,13 +50,13 @@ body:
   validations:
     required: false
 
-body:
 - type: checkboxes
   id: soft-limit
   attributes:
-    label: Can shutdown happen from 23:00?
+    label: Do you need this exclusion past 23:00?
     description: You may select more than one.
     options:
       - label: 'Yes'
-      - label: 'No'
+  validations:
+    required: true
 
