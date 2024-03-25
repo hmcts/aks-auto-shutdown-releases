@@ -54,7 +54,6 @@ body:
   id: soft-limit
   attributes:
     label: Do you need this exclusion past 23:00?
-    description: You may select more than one.
     options:
       - label: 'Yes'
   validations:
