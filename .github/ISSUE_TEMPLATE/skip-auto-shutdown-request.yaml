@@ -49,3 +49,14 @@ body:
     description: "DD-MM-YYYY - Defaults to start date. 20:00 shutdown job will skip provided clusters on this date."
   validations:
     required: false
+
+body:
+- type: checkboxes
+  id: soft-limit
+  attributes:
+    label: Can shutdown happen from 23:00?
+    description: You may select more than one.
+    options:
+      - label: 'Yes'
+      - label: 'No'
+
