@@ -59,7 +59,7 @@ function should_stay_on_late() {
   echo "current our set to: $current_hour"
 
 # Check if the current hour is greater than 22:00
-  if [[ $current_hour -ge 14 ]]; then
+  if [[ $current_hour -ge 14 && $stay_on_late == "Yes"]]; then
     echo "true"
   else
     echo "false"
