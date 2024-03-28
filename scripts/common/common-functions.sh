@@ -50,6 +50,19 @@ function is_in_date_range() {
   fi
 }
 
+function should_stay_on_late() {
+  local stay_on_late current_hour
+  stay_on_late=$1
+  current_hour=$(date_command '+%H')
+
+# Check if the current hour is greater than 22:00
+  if [[ $current_hour -ge 22 && stay_on_late == "Yes" ]]; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+
 function should_skip_start_stop () {
   local env business_area issue
   env=$1
@@ -61,11 +74,12 @@ function should_skip_start_stop () {
     return
   fi
   while read issue; do
-    local env_entry business_area_entry start_date end_date
+    local env_entry business_area_entry start_date end_date stay_on_late
     env_entry=$(jq -r '."environment"' <<< $issue)
     business_area_entry=$(jq -r '."business_area"' <<< $issue)
     start_date=$(jq -r '."start_date"' <<< $issue)
     end_date=$(jq -r '."end_date"' <<< $issue)
+    stay_on_late=$(jq -r '."stay_on_late"' <<< $issue)
     get_request_type "$issue"
 
     if [[ $request_type != $mode ]]; then
