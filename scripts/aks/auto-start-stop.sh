@@ -14,6 +14,9 @@ if [[ "$MODE" != "start" && "$MODE" != "stop" ]]; then
     exit 1
 fi
 
+echo "[TEST] new function"
+should_stay_on_late "Yes"
+
 SUBSCRIPTIONS=$(az account list -o json)
 jq -c '.[]' <<< $SUBSCRIPTIONS | while read subscription; do
   get_subscription_clusters
