@@ -54,10 +54,7 @@ function should_stay_on_late() {
   local stay_on_late current_hour
   stay_on_late=$1
   current_hour=$($date_command +'%H')
-
-  echo "var set to: $stay_on_late"
-  echo "current our set to: $current_hour"
-
+  
 # Check if the current hour is greater than 22:00
   if [[ $current_hour -ge 14 && $stay_on_late == "Yes" ]]; then
     echo "true"
